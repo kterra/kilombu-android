@@ -28,11 +28,13 @@ public class Business {
 
         this.name = name;
         this.user = user;
-        this.CNPJ = CNPJ;
         this.category = category;
         this.description = description;
         this.city = city;
         this.address = address;
+
+        this.CNPJ = CNPJ;
+
         this.business_hours = business_hours;
         this.phone_number = phone_number;
         this.email = email;
