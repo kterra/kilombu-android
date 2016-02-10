@@ -14,31 +14,55 @@
         android:padding="16dp"
         >
 
-        <ImageView
+       <!-- <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_photo"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="16dp"
-            />
+            /> -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_name"
-            android:layout_toRightOf="@+id/user_photo"
+            android:textAllCaps="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@color/primary_text_material_light"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/user_age"
+            android:textAllCaps="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/user_name"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text_material_light"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/user_comment"
-            android:layout_toRightOf="@+id/user_photo"
-            android:layout_below="@+id/user_name"
-            android:textSize="16sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/user_age"
+            android:textSize="14sp"
+            android:textColor="@color/colorDescription"
             />
 
 

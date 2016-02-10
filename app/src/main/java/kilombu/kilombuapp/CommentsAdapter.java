@@ -19,7 +19,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.UserVi
 
         CardView cv;
         TextView userName;
-        //TextView userAge;
+        TextView userAge;
         TextView userComment;
         ImageView userPhoto;
 
@@ -27,8 +27,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.UserVi
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             userName = (TextView)itemView.findViewById(R.id.user_name);
-            //userAge = (TextView)itemView.findViewById(R.id.person_age);
-            userPhoto = (ImageView)itemView.findViewById(R.id.user_photo);
+            userAge = (TextView)itemView.findViewById(R.id.user_age);
+            //userPhoto = (ImageView)itemView.findViewById(R.id.user_photo);
             userComment = (TextView)itemView.findViewById(R.id.user_comment);
         }
     }
@@ -54,8 +54,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.UserVi
     @Override
     public void onBindViewHolder(UserViewHolder userViewHolder, int position) {
         userViewHolder.userName.setText(users.get(position).name);
-        //userViewHolder.userAge.setText(users.get(position).age);
-        userViewHolder.userPhoto.setImageResource(users.get(position).photoId);
+        userViewHolder.userAge.setText(users.get(position).age);
+//        userViewHolder.userPhoto.setImageResource(users.get(position).photoId);
         userViewHolder.userComment.setText(users.get(position).comment);
     }
 

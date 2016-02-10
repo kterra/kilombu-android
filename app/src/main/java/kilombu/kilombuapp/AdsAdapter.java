@@ -19,17 +19,16 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
 
         CardView cv;
         TextView businessName;
-        //TextView userAge;
+        TextView businessCategory;
         TextView shortDescription;
-        ImageView userPhoto;
+        ImageView businessLogo;
 
         BusinessViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            businessName = (TextView)itemView.findViewById(R.id.user_name);
-            //userAge = (TextView)itemView.findViewById(R.id.person_age);
-            userPhoto = (ImageView)itemView.findViewById(R.id.user_photo);
-            shortDescription = (TextView)itemView.findViewById(R.id.user_comment);
+           // businessName = (TextView)itemView.findViewById(R.id.user_name);
+            //businessCategory = (TextView)itemView.findViewById(R.id.person_age);
+            //shortDescription = (TextView)itemView.findViewById(R.id.user_comment);
         }
     }
 

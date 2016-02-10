@@ -10,22 +10,32 @@
     tools:context="kilombu.kilombuapp.GalleryActivity">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:text="@string/profile"
         android:id="@+id/button"
-        android:layout_marginTop="66dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="56dp" />
+        android:layout_marginStart="20dp"
+        android:drawableTop="@drawable/ic_white_afro_profile"
+
+        android:layout_marginTop="40dp"
+        android:background="@drawable/gallery_button"
+        android:textColor="@color/button_text_color"
+        android:fontFamily="sans-serif-condensed"
+        />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:text="@string/businessProfile"
         android:id="@+id/button2"
-        android:layout_alignTop="@+id/button"
-        android:layout_toEndOf="@+id/button" />
+        android:layout_alignTop="@id/button"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/button"
+        android:textColor="@color/button_text_color"
+        android:background="@drawable/gallery_button"
+        android:fontFamily="sans-serif-condensed"/>
 
 
 </RelativeLayout>
