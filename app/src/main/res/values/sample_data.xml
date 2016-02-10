@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="nome1">Enfermeira Rafaella Silva</string>
+    <string name="cat1">Saúde</string>
+    <string name="descricao1">Assistência à clientes em média e alta complexidade, supervisão e educação continuada ao profissional e remoções e avaliação de clientes críticos.</string>
+    <string name="end1">""</string>
+
+    <string name="nome2">Negroshow</string>
+    <string name="cat2">Moda</string>
+    <string name="descricao2">Trabalhamos com Lace front ..bolsas e acessórios de matérias sustentáveis e brincos em mdf</string>
+    <string name="end2">""</string>
+
+    <string name="nome3">PryArt\'s - Atelier Priscila Cardoso</string>
+    <string name="cat3">Beleza</string>
+    <string name="descricao3">O atelier se destina a vender produtos artesanais produzidos com materiais de qualidade, entre eles: roupas, decoração e acessórios em crochê.</string>
+    <string name="end3">28 de setembro, 258 loja 16. Vila Isabel</string>
+
+    <string name="nome4">Isabelle Freitas - Design de sobrancelhas e maquiadora</string>
+    <string name="cat4">Beleza</string>
+    <string name="descricao4">Design de sobrancelhas, maquiagem para todas as ocasiões,  micropigmentação,  alongamento de cílios e cursos livres</string>
+    <string name="end4">28 de setembro, 258 loja 16. Vila Isabel</string>
+
+    <string name="nome5">Studio Simone Gregório</string>
+    <string name="cat5">Beleza</string>
+    <string name="descricao5">Desing de sobrancelhas e Micropigmentacao Estética</string>
+    <string name="end5">R. Dr. Jose Mário teixeira de leão, 235 jd pery</string>
+    
+</resources>

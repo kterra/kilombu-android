@@ -21,14 +21,13 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
         TextView businessName;
         TextView businessCategory;
         TextView shortDescription;
-        ImageView businessLogo;
 
         BusinessViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-           // businessName = (TextView)itemView.findViewById(R.id.user_name);
-            //businessCategory = (TextView)itemView.findViewById(R.id.person_age);
-            //shortDescription = (TextView)itemView.findViewById(R.id.user_comment);
+            businessName = (TextView)itemView.findViewById(R.id.business_name);
+            businessCategory = (TextView)itemView.findViewById(R.id.business_category);
+            shortDescription = (TextView)itemView.findViewById(R.id.business_description);
         }
     }
 
@@ -53,8 +52,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
     @Override
     public void onBindViewHolder(BusinessViewHolder businessViewHolder, int position) {
         businessViewHolder.businessName.setText(businesses.get(position).getName());
-        //userViewHolder.userAge.setText(users.get(position).age);
-        //businessViewHolder.userPhoto.setImageResource(businesses.get(position).photoId);
+        businessViewHolder.businessCategory.setText(businesses.get(position).getCategory());
         businessViewHolder.shortDescription.setText(businesses.get(position).getDescription());
     }
 

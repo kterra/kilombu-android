@@ -26,10 +26,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.UserVi
         UserViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            userName = (TextView)itemView.findViewById(R.id.user_name);
-            userAge = (TextView)itemView.findViewById(R.id.user_age);
+            userName = (TextView)itemView.findViewById(R.id.business_name);
+            userAge = (TextView)itemView.findViewById(R.id.business_category);
             //userPhoto = (ImageView)itemView.findViewById(R.id.user_photo);
-            userComment = (TextView)itemView.findViewById(R.id.user_comment);
+            userComment = (TextView)itemView.findViewById(R.id.business_description);
         }
     }
 

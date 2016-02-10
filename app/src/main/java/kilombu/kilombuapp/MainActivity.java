@@ -1,11 +1,8 @@
 package kilombu.kilombuapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +19,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private List<User> users;
+    private List<Business> businesses;
     private RecyclerView adsView;
 
 
@@ -44,15 +41,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -64,16 +52,34 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeData(){
-        users = new ArrayList<>();
-        users.add(new User("Hallison da Paz", "24 anos", R.drawable.hallison, getString(R.string.hallpaz_comment) ));
-        users.add(new User("Kizzy dos reis", "23 anos", R.drawable.kizzy, getString(R.string.kizzy_comment)));
-        users.add(new User("Rubens Ramos", "25 anos", R.drawable.rubens, getString(R.string.rubens_comment)));
-        users.add(new User("Tatiana Silva", "25 years old", R.drawable.tatiana, getString(R.string.tatiana_comment)));
-        users.add(new User("Patrícia Licio", "20 anos", R.drawable.patricia, getString(R.string.patricia_comment)));
+        businesses = new ArrayList<>();
+
+
+
+        businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
+                getString(R.string.cat1), getString(R.string.descricao1), "Rio de janeiro",
+                getString(R.string.end1), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
+                "lore_ipsum@qmail.com", null, null));
+        businesses.add(new Business(getString(R.string.nome2), null, "098687333/78",
+                getString(R.string.cat2), getString(R.string.descricao2), "Rio de janeiro",
+                getString(R.string.end2), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
+                "lore_ipsum@qmail.com", null, null));
+        businesses.add(new Business(getString(R.string.nome3), null, "098687333/78",
+                getString(R.string.cat3), getString(R.string.descricao3), "Rio de janeiro",
+                getString(R.string.end3), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
+                "lore_ipsum@qmail.com", null, null));
+        businesses.add(new Business(getString(R.string.nome4), null, "098687333/78",
+                getString(R.string.cat4), getString(R.string.descricao4), "Rio de janeiro",
+                getString(R.string.end4), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
+                "lore_ipsum@qmail.com", null, null));
+        businesses.add(new Business(getString(R.string.nome5), null, "098687333/78",
+                getString(R.string.cat5), getString(R.string.descricao5), "Rio de janeiro",
+                getString(R.string.end5), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
+                "lore_ipsum@qmail.com", null, null));
     }
 
     private void initializeAdapter(){
-        CommentsAdapter adapter = new CommentsAdapter(users);
+        AdsAdapter adapter = new AdsAdapter(businesses);
         adsView.setAdapter(adapter);
     }
 
