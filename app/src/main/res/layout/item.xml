@@ -23,34 +23,37 @@
             android:layout_marginRight="16dp"
             /> -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_name"
-            android:textAllCaps="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="1dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="5dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_text_material_light"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/business_category"
-            android:textAllCaps="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="14sp"
+            android:textColor="@color/textview_category"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/business_name"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/business_category"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@id/business_name"
-            android:textSize="14sp"
-            android:textColor="@color/secondary_text_material_light"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorDescription"
+
             />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,10 +63,35 @@
             android:layout_marginRight="16dp"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_below="@id/business_category"
-            android:textSize="14sp"
-            android:textColor="@color/colorDescription"
+            android:layout_below="@id/business_name"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/secondary_text_material_light"
             />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/see_details"
+            android:layout_alignParentRight="true"
+            android:text="@string/see_details"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/business_description"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+
+            />
+
 
 
     </RelativeLayout>
