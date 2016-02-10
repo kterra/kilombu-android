@@ -5,8 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Configurações</string>
-    <string name="profile">Meu Perfil</string>
-    <string name="businessProfile">Meu Negócio</string>
+    <string name="profile">Perfil</string>
+    <string name="businessProfile">Negócio</string>
 
 
     <!-- Hardcoded sample comments -->
