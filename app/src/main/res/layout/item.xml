@@ -27,26 +27,14 @@
             /> -->
 
 
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/business_category"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="14sp"
-            android:textColor="@color/textview_category"
-
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/business_name"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/business_category"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="5dp"
@@ -73,25 +61,34 @@
             />
 
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/see_details"
-            android:layout_alignParentRight="true"
-            android:text="@string/see_details"
-            android:layout_marginRight="5dp"
+            android:id="@+id/business_category"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/business_description"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_below="@id/business_description"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="5dp"
             android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/category_textview"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textColor="@color/textview_category_text"
+
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/see_details"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@id/business_description"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_open_in_new_black_12dp"
 
             />
 
