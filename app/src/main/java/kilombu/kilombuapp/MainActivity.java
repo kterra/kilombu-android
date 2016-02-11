@@ -1,5 +1,6 @@
 package kilombu.kilombuapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -112,6 +113,11 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if (id == R.id.action_options) {
+            Intent intent = new Intent(this, GalleryActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
