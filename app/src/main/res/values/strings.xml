@@ -5,19 +5,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Configurações</string>
+    <string name="action_options">Opções</string>
+
     <string name="profile">Perfil</string>
     <string name="businessProfile">Negócio</string>
     <string name="see_details"><u>Mais detalhes</u></string>
+    <string name="create_new_business">Criar novo negócio</string>
 
 
-    <!-- Hardcoded sample comments -->
-    <string name="hallpaz_comment">Ainda bem que existe esse app, impossível ver esta obra e não querer comentar.</string>
-    <string name="kizzy_comment">Essa obra é muuuuuito maneira! E esse app é um barato!</string>
-    <string name="rubens_comment">Obra de grande influência para os artistas contemporâneos</string>
-    <string name="tatiana_comment">Obra bem sensível. Nunca tinha percebido essas influências nela.</string>
-    <string name="patricia_comment">Obra forte e carregada de crítica! Varejão não decepciona! &lt;3 </string>
-    <string name="fulano_comment">Obra de grande influência para os artistas contemporâneos</string>
-    <string name="title_activity_business_details">BusinessDetailsActivity</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -107,4 +103,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_business_details">BusinessDetailsActivity</string>
+    <string name="title_activity_create_business">CreateBusinessActivity</string>
 </resources>
