@@ -16,7 +16,8 @@
     </android.support.v7.widget.RecyclerView>-->
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         
         <TextView
             android:layout_width="match_parent"
@@ -51,34 +52,21 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/business_facebook"/>
+            android:id="@+id/business_facebook"
+            android:src="@drawable/image_placeholder"/>
 
         <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_instagram"/>
-
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_email"/>
-
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/business_name"
-            android:textAllCaps="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="1dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="5dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_text_material_light"
-            />
+            android:id="@+id/business_instagram"
+            android:src="@drawable/image_placeholder"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/business_email"
+            android:src="@drawable/image_placeholder"/>
+
         
         
     </android.support.v7.widget.LinearLayoutCompat>

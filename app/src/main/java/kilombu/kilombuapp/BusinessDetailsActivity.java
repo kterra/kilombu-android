@@ -28,28 +28,27 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
-
-        Intent intent = getIntent();
-        Business chosenBusiness = intent.getex
+        setupBusinessDetails();
 
     }
 
 
-    public void setupBusinessDetails(Business chosenBusiness){
+    public void setupBusinessDetails(){
+        Intent intent = getIntent();
         TextView currentText = (TextView) findViewById(R.id.business_name_detail);
-        currentText.setText(chosenBusiness.getName());
+        currentText.setText(intent.getStringExtra("business_name"));
 
         currentText = (TextView) findViewById(R.id.business_category_detail);
-        currentText.setText(chosenBusiness.getCategory());
+        currentText.setText(intent.getStringExtra("business_category"));
 
         currentText = (TextView) findViewById(R.id.business_description_detail);
-        currentText.setText(chosenBusiness.getDescription());
+        currentText.setText(intent.getStringExtra("business_description"));
 
         currentText = (TextView) findViewById(R.id.business_address);
-        currentText.setText(chosenBusiness.getAddress());
+        currentText.setText(getString(R.string.end1));
 
         currentText = (TextView) findViewById(R.id.business_working_hours);
-        currentText.setText(chosenBusiness.getBusiness_hours());
+        currentText.setText("Segunda a Sexta: 08:00 — 12:00");
 
         /**Must setup the images so they can send an intent for each app**/
     }

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeAdapter(){
-        AdsAdapter adapter = new AdsAdapter(businesses);
+        AdsAdapter adapter = new AdsAdapter(this, businesses);
         adsView.setAdapter(adapter);
     }
 

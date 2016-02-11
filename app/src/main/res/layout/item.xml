@@ -6,6 +6,9 @@
     android:layout_height="wrap_content"
     android:id="@+id/cv"
     card_view:cardUseCompatPadding="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     >
 
     <RelativeLayout
@@ -91,8 +94,6 @@
             android:textColor="@color/colorPrimaryDark"
 
             />
-
-
 
     </RelativeLayout>
 

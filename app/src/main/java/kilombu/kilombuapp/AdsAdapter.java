@@ -1,5 +1,7 @@
 package kilombu.kilombuapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,9 @@ import java.util.List;
  * Created by hallpaz on 11/10/2015.
  */
 public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHolder> {
+    List<Business> businesses;
+    static Context context;
+
 
     public static class BusinessViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,13 +33,27 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
             businessName = (TextView)itemView.findViewById(R.id.business_name);
             businessCategory = (TextView)itemView.findViewById(R.id.business_category);
             shortDescription = (TextView)itemView.findViewById(R.id.business_description);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AdsAdapter.context, BusinessDetailsActivity.class);
+
+                    intent.putExtra("business_name", businessName.getText());
+                    intent.putExtra("business_category", businessCategory.getText());
+                    intent.putExtra("business_description", shortDescription.getText());
+                    AdsAdapter.context.startActivity(intent);
+
+                }
+            });
+
         }
     }
 
-    List<Business> businesses;
+    AdsAdapter(Context context, List<Business> businesses){
 
-    AdsAdapter(List<Business> businesses){
         this.businesses = businesses;
+        AdsAdapter.context = context;
     }
 
     @Override
