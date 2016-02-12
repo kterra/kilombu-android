@@ -40,20 +40,36 @@
             android:layout_alignParentTop="true"
             android:id="@+id/business_name_detail"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="sans-serif-condensed"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorDescription"/>
+            android:textColor="@color/secondary_text_material_light"/>
+
+                <TextView
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/line"
+                    android:textSize="15sp"
+                    android:textColor="@color/secondary_text_material_light"
+                    />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/business_description_detail"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorDescription"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-condensed"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -66,7 +82,9 @@
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="10dp"
             android:textAllCaps="true"
-            android:textStyle="bold"
+
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/business_working_hours_title"
             android:textColor="@color/business_details_card_title_color"
             android:text="@string/business_working_hours_card_tilte"/>
@@ -114,7 +132,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/business_working_hours"
-                    android:textColor="@color/colorDescription"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/colorDescription"
+                    android:fontFamily="sans-serif-condensed"/>
 
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -128,7 +148,9 @@
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="10dp"
             android:textAllCaps="true"
-            android:textStyle="bold"
+            android:textSize="16sp"
+
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/business_address_card_tilte"
             android:textColor="@color/business_details_card_title_color"
             android:text="@string/business_address_card_tilte"/>
@@ -154,23 +176,13 @@
                 >
 
 
-                <!--<TextView-->
-                    <!--android:id="@+id/line2"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentLeft="true"-->
-                    <!--android:layout_marginTop="-12dp"-->
-                    <!--android:layout_marginBottom="10dp"-->
-                    <!--android:layout_marginRight="16dp"-->
-                    <!--android:fontFamily="sans-serif-condensed"-->
-                    <!--android:text="@string/line"-->
-                    <!--android:textSize="15sp"-->
-                    <!--android:textColor="@color/business_details_card_title_color"-->
-                    <!--/>-->
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/business_address"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="16sp"
                     android:textColor="@color/colorDescription"/>
 
 
@@ -178,6 +190,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/business_phone_number"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/colorDescription"/>
 
 
