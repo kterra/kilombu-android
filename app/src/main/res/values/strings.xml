@@ -9,7 +9,7 @@
 
     <string name="profile">Perfil</string>
     <string name="businessProfile">Negócio</string>
-    <string name="see_details"><u>Mais detalhes</u></string>
+    <string name="see_details">Ver mais</string>
     <string name="create_new_business">Criar novo negócio</string>
 
     <!-- Business Form Data -->
@@ -22,7 +22,6 @@
     <string name="hint_business_hours">Horário de Funcionamento</string>
     <string name="hint_facebook">Página no Facebook</string>
     <string name="hint_instagram">Página no Instagram</string>
-
 
 
     <string name="large_text">
