@@ -59,6 +59,17 @@ public class MainActivity extends AppCompatActivity
         businesses = new ArrayList<>();
 
         businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
+                getString(R.string.cat1), getString(R.string.descricao1)));
+        businesses.add(new Business(getString(R.string.nome2), null, "098687333/78",
+                getString(R.string.cat2), getString(R.string.descricao2)));
+        businesses.add(new Business(getString(R.string.nome3), null, "098687333/78",
+                getString(R.string.cat3), getString(R.string.descricao3)));
+        businesses.add(new Business(getString(R.string.nome4), null, "098687333/78",
+                getString(R.string.cat4), getString(R.string.descricao4)));
+        businesses.add(new Business(getString(R.string.nome5), null, "098687333/78",
+                getString(R.string.cat5), getString(R.string.descricao5)));
+
+        /*businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
                 getString(R.string.cat1), getString(R.string.descricao1), "Rio de janeiro",
                 getString(R.string.end1), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
                 "lore_ipsum@qmail.com", null, null));
@@ -77,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         businesses.add(new Business(getString(R.string.nome5), null, "098687333/78",
                 getString(R.string.cat5), getString(R.string.descricao5), "Rio de janeiro",
                 getString(R.string.end5), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
-                "lore_ipsum@qmail.com", null, null));
+                "lore_ipsum@qmail.com", null, null));*/
     }
 
     private void initializeAdapter(){
@@ -126,6 +137,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_sign_up){
             Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
+        }
+
+        if (id == R.id.action_create_business){
+            Intent intent = new Intent(this, CreateBusinessActivity.class);
             startActivity(intent);
         }
 

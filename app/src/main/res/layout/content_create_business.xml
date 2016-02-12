@@ -32,21 +32,33 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/form_address"
-        android:hint="@string/hint_address"
+        android:id="@+id/form_street"
+        android:hint="@string/hint_street"
         android:layout_below="@id/form_city"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_district"
+        android:hint="@string/hint_district"
+        android:layout_below="@id/form_street"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/form_business_hours"
         android:hint="@string/hint_business_hours"
-        android:layout_below="@id/form_address"/>
+        android:layout_below="@id/form_district"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_phone"
+        android:hint="@string/hint_phone_number"
+        android:layout_below="@id/form_business_hours"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/form_email"
         android:hint="@string/hint_email"
-        android:layout_below="@id/form_business_hours"/>
+        android:layout_below="@id/form_phone"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
