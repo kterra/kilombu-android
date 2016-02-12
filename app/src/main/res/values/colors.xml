@@ -17,6 +17,26 @@
     <color name="button_backgrond_color_pressed">#760d00</color>
     <color name="button_text_color">#FFFFFF</color>
 
+<!-- copiado do projeto ehelp -->
+    <color name="register_button_backgrond_color">#d63900</color>
+    <color name="register_button_backgrond_color_pressed">#a62c00</color>
+    <color name="register_button_stroke_color_focused">#a62c00</color>
+
+
+
+    <color name="other_button_backgrond_color">#00688e</color>
+    <color name="other_button_backgrond_color_pressed">#00455f</color>
+    <color name="other_button_stroke_color_focused">#00455f</color>
+
+    <color name="edit_text_background">#fff</color>
+    <color name="edit_text_text_color">#2d2c25</color>
+    <color name="edit_text_hint_color">#c3cdd6</color>
+    <color name="login_icon_background_color">#ef5319</color>
+    <color name="login_button_backgrond_color">#009cd6</color>
+
+    <color name="header_background_color">#ef5319</color>
+    <color name="header_text_color">#fff</color>
+
 
 
 </resources>
