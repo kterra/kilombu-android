@@ -47,25 +47,10 @@ xmlns:tools="http://schemas.android.com/tools" >
             />
 
         <EditText
-            android:id="@+id/phone_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_below="@id/username_edit_text"
-            android:hint="@string/prompt_phone"
-            android:inputType="phone"
-            android:maxLines="1"
-            android:background="@drawable/edit_text"
-            android:textColorHint="@color/edit_text_hint_color"
-            android:textColor="@color/edit_text_text_color"
-            android:singleLine="true"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="10dp"/>
-
-        <EditText
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="50sp"
-            android:layout_below="@id/phone_edit_text"
+            android:layout_below="@id/username_edit_text"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"

@@ -10,4 +10,12 @@
         android:id="@+id/action_options"
         android:title="@string/action_options"
         />
+    <item
+        android:id="@+id/action_login"
+        android:title="@string/action_login"
+        />
+    <item
+        android:id="@+id/action_sign_up"
+        android:title="@string/title_activity_signup"
+        />
 </menu>

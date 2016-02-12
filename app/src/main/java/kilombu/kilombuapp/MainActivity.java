@@ -118,6 +118,18 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+        if (id == R.id.action_login) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        if (id == R.id.action_sign_up){
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
+        }
+
+
+
         return super.onOptionsItemSelected(item);
     }
 

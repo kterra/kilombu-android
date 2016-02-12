@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.parse.ParseUser;
+import com.firebase.client.Firebase;
 
 public class DispatchActivity extends Activity {
+
+    private Firebase appRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        appRef = new Firebase(getString(R.string.firebase_url));
 
         /* Redirection Logic
         if(ParseUser.getCurrentUser() != null){
