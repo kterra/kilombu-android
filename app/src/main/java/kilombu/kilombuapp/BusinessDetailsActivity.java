@@ -29,13 +29,16 @@ public class BusinessDetailsActivity extends AppCompatActivity {
             }
         });*/
         setupBusinessDetails();
+       // String toolbarTitle = setupBusinessDetails();
+       // getSupportActionBar().setTitle(toolbarTitle);
 
     }
 
 
-    public void setupBusinessDetails(){
+    public String setupBusinessDetails(){
         Intent intent = getIntent();
         TextView currentText = (TextView) findViewById(R.id.business_name_detail);
+        String businessName = intent.getStringExtra("business_name");
         currentText.setText(intent.getStringExtra("business_name"));
 
         currentText = (TextView) findViewById(R.id.business_category_detail);
@@ -51,5 +54,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         currentText.setText("Segunda a Sexta: 08:00 — 12:00");
 
         /**Must setup the images so they can send an intent for each app**/
+
+        return businessName;
     }
 }

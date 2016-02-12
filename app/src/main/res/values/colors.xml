@@ -5,7 +5,9 @@
     <color name="colorAccent">#D32F2F</color>
     <color name="colorDescription">#000000</color>
     <color name="primary_text_material_light">#931007</color>
-    <color name="secondary_text_material_light">#7f7f7f</color>
+    <color name="secondary_text_material_light">#941100</color>
+
+    <color name="textview_business_description">#7f7f7f</color>
 
     <color name="textview_category">#941100</color>
     <color name="textview_category_text">#941100</color>

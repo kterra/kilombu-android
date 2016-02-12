@@ -57,7 +57,7 @@
             android:layout_below="@id/business_name"
             android:textSize="16sp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/secondary_text_material_light"
+            android:textColor="@color/textview_business_description"
             />
 
 
@@ -80,17 +80,17 @@
 
             />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/see_details"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_below="@id/business_description"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_open_in_new_black_12dp"
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/see_details"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_below="@id/business_description"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:src="@drawable/ic_navigate_next_black_24dp"-->
 
-            />
+            <!--/>-->
 
     </RelativeLayout>
 
