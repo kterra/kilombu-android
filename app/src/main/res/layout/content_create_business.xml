@@ -12,4 +12,53 @@
     tools:context="kilombu.kilombuapp.CreateBusinessActivity"
     tools:showIn="@layout/activity_create_business">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_name"
+        android:hint="@string/hint_name"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_description"
+        android:hint="@string/hint_description"
+        android:layout_below="@id/form_name"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_city"
+        android:hint="@string/hint_city"
+        android:layout_below="@id/form_description"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_address"
+        android:hint="@string/hint_address"
+        android:layout_below="@id/form_city"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_business_hours"
+        android:hint="@string/hint_business_hours"
+        android:layout_below="@id/form_address"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_email"
+        android:hint="@string/hint_email"
+        android:layout_below="@id/form_business_hours"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_facebook"
+        android:hint="@string/hint_facebook"
+        android:layout_below="@id/form_email"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_instagram"
+        android:hint="@string/hint_instagram"
+        android:layout_below="@id/form_facebook"/>
+
+
 </RelativeLayout>

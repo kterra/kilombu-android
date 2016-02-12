@@ -1,16 +1,31 @@
 <resources>
     <string name="app_name">Kilombu</string>
 
+    <string name="firebase_url">https://brilliant-torch-2357.firebaseio.com</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Configurações</string>
     <string name="action_options">Opções</string>
+    <string name="action_login">Login</string>
+    <string name="action_sign_up">Cadastrar</string>
 
     <string name="profile">Perfil</string>
     <string name="businessProfile">Negócio</string>
     <string name="see_details">Ver mais</string>
     <string name="create_new_business">Criar novo negócio</string>
+
+    <!-- Business Form Data -->
+    <string name="hint_name">Nome do negócio/serviço</string>
+    <string name="hint_description">Breve descrição</string>
+    <string name="hint_phone_number">Telefone Comercial</string>
+    <string name="hint_email">E-mail Comercial</string>
+    <string name="hint_city">Cidade</string>
+    <string name="hint_address">Endereço</string>
+    <string name="hint_business_hours">Horário de Funcionamento</string>
+    <string name="hint_facebook">Página no Facebook</string>
+    <string name="hint_instagram">Página no Instagram</string>
 
 
     <string name="large_text">
@@ -104,4 +119,36 @@
     </string>
     <string name="title_activity_business_details">BusinessDetailsActivity</string>
     <string name="title_activity_create_business">CreateBusinessActivity</string>
+
+
+    <string name="prompt_name">Nome</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_phone">Celular</string>
+    <string name="prompt_password">  Digite uma senha</string>
+    <string name="prompt_password_again">Repita a senha</string>
+    <string name="prompt_contact_username">Email do seu contato</string>
+    <string name="login_email">Digite seu email</string>
+    <string name="login_password">Digite sua senha</string>
+
+    <string name="error_intro">"Por favor, "</string>
+    <string name="error_blank_username">digite seu nome</string>
+    <string name="error_blank_phone">digite seu telefone</string>
+    <string name="error_blank_email">digite seu email</string>
+    <string name="error_blank_password">digite uma senha</string>
+    <string name="error_mismatched_passwords">digite a MESMA senha 2 vezes</string>
+    <string name="error_join">", e "</string>
+    <string name="error_end">.</string>
+    <string name="title_activity_dispatch">DispatchActivity</string>
+    <string name="progress_signup">Um momento, por favor</string>
+    <string name="title_activity_opening">OpeningActivity</string>
+
+
+    <string name="signup">Cadastrar</string>
+    <string name="signin">Logar</string>
+    <string name="logout">Logout</string>
+    <string name="forgot_password"><u>Esqueceu sua senha?</u></string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_signup">SignUpActivity</string>
+    <string name="prompt_header">Bem Vindo! Vamos começar! </string>
+
 </resources>

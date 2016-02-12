@@ -5,15 +5,29 @@ package kilombu.kilombuapp;
  */
 public class User {
 
-    String name;
-    String comment;
-    String age;
-    int photoId;
+    private String name;
+    private String email;
+    private String city;
 
-    User(String name, String age, int photoId, String comment) {
+    User(){
+
+    }
+
+    User(String name, String email, String city) {
         this.name = name;
-        this.age = age;
-        this.photoId = photoId;
-        this.comment = comment;
+        this.email = email;
+        this.city = city;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

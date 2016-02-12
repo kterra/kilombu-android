@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity
     private void initializeData(){
         businesses = new ArrayList<>();
 
-
-
         businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
                 getString(R.string.cat1), getString(R.string.descricao1), "Rio de janeiro",
                 getString(R.string.end1), "Segunda a Sexta: 08:00 - 12:00", "(21) 23456-7890",
@@ -120,6 +118,18 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, GalleryActivity.class);
             startActivity(intent);
         }
+
+        if (id == R.id.action_login) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        if (id == R.id.action_sign_up){
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
+        }
+
+
 
         return super.onOptionsItemSelected(item);
     }
