@@ -44,6 +44,7 @@ public class SignUpActivity extends Activity {
 
         if(validateData(name, email, password, passwordAgain)){
             newuser = new User(name, email, null);
+            Log.d(TAG, "Validou!!!");
         }
 
         // Set up a progress dialog
@@ -64,6 +65,9 @@ public class SignUpActivity extends Activity {
                         newuserRef.setValue(newuser);
                         Toast.makeText(SignUpActivity.this, result.get("uid").toString(), Toast.LENGTH_LONG).show();
                         dialog.hide();
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -111,6 +115,6 @@ public class SignUpActivity extends Activity {
         if (validationError) {
             Toast.makeText(SignUpActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG).show();
         }
-        return validationError;
+        return !validationError;
     }
 }

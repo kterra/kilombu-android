@@ -42,26 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         EditText emailEditText = (EditText) findViewById(R.id.login_email);
         EditText passwordEditText = (EditText) findViewById(R.id.login_password);
 
-        //createUser(emailEditText.getText().toString(), passwordEditText.getText().toString());
         loginWithPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
 
-        /*Login Logic
-        ParseUser.logInInBackground(emailEditText.getText().toString(),
-                passwordEditText.getText().toString(), new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                dialog.dismiss();
-                if (e != null) {
-                    // Show the error message
-                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                } else {
-                    // Start an intent for the dispatch activity
-                    Intent intent = new Intent(LoginActivity.this, DispatchActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-            }
-        });*/
     }
 
     /**
@@ -77,9 +59,12 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onAuthenticated(AuthData authData) {
-            dialog.hide();
             Log.i(TAG, provider + " auth successful");
             Toast.makeText(LoginActivity.this, authData.getUid().toString(), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            dialog.hide();
 
         }
 
@@ -89,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, firebaseError.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
 
 
     public void loginWithPassword(String username, String password) {

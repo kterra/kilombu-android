@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Business Form Data -->
+    <string name="hint_name">Nome do negócio/serviço</string>
+    <string name="hint_description">Breve descrição</string>
+    <string name="hint_phone_number">Telefone Comercial</string>
+    <string name="hint_email">E-mail Comercial</string>
+    <string name="hint_city">Cidade</string>
+    <string name="hint_address">Endereço</string>
+    <string name="hint_business_hours">Horário de Funcionamento</string>
+    <string name="hint_facebook">Página no Facebook</string>
+    <string name="hint_instagram">Página no Instagram</string>
+
+    <string name="prompt_name">Nome</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_phone">Celular</string>
+    <string name="prompt_password">  Digite uma senha</string>
+    <string name="prompt_password_again">Repita a senha</string>
+    <string name="prompt_contact_username">Email do seu contato</string>
+    <string name="login_email">Digite seu email</string>
+    <string name="login_password">Digite sua senha</string>
+
+</resources>
