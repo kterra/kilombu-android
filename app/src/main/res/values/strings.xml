@@ -16,7 +16,10 @@
     <string name="businessProfile">Negócio</string>
     <string name="see_details">Ver mais</string>
     <string name="create_new_business">Criar novo negócio</string>
+    <string name="line">__________________________________________________</string>
 
+    <string name="business_working_hours_card_tilte">Horário de Funcionamento</string>
+    <string name="business_address_card_tilte">Endereço</string>
 
     <string name="title_activity_business_details">BusinessDetailsActivity</string>
     <string name="title_activity_create_business">CreateBusinessActivity</string>
@@ -24,7 +27,6 @@
     <string name="title_activity_signup">SignUpActivity</string>
     <string name="title_activity_dispatch">DispatchActivity</string>
     <string name="title_activity_opening">OpeningActivity</string>
-
 
 
     <string name="error_intro">"Por favor, "</string>

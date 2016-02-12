@@ -8,64 +8,185 @@
     tools:context="kilombu.kilombuapp.BusinessDetailsActivity"
     tools:showIn="@layout/activity_business_details">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/rv"
-        >
-    </android.support.v7.widget.RecyclerView>
+
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        
-        <TextView
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/business_name_detail"/>
+            android:id="@+id/cv"
+            card_view:cardUseCompatPadding="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                >
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_category_detail"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_description_detail"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_address"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_working_hours"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/business_phone_number"/>
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/business_facebook"
-            android:src="@drawable/image_placeholder"/>
+            android:layout_alignParentTop="true"
+            android:id="@+id/business_name_detail"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorDescription"/>
 
-        <ImageButton
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/business_description_detail"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/business_instagram"
-            android:src="@drawable/image_placeholder"/>
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:id="@+id/business_working_hours_title"
+            android:textColor="@color/business_details_card_title_color"
+            android:text="@string/business_working_hours_card_tilte"/>
 
-        <ImageButton
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv2"
+            card_view:cardUseCompatPadding="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical"
+                >
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/business_working_hours_card_title"-->
+                    <!--android:textColor="@color/business_details_card_title_color"-->
+                    <!--android:text="@string/business_working_hours_card_tilte"/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/line"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginTop="-12dp"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginRight="16dp"-->
+                    <!--android:fontFamily="sans-serif-condensed"-->
+                    <!--android:text="@string/line"-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:textColor="@color/business_details_card_title_color"-->
+                    <!--/>-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/business_working_hours"
+                    android:textColor="@color/colorDescription"/>
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/business_email"
-            android:src="@drawable/image_placeholder"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:id="@+id/business_address_card_tilte"
+            android:textColor="@color/business_details_card_title_color"
+            android:text="@string/business_address_card_tilte"/>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv3"
+            card_view:cardUseCompatPadding="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical"
+                >
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/line2"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginTop="-12dp"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginRight="16dp"-->
+                    <!--android:fontFamily="sans-serif-condensed"-->
+                    <!--android:text="@string/line"-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:textColor="@color/business_details_card_title_color"-->
+                    <!--/>-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/business_address"
+                    android:textColor="@color/colorDescription"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/business_phone_number"
+                    android:textColor="@color/colorDescription"/>
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
+
+
 
         
         
