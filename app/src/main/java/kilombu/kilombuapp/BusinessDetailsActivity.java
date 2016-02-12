@@ -19,6 +19,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_business_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -41,14 +42,15 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         String businessName = intent.getStringExtra("business_name");
         currentText.setText(intent.getStringExtra("business_name"));
 
-        currentText = (TextView) findViewById(R.id.business_category_detail);
-        currentText.setText(intent.getStringExtra("business_category"));
 
         currentText = (TextView) findViewById(R.id.business_description_detail);
         currentText.setText(intent.getStringExtra("business_description"));
 
         currentText = (TextView) findViewById(R.id.business_address);
-        currentText.setText(getString(R.string.end1));
+        currentText.setText("Rua das Coves, 145");
+
+        currentText = (TextView) findViewById(R.id.business_phone_number);
+        currentText.setText("Tel: 021 3234-5678");
 
         currentText = (TextView) findViewById(R.id.business_working_hours);
         currentText.setText("Segunda a Sexta: 08:00 — 12:00");

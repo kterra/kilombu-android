@@ -14,7 +14,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="10dp"
         >
 
        <!-- <ImageView
@@ -27,20 +30,34 @@
             /> -->
 
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:id="@+id/business_name"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="26dp"
             android:fontFamily="sans-serif-condensed"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/colorDescription"
+
+            />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="-12dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/business_name"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/line"
+            android:textSize="15sp"
             android:textColor="@color/colorDescription"
 
             />
@@ -52,9 +69,9 @@
             android:id="@+id/business_description"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="16dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="26dp"
             android:layout_marginBottom="5dp"
-            android:layout_below="@id/business_name"
+            android:layout_below="@id/line"
             android:textSize="16sp"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/textview_business_description"
@@ -67,7 +84,7 @@
             android:id="@+id/business_category"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/business_description"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="26dp"
             android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
