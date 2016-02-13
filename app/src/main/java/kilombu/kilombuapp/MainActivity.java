@@ -98,11 +98,8 @@ public class MainActivity extends AppCompatActivity
 
                                 TextView username = (TextView) findViewById(R.id.user_name_header);
                                 username.setText(currentUser.getName());
-                                Log.d("nome", currentUser.getName());
-                                username.setVisibility(View.VISIBLE);
                                 TextView usermail = (TextView) findViewById(R.id.user_mail_header);
                                 usermail.setText(currentUser.getEmail());
-                                usermail.setVisibility(View.VISIBLE);
                             }else{
                                 //TODO: what if user data is not found?
                             }
@@ -222,11 +219,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, CreateBusinessActivity.class);
             startActivity(intent);
 
-        } /*else if (id == R.id.nav_share) {
+        } else if (id == R.id.business_menu) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.settings_menu) {
 
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
