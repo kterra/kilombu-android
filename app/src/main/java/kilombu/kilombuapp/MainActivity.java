@@ -3,6 +3,7 @@ package kilombu.kilombuapp;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.ui.FirebaseRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +34,11 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase appRef;
-    private List<Business> businesses;
+    //private List<Business> businesses;
     private RecyclerView adsView;
     User currentUser;
+    private FirebaseRecyclerAdapter<Business, BusinessViewHolder> firebaseAdsAdapter;
+    private Firebase businessRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,8 @@ public class MainActivity extends AppCompatActivity
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
 
-        initializeData();
+        businessRef = new Firebase(getString(R.string.firebase_url)).child("business");
+        //initializeData();
         initializeAdapter();
 
 
@@ -64,32 +69,30 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
+        setUpCustomDrawer();
+
+    }
+
+    private void setUpCustomDrawer(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         if( appRef.getAuth() != null){
             String userId = appRef.getAuth().getUid();
-
             navigationView.getMenu().clear(); //clear old inflated items.
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
 
-
             //set nav header text
             Query getUser = appRef.child("users").orderByKey().equalTo(userId);
-            getUser.addListenerForSingleValueEvent(
-                    new ValueEventListener() {
+            getUser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.d("foo", "fooosjos");
                             if (dataSnapshot.exists()) {
-                                Log.d("bar", "fooosjos");
                                 Log.d("auth", Long.toString(dataSnapshot.getChildrenCount()));
                                 currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
 
-
-//
                                 TextView username = (TextView) findViewById(R.id.user_name_header);
                                 username.setText(currentUser.getName());
                                 Log.d("nome", currentUser.getName());
@@ -97,8 +100,8 @@ public class MainActivity extends AppCompatActivity
                                 TextView usermail = (TextView) findViewById(R.id.user_mail_header);
                                 usermail.setText(currentUser.getEmail());
                                 usermail.setVisibility(View.VISIBLE);
-
-
+                            }else{
+                                //TODO: what if user data is not found?
                             }
                         }
 
@@ -109,29 +112,37 @@ public class MainActivity extends AppCompatActivity
                     }
             );
         }
-
-
-    }
-
-    private void initializeData(){
-        businesses = new ArrayList<>();
-
-        businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
-                getString(R.string.cat1), getString(R.string.descricao1)));
-        businesses.add(new Business(getString(R.string.nome2), null, "098687333/78",
-                getString(R.string.cat2), getString(R.string.descricao2)));
-        businesses.add(new Business(getString(R.string.nome3), null, "098687333/78",
-                getString(R.string.cat3), getString(R.string.descricao3)));
-        businesses.add(new Business(getString(R.string.nome4), null, "098687333/78",
-                getString(R.string.cat4), getString(R.string.descricao4)));
-        businesses.add(new Business(getString(R.string.nome5), null, "098687333/78",
-                getString(R.string.cat5), getString(R.string.descricao5)));
-
     }
 
     private void initializeAdapter(){
-        AdsAdapter adapter = new AdsAdapter(this, businesses);
-        adsView.setAdapter(adapter);
+        Query businessQuery = businessRef.orderByKey().limitToFirst(15);
+        firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
+                R.layout.item, BusinessViewHolder.class, businessQuery) {
+            @Override
+            protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
+                businessViewHolder.businessName.setText(business.getName());
+                businessViewHolder.shortDescription.setText(business.getDescription());
+
+                businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
+
+                        intent.putExtra("business_name", business.getName());
+                        intent.putExtra("business_category", business.getCategory());
+                        intent.putExtra("business_description", business.getDescription());
+
+                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
+                        String itemKey = itemRef.getKey();
+                        intent.putExtra("business_key", itemKey);
+
+                        MainActivity.this.startActivity(intent);
+
+                    }
+                });
+            }
+        };
+        adsView.setAdapter(firebaseAdsAdapter);
     }
 
     @Override
@@ -219,5 +230,36 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /*private void initializeData(){
+        businesses = new ArrayList<>();
+
+        businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
+                getString(R.string.cat1), getString(R.string.descricao1)));
+        businesses.add(new Business(getString(R.string.nome2), null, "098687333/78",
+                getString(R.string.cat2), getString(R.string.descricao2)));
+        businesses.add(new Business(getString(R.string.nome3), null, "098687333/78",
+                getString(R.string.cat3), getString(R.string.descricao3)));
+        businesses.add(new Business(getString(R.string.nome4), null, "098687333/78",
+                getString(R.string.cat4), getString(R.string.descricao4)));
+        businesses.add(new Business(getString(R.string.nome5), null, "098687333/78",
+                getString(R.string.cat5), getString(R.string.descricao5)));
+
+    }*/
+
+    public static class BusinessViewHolder extends RecyclerView.ViewHolder {
+
+        CardView cv;
+        TextView businessName;
+        TextView shortDescription;
+
+        public BusinessViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cv);
+            businessName = (TextView)itemView.findViewById(R.id.business_name);
+            shortDescription = (TextView)itemView.findViewById(R.id.business_description);
+
+        }
     }
 }
