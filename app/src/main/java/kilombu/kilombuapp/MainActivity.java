@@ -170,11 +170,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
         }
 
-        /*if (id == R.id.action_options) {
+        if (id == R.id.action_options) {
             Intent intent = new Intent(this, GalleryActivity.class);
             startActivity(intent);
         }
