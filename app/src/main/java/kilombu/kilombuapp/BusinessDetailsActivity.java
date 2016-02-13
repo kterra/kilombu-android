@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -17,6 +18,9 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
 
@@ -36,46 +40,73 @@ public class BusinessDetailsActivity extends AppCompatActivity {
     public String setupBusinessDetails(){
         Intent intent = getIntent();
         TextView currentText = (TextView) findViewById(R.id.business_name_detail);
-        String businessName = intent.getStringExtra("business_name");
         currentText.setText(intent.getStringExtra("business_name"));
+        currentText = (TextView) findViewById(R.id.business_description_detail);
+        currentText.setText(intent.getStringExtra("business_description"));
 
         String businessKey = intent.getStringExtra("business_key");
-        Log.d(TAG, businessKey);
-
-        Query detailsQuery = detailsRef.orderByKey().equalTo(businessKey);
+        Query detailsQuery = detailsRef.orderByKey().equalTo(businessKey).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     BusinessDetails businessDetails = dataSnapshot.getChildren().iterator().
                             next().getValue(BusinessDetails.class);
-                    TextView currentText = (TextView) findViewById(R.id.business_working_hours);
-                    currentText.setText(businessDetails.getFacebookPage());
+                    //TODO: configure details cell
+                    TextView currentText;
+
+                    if (businessDetails.getStores() != null){
+                        Map<String, Store> stores = businessDetails.getStores();
+                        for (Store store : stores.values()){
+                            //TODO: deal with many stores and phone number
+                            currentText = (TextView) findViewById(R.id.business_address);
+                            currentText.setText(store.getAddress().toString());
+
+                            currentText = (TextView) findViewById(R.id.business_working_hours);
+                            currentText.setText(store.getBusinessHours());
+
+                        }
+                    }
+
+                    if (businessDetails.getSACNumber() != null &&
+                            !businessDetails.getSACNumber().isEmpty()){
+                        currentText = (TextView) findViewById(R.id.business_phone_number);
+                        currentText.setText("Tel: " + businessDetails.getSACNumber());
+                    }
+
+                    /**TODO: Must setup the images so they can send an intent for each app**/
+                    if (businessDetails.getEmail() != null &&
+                            !businessDetails.getEmail().isEmpty()){
+                        //TODO: put email reference
+                    }
+
+                    if (businessDetails.getFacebookPage() != null &&
+                            !businessDetails.getFacebookPage().isEmpty()){
+                        //TODO: put facebook logo referencing facebook page
+                    }
+
+                    if (businessDetails.getInstagramPage() != ""){
+                        //TODO: put instagram logo referencing instagram page
+                    }
+
+                    if (businessDetails.getWebsite() != null &&
+                            !businessDetails.getWebsite().isEmpty()){
+                        //TODO: put website reference
+                    }
+
                 }
 
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                Toast.makeText(BusinessDetailsActivity.this,
+                        "An error ocureed during details retrieval", Toast.LENGTH_LONG);
             }
         });
 
 
-        currentText = (TextView) findViewById(R.id.business_description_detail);
-        currentText.setText(intent.getStringExtra("business_description"));
 
-        currentText = (TextView) findViewById(R.id.business_address);
-        currentText.setText("Rua das Coves, 145");
-
-        currentText = (TextView) findViewById(R.id.business_phone_number);
-        currentText.setText("Tel: 021 3234-5678");
-
-        //currentText = (TextView) findViewById(R.id.business_working_hours);
-        //currentText.setText("Segunda a Sexta: 08:00 — 12:00");
-
-        /**Must setup the images so they can send an intent for each app**/
-
-        return businessName;
+        return businessKey;
     }
 }

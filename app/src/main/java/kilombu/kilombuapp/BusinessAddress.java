@@ -40,4 +40,17 @@ public class BusinessAddress {
     public String getComplement() {
         return complement;
     }
+
+
+    @Override
+    public String toString(){
+        String representation = "";
+        if (street != "" && street != null)
+            representation += street;
+        if (district != null && !district.isEmpty())
+            representation += ", " + district;
+        if (city != null && !city.isEmpty())
+            representation += ", " + city;
+        return representation;
+    }
 }

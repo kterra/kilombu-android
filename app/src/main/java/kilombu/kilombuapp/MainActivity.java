@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase appRef;
+    private final int adsPerPage = 10;
     //private List<Business> businesses;
     private RecyclerView adsView;
     User currentUser;
@@ -45,23 +46,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("teste","Hello!");
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-        adsView =(RecyclerView)findViewById(R.id.rv);
-
         LinearLayoutManager llm = new LinearLayoutManager(this);
+        adsView =(RecyclerView)findViewById(R.id.rv);
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
 
         businessRef = new Firebase(getString(R.string.firebase_url)).child("business");
-        //initializeData();
-        initializeAdapter();
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,11 +63,20 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
         appRef = new Firebase(getString(R.string.firebase_url));
-
         setUpCustomDrawer();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializeAdapter();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAdsAdapter.cleanup();
     }
 
     private void setUpCustomDrawer(){
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeAdapter(){
-        Query businessQuery = businessRef.orderByKey().limitToFirst(15);
+        Query businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
                 R.layout.item, BusinessViewHolder.class, businessQuery) {
             @Override
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
-        if (id == R.id.action_options) {
+        /*if (id == R.id.action_options) {
             Intent intent = new Intent(this, GalleryActivity.class);
             startActivity(intent);
         }
@@ -192,9 +195,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_create_business){
             Intent intent = new Intent(this, CreateBusinessActivity.class);
             startActivity(intent);
-        }
-
-
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
