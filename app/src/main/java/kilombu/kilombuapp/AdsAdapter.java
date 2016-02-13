@@ -40,7 +40,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
                     Intent intent = new Intent(AdsAdapter.context, BusinessDetailsActivity.class);
 
                     intent.putExtra("business_name", businessName.getText());
-                    intent.putExtra("business_category", businessCategory.getText());
+                   // intent.putExtra("business_category", businessCategory.getText());
                     intent.putExtra("business_description", shortDescription.getText());
                     AdsAdapter.context.startActivity(intent);
 
