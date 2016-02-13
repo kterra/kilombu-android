@@ -7,7 +7,6 @@ public class User {
 
     private String name;
     private String email;
-    private String city;
 
     User(){
 
@@ -16,7 +15,7 @@ public class User {
     User(String name, String email, String city) {
         this.name = name;
         this.email = email;
-        this.city = city;
+
     }
 
     public String getName() {
@@ -27,7 +26,5 @@ public class User {
         return email;
     }
 
-    public String getCity() {
-        return city;
-    }
+
 }
