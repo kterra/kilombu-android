@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         adsView.setHasFixedSize(true);
 
         businessRef = new Firebase(getString(R.string.firebase_url)).child("business");
+        initializeAdapter();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,12 +71,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        initializeAdapter();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         firebaseAdsAdapter.cleanup();
     }
 
