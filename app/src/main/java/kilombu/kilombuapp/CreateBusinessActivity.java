@@ -67,7 +67,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
             Store store = new Store(address, phoneNumber, businessHours);
 
             String admin = appRef.getAuth().getUid();
-            Business business = new Business(name, admin, "0000000000/00", category, description);
+            Business business = new Business(name, admin, category, description, "0000000000/00");
 
 
             Firebase newBusinessRef = businessRef.push();

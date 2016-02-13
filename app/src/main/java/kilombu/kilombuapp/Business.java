@@ -1,44 +1,32 @@
 package kilombu.kilombuapp;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 /**
  * Created by hallpaz on 09/02/2016.
  */
 public class Business {
 
-    private String name;
     private String admin;
     private String category;
     private String description;
-
-    private String CNPJ;
+    private String name;
+    private String corporateNumber;
 
     public Business(){
     }
 
-    public Business(String name, String admin, String CNPJ,
-                    String category, String description){
+    public Business(String name, String admin, String category, String description, String corporateNumber){
 
         this.name = name;
         this.admin = admin;
         this.category = category;
         this.description = description;
 
-        this.CNPJ = CNPJ;
+        this.corporateNumber = corporateNumber;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public String getAdmin() {
         return admin;
-    }
-
-    public String getCNPJ() {
-        return CNPJ;
     }
 
     public String getCategory() {
@@ -49,4 +37,12 @@ public class Business {
         return description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCorporateNumber() {
+        return corporateNumber;
+    }
 }
+
