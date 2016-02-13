@@ -54,7 +54,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                             next().getValue(BusinessDetails.class);
                     //TODO: configure details cell
                     TextView currentText;
-
                     if (businessDetails.getStores() != null){
                         Map<String, Store> stores = businessDetails.getStores();
                         for (Store store : stores.values()){
@@ -65,9 +64,12 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                             currentText = (TextView) findViewById(R.id.business_working_hours);
                             currentText.setText(store.getBusinessHours());
 
+                            //TODO: deal with store phone
+
                         }
                     }
 
+                    //TODO: deal with SAC phone
                     if (businessDetails.getSACNumber() != null &&
                             !businessDetails.getSACNumber().isEmpty()){
                         currentText = (TextView) findViewById(R.id.business_phone_number);
