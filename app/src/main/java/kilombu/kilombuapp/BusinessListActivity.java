@@ -64,7 +64,7 @@ public class BusinessListActivity extends AppCompatActivity
         firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
                 R.layout.item, BusinessViewHolder.class, businessQuery) {
             @Override
-            protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, int position) {
+            protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
                 businessViewHolder.businessName.setText(business.getName());
                 businessViewHolder.businessCategory.setText(business.getCategory());
                 businessViewHolder.shortDescription.setText(business.getDescription());
@@ -77,6 +77,11 @@ public class BusinessListActivity extends AppCompatActivity
                         intent.putExtra("business_name", business.getName());
                         intent.putExtra("business_category", business.getCategory());
                         intent.putExtra("business_description", business.getDescription());
+
+                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
+                        String itemKey = itemRef.getKey();
+                        intent.putExtra("business_key", itemKey);
+
                         BusinessListActivity.this.startActivity(intent);
 
                     }
