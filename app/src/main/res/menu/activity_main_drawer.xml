@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Categorias">
-        <menu>
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Moda" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Beleza" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Tecnologia" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Construção" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
 
-    <!--<item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>-->
+        <item
+            android:id="@+id/menu_signin"
+            android:icon="@drawable/ic_input_black_24dp"
+            android:title="@string/signin_menu" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/menu_signup"
+            android:icon="@drawable/ic_public_black_24dp"
+            android:title="@string/signup_menu" />
+    </group>
+
+
+
+    <!--<item android:title="Categorias">-->
+        <!--<menu>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_camera"-->
+            <!--android:icon="@drawable/ic_menu_camera"-->
+            <!--android:title="Moda" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_gallery"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Beleza" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_slideshow"-->
+            <!--android:icon="@drawable/ic_menu_slideshow"-->
+            <!--android:title="Tecnologia" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Construção" />-->
+        <!--</menu>-->
+    <!--</item>-->
+
+
 
 </menu>

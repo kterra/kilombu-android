@@ -1,5 +1,6 @@
 package kilombu.kilombuapp;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +11,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +31,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private Firebase appRef;
     private List<Business> businesses;
     private RecyclerView adsView;
-
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d("teste","Hello!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -53,6 +66,51 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        appRef = new Firebase(getString(R.string.firebase_url));
+
+        if( appRef.getAuth() != null){
+            String userId = appRef.getAuth().getUid();
+
+            navigationView.getMenu().clear(); //clear old inflated items.
+            navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
+
+
+            //set nav header text
+            Query getUser = appRef.child("users").orderByKey().equalTo(userId);
+            getUser.addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.d("foo", "fooosjos");
+                            if (dataSnapshot.exists()) {
+                                Log.d("bar", "fooosjos");
+                                Log.d("auth", Long.toString(dataSnapshot.getChildrenCount()));
+                                currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
+
+
+//
+                                TextView username = (TextView) findViewById(R.id.user_name_header);
+                                username.setText(currentUser.getName());
+                                Log.d("nome", currentUser.getName());
+                                username.setVisibility(View.VISIBLE);
+                                TextView usermail = (TextView) findViewById(R.id.user_mail_header);
+                                usermail.setText(currentUser.getEmail());
+                                usermail.setVisibility(View.VISIBLE);
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    }
+            );
+        }
+
+
     }
 
     private void initializeData(){
@@ -136,13 +194,21 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.menu_signin) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_signup) {
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.signout_menu) {
+            appRef.unauth();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.business_create_menu) {
+            Intent intent = new Intent(this, CreateBusinessActivity.class);
+            startActivity(intent);
 
         } /*else if (id == R.id.nav_share) {
 

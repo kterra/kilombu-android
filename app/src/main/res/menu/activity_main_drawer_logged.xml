@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/business_menu"
+            android:icon="@drawable/ic_location_city_black_24dp"
+            android:title="@string/business_menu" />
+        <item
+            android:id="@+id/business_create_menu"
+            android:icon="@drawable/ic_queue_black_24dp"
+            android:title="@string/business_create_menu" />
+
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/settings_menu"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings_menu" />
+
+        <item
+            android:id="@+id/signout_menu"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="@string/signout_menu" />
+    </group>
+
+
+
+</menu>

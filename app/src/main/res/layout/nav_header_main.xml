@@ -12,21 +12,23 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
+        android:id="@+id/user_name_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:fontFamily="sans-serif-condensed"
-        android:text="Fulana de Tal"
+        android:text=""
         android:textSize="22sp"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/user_mail_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"
+        android:text=""
         android:textSize="18sp"
-        android:text="android.studio@android.com" />
+         />
 
 </LinearLayout>

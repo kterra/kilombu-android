@@ -10,9 +10,177 @@
     tools:context="kilombu.kilombuapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <HorizontalScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Assistência"
+                android:padding="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Beleza"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Bem-estar"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Cultura"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Construção Civil"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Consultoria"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Educação"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Esportes"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Lazer"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Meio Ambiente"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Moda"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Publicidade"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Recursos Humanos"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Seguros/Consórcios"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Saúde"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="Software/TI"
+
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"/>
+
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
     <android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_below="@id/scrollview"
         android:id="@+id/rv"
         >
     </android.support.v7.widget.RecyclerView>
