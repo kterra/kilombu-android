@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="Assistência"
+                android:text="@string/category_assistance"
                 android:padding="10dp"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
@@ -39,7 +39,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Beleza"
+                android:text="@string/category_beauty"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"
+                android:onClick="changeCategory"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="@string/category_welfare"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -48,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Bem-estar"
+                android:text="@string/category_culture"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -57,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Cultura"
+                android:text="@string/category_building"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -66,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Construção Civil"
+                android:text="@string/category_consulting"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -75,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Consultoria"
+                android:text="@string/category_education"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -84,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Educação"
+                android:text="@string/category_sport"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -93,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Esportes"
+                android:text="@string/category_leisure"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -102,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Lazer"
+                android:text="@string/category_environment"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -111,16 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Meio Ambiente"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="Moda"
+                android:text="@string/category_fashion"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -129,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Publicidade"
+                android:text="@string/category_advertising"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -138,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Recursos Humanos"
+                android:text="@string/category_human_resources"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -148,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Seguros/Consórcios"
+                android:text="@string/category_insurance"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -157,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Saúde"
+                android:text="@string/category_health"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
 
@@ -166,11 +167,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:padding="10dp"
-                android:text="Software/TI"
-
+                android:text="@string/category_software"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"/>
-
 
 
         </LinearLayout>

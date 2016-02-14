@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_assistance">Assistência</string>
+    <string name="category_beauty">Beleza</string>
+    <string name="category_welfare">Bem-Estar</string>
+    <string name="category_culture">Cultura</string>
+    <string name="category_building">Construção Civil</string>
+    <string name="category_consulting">Consultoria</string>
+    <string name="category_education">Educação</string>
+    <string name="category_sport">Esportes</string>
+    <string name="category_leisure">Lazer</string>
+    <string name="category_environment">Meio Ambiente</string>
+    <string name="category_fashion">Moda</string>
+    <string name="category_advertising">Publicidade</string>
+    <string name="category_human_resources">Recursos Humanos</string>
+    <string name="category_insurance">Seguros/Consórcios</string>
+    <string name="category_health">Saúde</string>
+    <string name="category_software">Software/TI</string>
+    <string name="category_all">Todas</string>
+
+    <string-array name="categories">
+        <item>Assistência</item>
+        <item>Beleza</item>
+        <item>Bem-Estar</item>
+        <item>Cultura</item>
+        <item>Construção Civil</item>
+        <item>Educação</item>
+        <item>Esportes</item>
+        <item>Lazer</item>
+        <item>Meio Ambiente</item>
+        <item>Moda</item>
+        <item>Publicidade</item>
+        <item>Recursos Humanos</item>
+        <item>Seguros/Consórcios</item>
+        <item>Saúde</item>
+        <item>Software/TI</item>
+    </string-array>
+</resources>

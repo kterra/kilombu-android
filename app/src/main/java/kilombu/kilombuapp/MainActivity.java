@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -35,11 +36,12 @@ public class MainActivity extends AppCompatActivity
 
     private Firebase appRef;
     private final int adsPerPage = 10;
-    //private List<Business> businesses;
+    private String currentCategory;
     private RecyclerView adsView;
     User currentUser;
     private FirebaseRecyclerAdapter<Business, BusinessViewHolder> firebaseAdsAdapter;
     private Firebase businessRef;
+    private Query businessQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
 
+        currentCategory = getString(R.string.category_all);
         businessRef = new Firebase(getString(R.string.firebase_url)).child("business");
         initializeAdapter();
 
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeAdapter(){
-        Query businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
+        businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
                 R.layout.item, BusinessViewHolder.class, businessQuery) {
             @Override
@@ -145,6 +148,44 @@ public class MainActivity extends AppCompatActivity
         adsView.setAdapter(firebaseAdsAdapter);
     }
 
+    //TODO: consider rewriting own adapter
+    public void changeCategory(View button){
+        currentCategory = ((Button) button).getText().toString();
+        Log.d("MAIN", currentCategory);
+        if (currentCategory != getString(R.string.category_all)){
+            businessQuery = businessRef.orderByChild("category").equalTo(currentCategory).limitToFirst(adsPerPage);
+        }else{
+            businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
+        }
+        firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
+                R.layout.item, BusinessViewHolder.class, businessQuery) {
+            @Override
+            protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
+                businessViewHolder.businessName.setText(business.getName());
+                businessViewHolder.shortDescription.setText(business.getDescription());
+
+                businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
+
+                        intent.putExtra("business_name", business.getName());
+                        intent.putExtra("business_category", business.getCategory());
+                        intent.putExtra("business_description", business.getDescription());
+
+                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
+                        String itemKey = itemRef.getKey();
+                        intent.putExtra("business_key", itemKey);
+
+                        MainActivity.this.startActivity(intent);
+
+                    }
+                });
+            }
+        };
+        adsView.swapAdapter(firebaseAdsAdapter, true);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -168,31 +209,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-       /* if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_options) {
-            Intent intent = new Intent(this, GalleryActivity.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.action_login) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.action_sign_up){
-            Intent intent = new Intent(this, SignUpActivity.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.action_create_business){
-            Intent intent = new Intent(this, CreateBusinessActivity.class);
-            startActivity(intent);
-        }*/
 
         return super.onOptionsItemSelected(item);
     }

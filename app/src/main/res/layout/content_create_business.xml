@@ -17,18 +17,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/form_name"
         android:hint="@string/hint_name"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_category"
+        android:layout_below="@id/form_name"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/form_description"
         android:hint="@string/hint_description"
-        android:layout_below="@id/form_name"/>
+        android:layout_below="@id/form_category"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_corporate_number"
+        android:hint="@string/hint_corporate_number"
+        android:layout_below="@id/form_description"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/form_city"
         android:hint="@string/hint_city"
-        android:layout_below="@id/form_description"/>
+        android:layout_below="@id/form_corporate_number"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,6 +82,5 @@
         android:id="@+id/form_instagram"
         android:hint="@string/hint_instagram"
         android:layout_below="@id/form_facebook"/>
-
 
 </RelativeLayout>
