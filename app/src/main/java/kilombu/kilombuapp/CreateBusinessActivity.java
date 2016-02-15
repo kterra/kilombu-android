@@ -25,6 +25,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private Firebase businessRef;
     private Firebase detailsRef;
     private Spinner categorySelection;
+    private Spinner stateSelection;
     private int storeIndex = 1;
 
     @Override
@@ -33,6 +34,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_business);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Cadastro de Negócio");
 
         appRef = new Firebase(getString(R.string.firebase_url));
         businessRef = appRef.child("business");
@@ -44,8 +46,20 @@ public class CreateBusinessActivity extends AppCompatActivity {
                 R.array.categories, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
         // Apply the adapter to the spinner
         categorySelection.setAdapter(adapter);
+
+        stateSelection = (Spinner) findViewById(R.id.state);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapterState = ArrayAdapter.createFromResource(this,
+                R.array.states, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapterState.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        stateSelection.setAdapter(adapterState);
     }
 
     //Floating send button action

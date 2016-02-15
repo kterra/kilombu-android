@@ -27,6 +27,7 @@
     <color name="register_button_stroke_color_focused">#a62c00</color>
 
     <color name="business_details_card_title_color">#a3a3a3</color>
+    <color name="business_create_section_title">#a3a3a3</color>
 
     <color name="other_button_backgrond_color">#a82525</color>
     <color name="other_button_backgrond_color_pressed">#7e1c1c</color>

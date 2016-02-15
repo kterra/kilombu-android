@@ -3,7 +3,7 @@
     <!-- Business Form Data -->
     <string name="hint_name">Nome do negócio/serviço</string>
     <string name="hint_description">Breve descrição</string>
-    <string name="hint_corporate_number">CNPJ</string>
+    <string name="hint_corporate_number">CNPJ (opcional)</string>
     <string name="hint_phone_number">Telefone Comercial</string>
     <string name="hint_email">E-mail Comercial</string>
     <string name="hint_city">Cidade</string>
@@ -21,5 +21,9 @@
     <string name="prompt_contact_username">Email do seu contato</string>
     <string name="login_email">Digite seu email</string>
     <string name="login_password">Digite sua senha</string>
+    <string name="prompt_category">Selecione uma categoria</string>
+    <string name="business_create_main_info_title">Informações Principais</string>
+    <string name="business_create_comercial_address_title">Endereço Comercial</string>
+    <string name="business_create_sac_title"> Atendimento ao Cliente</string>
 
 </resources>

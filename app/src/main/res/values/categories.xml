@@ -19,6 +19,7 @@
     <string name="category_all">Todas</string>
 
     <string-array name="categories">
+        <item>Selecione uma categoria</item>
         <item>Assistência</item>
         <item>Beleza</item>
         <item>Bem-Estar</item>

@@ -23,13 +23,5 @@
 
     <include layout="@layout/content_create_business" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_send_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"
-        android:onClick="sendForm"/>
 
 </android.support.design.widget.CoordinatorLayout>
