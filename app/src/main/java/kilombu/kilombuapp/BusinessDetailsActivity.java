@@ -55,7 +55,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     BusinessDetails businessDetails = dataSnapshot.getChildren().iterator().
                             next().getValue(BusinessDetails.class);
                     //TODO: configure details cell
-                    boolean allEmptyFlag = true;
+
                     TextView currentText;
                     if (businessDetails.getStores() != null){
                         Map<String, Store> stores = businessDetails.getStores();
@@ -67,7 +67,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                             String address = store.getAddress().toString();
 
                             if(address != null && !address.isEmpty()) {
-                                allEmptyFlag = false;
                                 currentText = (TextView) findViewById(R.id.business_address);
                                 currentText.setText(address);
                                 currentText.setVisibility(View.VISIBLE);
@@ -76,7 +75,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
                             String workingHours = store.getBusinessHours();
                             if(workingHours != null && !workingHours.isEmpty()){
-                                allEmptyFlag = false;
                                 currentText = (TextView) findViewById(R.id.business_working_hours);
                                 currentText.setText(workingHours);
                                 currentText.setVisibility(View.VISIBLE);
@@ -85,7 +83,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
                             String phone = store.getPhoneNumber();
                             if(phone != null && !phone.isEmpty()) {
-                                allEmptyFlag = false;
                                 currentText = (TextView) findViewById(R.id.business_phone_number);
                                 currentText.setText("Tel: " + phone);
                                 currentText.setVisibility(View.VISIBLE);
@@ -95,7 +92,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
                         }
                     }else{
-                        Log.d("flag", Boolean.toString(allEmptyFlag));
+                        Log.d("flag", "true");
                         currentText = (TextView) findViewById(R.id.noinfo_message);
                         currentText.setVisibility(View.VISIBLE);
                     }
