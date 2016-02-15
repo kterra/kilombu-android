@@ -109,6 +109,16 @@
                 android:orientation="vertical"
                 >
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/no_info_message"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/noinfo_message"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorDescription"
+                    android:visibility="gone"/>
+
                 <!--<TextView-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content"-->
@@ -333,9 +343,19 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:orientation="vertical"
+                android:id="@+id/comercial_address"
                 >
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/noinfo_message"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/noinfo_message"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorDescription"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -343,7 +363,8 @@
                     android:id="@+id/business_address"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="16sp"
-                    android:textColor="@color/colorDescription"/>
+                    android:textColor="@color/colorDescription"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -351,7 +372,8 @@
                     android:id="@+id/business_phone_number"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/colorDescription"/>
+                    android:textColor="@color/colorDescription"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -360,7 +382,8 @@
                     android:id="@+id/business_working_hours"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
-                    android:fontFamily="sans-serif-condensed"/>
+                    android:fontFamily="sans-serif-condensed"
+                    android:visibility="gone"/>
 
 
 

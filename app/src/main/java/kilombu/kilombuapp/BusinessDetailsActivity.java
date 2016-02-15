@@ -27,6 +27,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
     private Firebase detailsRef;
     private final String TAG = "Business Details";
+    LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,22 +60,51 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         Map<String, Store> stores = businessDetails.getStores();
                         for (Store store : stores.values()){
                             //TODO: deal with many stores and phone number
-                            currentText = (TextView) findViewById(R.id.business_address);
-                            currentText.setText(store.getAddress().toString());
 
-                            currentText = (TextView) findViewById(R.id.business_working_hours);
-                            currentText.setText(store.getBusinessHours());
+                            boolean allEmptyFlag = true;
 
-                            currentText = (TextView) findViewById(R.id.business_phone_number);
-                            currentText.setText("Tel: "+ store.getPhoneNumber());
+                            String address = store.getAddress().toString();
+
+                            if(address != null && !address.isEmpty()) {
+                                allEmptyFlag = false;
+                                currentText = (TextView) findViewById(R.id.business_address);
+                                currentText.setText(address);
+                                currentText.setVisibility(View.VISIBLE);
+
+                            }
+
+                            String workingHours = store.getBusinessHours();
+                            if(workingHours != null && !workingHours.isEmpty()){
+                                allEmptyFlag = false;
+                                currentText = (TextView) findViewById(R.id.business_working_hours);
+                                currentText.setText(workingHours);
+                                currentText.setVisibility(View.VISIBLE);
+                            }
+
+
+                            String phone = store.getPhoneNumber();
+                            if(phone != null && !phone.isEmpty()) {
+                                allEmptyFlag = false;
+                                currentText = (TextView) findViewById(R.id.business_phone_number);
+                                currentText.setText("Tel: " + phone);
+                                currentText.setVisibility(View.VISIBLE);
+                            }
+
+                            if(allEmptyFlag == true){
+                                currentText = (TextView) findViewById(R.id.noinfo_message);
+                                currentText.setVisibility(View.VISIBLE);
+                            }
 
                         }
                     }
 
+                    boolean sacAllEmptyFlag = true;
+
                     if (businessDetails.getSACNumber() != null &&
                             !businessDetails.getSACNumber().isEmpty()){
-                        LinearLayout group1 = (LinearLayout) findViewById(R.id.gruop1);
-                        group1.setVisibility(View.VISIBLE);
+                        sacAllEmptyFlag = false;
+                       linearLayout  = (LinearLayout) findViewById(R.id.gruop1);
+                        linearLayout .setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_sac_phone);
                         currentText.setText(businessDetails.getSACNumber());
                     }
@@ -82,41 +112,54 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     /**TODO: Must setup the images so they can send an intent for each app**/
                     if (businessDetails.getEmail() != null &&
                             !businessDetails.getEmail().isEmpty()){
-                        LinearLayout group1 = (LinearLayout) findViewById(R.id.gruop2);
-                        group1.setVisibility(View.VISIBLE);
+                        sacAllEmptyFlag = false;
+                        linearLayout  = (LinearLayout) findViewById(R.id.gruop2);
+                        linearLayout .setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_email);
                         currentText.setText(businessDetails.getEmail());
                     }
 
                     if (businessDetails.getWebsite() != null &&
                             !businessDetails.getWebsite().isEmpty()){
-                        LinearLayout group1 = (LinearLayout) findViewById(R.id.gruop3);
-                        group1.setVisibility(View.VISIBLE);
+                        sacAllEmptyFlag = false;
+                        linearLayout  = (LinearLayout) findViewById(R.id.gruop3);
+                        linearLayout .setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_website);
                         currentText.setText(businessDetails.getWebsite());
                     }
 
                     if (businessDetails.getWhatsapp() != null &&
                             !businessDetails.getWebsite().isEmpty()){
-                        LinearLayout group1 = (LinearLayout) findViewById(R.id.gruop4);
-                        group1.setVisibility(View.VISIBLE);
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop4);
+                        linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_whatsapp);
                         currentText.setText(businessDetails.getWhatsapp());
                     }
 
                     if (businessDetails.getFacebookPage() != null &&
                             !businessDetails.getFacebookPage().isEmpty()){
-                        LinearLayout group1 = (LinearLayout) findViewById(R.id.gruop5);
-                        group1.setVisibility(View.VISIBLE);
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop5);
+                        linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_facebook);
                         currentText.setText(businessDetails.getFacebookPage());
                     }
 
-                    if (businessDetails.getInstagramPage() != ""){
-                        LinearLayout group1 = (LinearLayout) findViewById(R.id.gruop6);
-                        group1.setVisibility(View.VISIBLE);
+                    if (businessDetails.getInstagramPage() != null &&
+                            !businessDetails.getInstagramPage().isEmpty()){
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop6);
+                        linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_instagram);
                         currentText.setText(businessDetails.getInstagramPage());
+                    }
+                    Log.d("flag_sac_before", Boolean.toString(sacAllEmptyFlag));
+
+                    if (sacAllEmptyFlag == true){
+                        Log.d("flag_sac", Boolean.toString(sacAllEmptyFlag));
+                        currentText = (TextView) findViewById(R.id.no_info_message);
+                        currentText.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -127,7 +170,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         "An error ocureed during details retrieval", Toast.LENGTH_LONG);
             }
         });
-        
+
         return businessKey;
     }
 }

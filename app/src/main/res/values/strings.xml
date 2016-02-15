@@ -54,4 +54,6 @@
     <string name="forgot_password"><u>Esqueceu sua senha?</u></string>
     <string name="prompt_header">Bem Vindo! Vamos começar!</string>
 
+    <string name="noinfo_message">Não há informações disponíves.</string>
+
 </resources>
