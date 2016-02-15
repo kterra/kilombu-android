@@ -81,9 +81,14 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
         String category = "Cultura";
         if (dataIsValid(name, email, city, phoneNumber, description, businessHours, facebook, instagram)){
-
-            BusinessAddress address = new BusinessAddress(city, street, district);
-            Store store = new Store(address, phoneNumber, businessHours);
+            BusinessAddress address = null;
+            Store store = null;
+            if (!city.isEmpty() || !street.isEmpty() || district.isEmpty()){
+                address = new BusinessAddress(city, street, district);
+            }
+            if (address != null || phoneNumber != null || businessHours != null){
+                store = new Store(address, phoneNumber, businessHours);
+            }
 
             String admin = appRef.getAuth().getUid();
             Business business = new Business(name, admin, category, description, corporateNumber);
@@ -94,7 +99,10 @@ public class CreateBusinessActivity extends AppCompatActivity {
             newBusinessRef.setValue(business);
 
             //TODO: check if we need to ask for a unit name
-            Map<String, Store> stores = new HashMap<String, Store>();
+            Map<String, Store> stores = null;
+            if (store != null){
+                stores = new HashMap<String, Store>();
+            }
             //TODO: check if there exists already a unit in the district and add an index
             stores.put(Integer.toString(storeIndex++) + district, store);
             BusinessDetails details = new BusinessDetails(stores, email, facebook,
