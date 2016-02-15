@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,8 @@ import com.firebase.client.FirebaseError;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreateBusinessActivity extends AppCompatActivity {
 
@@ -77,24 +80,14 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
         //TODO: deal with category as droplist or similar
 
-        //String category = categorySelection.getSelectedItem().toString();
+        String category = categorySelection.getSelectedItem().toString();
 
-        String category = "Cultura";
-        if (dataIsValid(name, email, city, phoneNumber, description, businessHours, facebook, instagram)){
-            BusinessAddress address = null;
-            Store store = null;
-            if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
-                Log.d("NEW", "ADDRES NOT NUL");
-                address = new BusinessAddress(city, street, district);
-            }
-            if (address != null || !phoneNumber.isEmpty() || !businessHours.isEmpty()){
-                Log.d("NEW", "SOME NOT NULL");
-                store = new Store(address, phoneNumber, businessHours);
-            }
+        if (dataIsValid(name, description, corporateNumber, email, phoneNumber, businessHours, facebook, instagram)){
+            BusinessAddress address = validateAddress(city, street, district);
+            Store store = validateStore(address, phoneNumber, businessHours);
 
             String admin = appRef.getAuth().getUid();
             Business business = new Business(name, admin, category, description, corporateNumber);
-
 
             Firebase newBusinessRef = businessRef.push();
             String businessId = newBusinessRef.getKey();
@@ -103,7 +96,6 @@ public class CreateBusinessActivity extends AppCompatActivity {
             //TODO: check if we need to ask for a unit name
             Map<String, Store> stores = null;
             if (store != null){
-                Log.d("NEW", "STORE NOT NULL");
                 stores = new HashMap<String, Store>();
                 stores.put(Integer.toString(storeIndex++) + district, store);
             }
@@ -121,24 +113,83 @@ public class CreateBusinessActivity extends AppCompatActivity {
             });*/
 
         }
-        /*Map<String, Store> stores = new HashMap<String, Store>();
-        stores.put(district, store);
-        BusinessDetails businessDetails = new BusinessDetails();
-
-        detailsRef.child("NINJA").setValue(businessDetails);*/
-
     }
 
 
     //TODO: separate validation methods
-    private boolean dataIsValid(String name, String email, String city,
-                                String phoneNumber, String description, String businessHours,
+    private boolean dataIsValid(String name, String description, String corporateNumber,
+                                String email, String phoneNumber, String businessHours,
                                 String facebook, String instagram){
 
+        boolean isValid = true;
+
+        isValid = isValid && validateName(name)
+                && validateDescription(description)
+                && validateCorporateNumber(corporateNumber)
+                && validateEmail(email)
+                && validatePhone(phoneNumber)
+                && validateFacebookPage(facebook)
+                && validateInstagramPage(instagram);
+
+        return isValid;
+    }
+
+    //Obrigatory
+    private boolean validateName(String name){
+        if (name.isEmpty()){
+            //TODO: Visual Feedback for user
+            return false;
+        }
         return true;
     }
 
+    private boolean validateDescription(String description){
+        if (description.isEmpty()){
+            //TODO: Visual Feedback for user
+            return false;
+        }
+        return  true;
+    }
 
+    private boolean validateCorporateNumber(String number){
+        return true;
+    }
 
+    private boolean validatePhone(String phone){
+        //TODO: Check how to validate a phone and give visual feedback
+        return true;
+    }
+
+    private boolean validateEmail(String email){
+        //Very simple email validation. We should not be very concerned about it, because to provide
+        //a valid email is a concern of the advertiser. So, keeping it simple will do
+        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private boolean validateFacebookPage(String page){
+        //TODO: check how to validate a facebook page
+        return true;
+    }
+
+    private boolean validateInstagramPage(String page){
+        //TODO: check how to validate instagram page
+        return true;
+    }
+
+    private BusinessAddress validateAddress(String city, String street, String district){
+        if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
+            return new BusinessAddress(city, street, district);
+        }
+        return null;
+    }
+
+    private Store validateStore(BusinessAddress address, String phone, String hours){
+        if (address != null || !phone.isEmpty() || !hours.isEmpty()){
+            return  new Store(address, phone, hours);
+        }
+        return null;
+    }
 
 }
