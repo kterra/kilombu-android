@@ -55,13 +55,14 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     BusinessDetails businessDetails = dataSnapshot.getChildren().iterator().
                             next().getValue(BusinessDetails.class);
                     //TODO: configure details cell
+                    boolean allEmptyFlag = true;
                     TextView currentText;
                     if (businessDetails.getStores() != null){
                         Map<String, Store> stores = businessDetails.getStores();
                         for (Store store : stores.values()){
                             //TODO: deal with many stores and phone number
 
-                            boolean allEmptyFlag = true;
+
 
                             String address = store.getAddress().toString();
 
@@ -90,14 +91,15 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                                 currentText.setVisibility(View.VISIBLE);
                             }
 
-                            if(allEmptyFlag == true){
-                                currentText = (TextView) findViewById(R.id.noinfo_message);
-                                currentText.setVisibility(View.VISIBLE);
-                            }
+
 
                         }
+                    }else{
+                        Log.d("flag", Boolean.toString(allEmptyFlag));
+                        currentText = (TextView) findViewById(R.id.noinfo_message);
+                        currentText.setVisibility(View.VISIBLE);
                     }
-
+                    
                     boolean sacAllEmptyFlag = true;
 
                     if (businessDetails.getSACNumber() != null &&
