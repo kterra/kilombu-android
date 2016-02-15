@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase appRef;
-    private final int adsPerPage = 10;
+    private final int adsPerPage = 30;
     private String currentCategory;
     private RecyclerView adsView;
     User currentUser;
