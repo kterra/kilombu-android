@@ -206,6 +206,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/form_sac_phone"
+            android:hint="@string/hint_sac_phone"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -214,12 +228,42 @@
         android:fontFamily="sans-serif-condensed"
         android:id="@+id/form_email"
         android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
         />
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/form_website"
+            android:hint="@string/hint_website"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/form_whatsapp"
+            android:hint="@string/hint_whatsapp"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -244,6 +288,7 @@
         android:hint="@string/hint_instagram"
         />
     </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:id="@+id/signup_button_again"
