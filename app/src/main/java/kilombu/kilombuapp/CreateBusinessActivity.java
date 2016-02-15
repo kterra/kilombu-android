@@ -83,10 +83,12 @@ public class CreateBusinessActivity extends AppCompatActivity {
         if (dataIsValid(name, email, city, phoneNumber, description, businessHours, facebook, instagram)){
             BusinessAddress address = null;
             Store store = null;
-            if (!city.isEmpty() || !street.isEmpty() || district.isEmpty()){
+            if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
+                Log.d("NEW", "ADDRES NOT NUL");
                 address = new BusinessAddress(city, street, district);
             }
             if (address != null || !phoneNumber.isEmpty() || !businessHours.isEmpty()){
+                Log.d("NEW", "SOME NOT NULL");
                 store = new Store(address, phoneNumber, businessHours);
             }
 
@@ -101,6 +103,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
             //TODO: check if we need to ask for a unit name
             Map<String, Store> stores = null;
             if (store != null){
+                Log.d("NEW", "STORE NOT NULL");
                 stores = new HashMap<String, Store>();
                 stores.put(Integer.toString(storeIndex++) + district, store);
             }
