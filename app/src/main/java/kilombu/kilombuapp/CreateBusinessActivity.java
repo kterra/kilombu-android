@@ -86,7 +86,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
             if (!city.isEmpty() || !street.isEmpty() || district.isEmpty()){
                 address = new BusinessAddress(city, street, district);
             }
-            if (address != null || phoneNumber != null || businessHours != null){
+            if (address != null || !phoneNumber.isEmpty() || !businessHours.isEmpty()){
                 store = new Store(address, phoneNumber, businessHours);
             }
 
@@ -102,9 +102,9 @@ public class CreateBusinessActivity extends AppCompatActivity {
             Map<String, Store> stores = null;
             if (store != null){
                 stores = new HashMap<String, Store>();
+                stores.put(Integer.toString(storeIndex++) + district, store);
             }
             //TODO: check if there exists already a unit in the district and add an index
-            stores.put(Integer.toString(storeIndex++) + district, store);
             BusinessDetails details = new BusinessDetails(stores, email, facebook,
                     instagram, null, null, null);
 
