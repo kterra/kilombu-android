@@ -43,7 +43,15 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme" />
-        <activity android:name=".CategoriesListActivity"></activity>
+        <activity android:name=".CategoriesListActivity" />
+        <activity
+            android:name=".UserSettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

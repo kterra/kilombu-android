@@ -243,7 +243,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.business_menu) {
 
         } else if (id == R.id.settings_menu) {
-
+            Intent intent = new Intent(this, UserSettingsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
