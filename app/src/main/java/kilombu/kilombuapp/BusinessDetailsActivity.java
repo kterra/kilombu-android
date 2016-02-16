@@ -2,10 +2,7 @@ package kilombu.kilombuapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,9 +15,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
@@ -99,13 +93,13 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     
                     boolean sacAllEmptyFlag = true;
 
-                    if (businessDetails.getSACNumber() != null &&
-                            !businessDetails.getSACNumber().isEmpty()){
+                    if (businessDetails.getSacNumber() != null &&
+                            !businessDetails.getSacNumber().isEmpty()){
                         sacAllEmptyFlag = false;
                        linearLayout  = (LinearLayout) findViewById(R.id.gruop1);
                         linearLayout .setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_sac_phone);
-                        currentText.setText(businessDetails.getSACNumber());
+                        currentText.setText(businessDetails.getSacNumber());
                     }
 
                     /**TODO: Must setup the images so they can send an intent for each app**/

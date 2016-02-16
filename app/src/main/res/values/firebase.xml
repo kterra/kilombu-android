@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_url">https://brilliant-torch-2357.firebaseio.com</string>
+    <string name="child_business">business</string>
+    <string name="child_users">users</string>
+    <string name="child_business_details">BusinessDetails</string>
+    <string name="child_business_statistics">BusinessStatistics</string>
+</resources>

@@ -13,22 +13,23 @@ public class BusinessDetails {
     private String instagramPage;
     private String website;
     private String whatsapp;
-    private String SACNumber;
+    private String sacNumber;
 
 
     public BusinessDetails(){
 
     }
 
-    public BusinessDetails(Map<String, Store> stores, String email, String facebookPage,
-                           String instagramPage, String website, String whatsapp, String SACNumber) {
+    public BusinessDetails(Map<String, Store> stores, String SACNumber, String email, String website,
+                           String whatsapp, String facebookPage, String instagramPage ) {
+
         this.stores = stores;
+        this.sacNumber = SACNumber;
         this.email = email;
-        this.facebookPage = facebookPage;
-        this.instagramPage = instagramPage;
         this.website = website;
         this.whatsapp = whatsapp;
-        this.SACNumber = SACNumber;
+        this.facebookPage = facebookPage;
+        this.instagramPage = instagramPage;
     }
 
     public Map<String, Store> getStores() {
@@ -55,7 +56,7 @@ public class BusinessDetails {
         return whatsapp;
     }
 
-    public String getSACNumber() {
-        return SACNumber;
+    public String getSacNumber() {
+        return sacNumber;
     }
 }

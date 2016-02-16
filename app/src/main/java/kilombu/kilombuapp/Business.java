@@ -10,6 +10,7 @@ public class Business {
     private String description;
     private String name;
     private String corporateNumber;
+    private double rankpoints;
 
     public Business(){
     }
@@ -22,8 +23,8 @@ public class Business {
         this.description = description;
 
         this.corporateNumber = corporateNumber;
+        this.rankpoints = 0.0;
     }
-
 
     public String getAdmin() {
         return admin;
@@ -43,6 +44,10 @@ public class Business {
 
     public String getCorporateNumber() {
         return corporateNumber;
+    }
+
+    public double getRankpoints() {
+        return rankpoints;
     }
 }
 

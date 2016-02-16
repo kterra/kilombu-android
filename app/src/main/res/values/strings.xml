@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Kilombu</string>
 
-    <string name="firebase_url">https://brilliant-torch-2357.firebaseio.com</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -22,7 +20,7 @@
     <string name="business_address_card_tilte">Endereço Comercial</string>
 
     <string name="title_activity_business_details">BusinessDetailsActivity</string>
-    <string name="title_activity_create_business">CreateBusinessActivity</string>
+    <string name="title_activity_create_business">Cadastro de Negócio</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_signup">SignUpActivity</string>
     <string name="title_activity_dispatch">DispatchActivity</string>

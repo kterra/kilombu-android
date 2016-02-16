@@ -15,10 +15,12 @@ public class BusinessAddress {
 
     }
 
-    public BusinessAddress(String city, String district, String street) {
-        this.city = city;
-        this.district = district;
+    public BusinessAddress(String street, String district, String city, String state) {
+
         this.street = street;
+        this.district = district;
+        this.city = city;
+        this.state = state;
     }
 
     public String getCountry() {
@@ -51,6 +53,8 @@ public class BusinessAddress {
             representation += ", " + district;
         if (city != null && !city.isEmpty())
             representation += ", " + city;
+        if (state != null && !state.isEmpty())
+            representation += " (" + state + ")";
         return representation;
     }
 }
