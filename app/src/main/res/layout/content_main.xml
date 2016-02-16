@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:scrollbars="none"
         >
 
@@ -29,11 +29,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/category_assistance"
+                android:layout_gravity="center"
                 android:padding="10dp"
+                android:text="@string/category_all"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="showListWithAllCategories"
+                android:textColor="@color/colorPrimary"/>
+
 
             <Button
                 android:layout_width="wrap_content"
@@ -43,17 +46,10 @@
                 android:text="@string/category_beauty"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_welfare"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -63,27 +59,11 @@
                 android:text="@string/category_culture"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_building"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_consulting"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -93,7 +73,9 @@
                 android:text="@string/category_education"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -103,27 +85,11 @@
                 android:text="@string/category_sport"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_leisure"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_environment"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -133,7 +99,9 @@
                 android:text="@string/category_fashion"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -143,7 +111,9 @@
                 android:text="@string/category_advertising"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -153,18 +123,11 @@
                 android:text="@string/category_human_resources"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_insurance"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -174,7 +137,9 @@
                 android:text="@string/category_health"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -184,17 +149,11 @@
                 android:text="@string/category_software"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"/>
+                android:onClick="changeCategory"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:text="@string/category_all"
-                android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
-                android:onClick="showListWithAllCategories"/>
+
 
         </LinearLayout>
 

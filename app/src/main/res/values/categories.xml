@@ -1,39 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="category_assistance">Assistência</string>
-    <string name="category_beauty">Beleza</string>
-    <string name="category_welfare">Bem-Estar</string>
-    <string name="category_culture">Cultura</string>
-    <string name="category_building">Construção Civil</string>
-    <string name="category_consulting">Consultoria</string>
+    <!--<string name="category_assistance">Assistência</string>-->
+    <string name="category_beauty">Beleza e\nEstética</string>
+    <!--<string name="category_welfare">Bem-Estar</string>-->
+    <string name="category_culture">Arte e\nCultura</string>
+    <!--<string name="category_building">Construção</string>-->
+    <!--<string name="category_consulting">Serviços de Consultoria</string>-->
     <string name="category_education">Educação</string>
     <string name="category_sport">Esportes</string>
-    <string name="category_leisure">Lazer</string>
-    <string name="category_environment">Meio Ambiente</string>
-    <string name="category_fashion">Moda</string>
+    <!--<string name="category_leisure">Entretenimento e Lazer</string>-->
+    <!--<string name="category_environment">Meio Ambiente</string>-->
+    <string name="category_fashion">Moda e\nAcessórios</string>
     <string name="category_advertising">Publicidade</string>
-    <string name="category_human_resources">Recursos Humanos</string>
-    <string name="category_insurance">Seguros/Consórcios</string>
+    <string name="category_human_resources">Recursos\nHumanos</string>
+    <!--<string name="category_insurance">Seguros e Consórcios</string>-->
     <string name="category_health">Saúde</string>
-    <string name="category_software">Software/TI</string>
-    <string name="category_all">Todas</string>
+    <string name="category_software">Informática e\nSoftware</string>
+    <string name="category_all">Ver\nTodas</string>
 
     <string-array name="categories">
         <item>Selecione uma categoria</item>
+        <item>Alimentação</item>
+        <item>Animais</item>
+         <item> Arte e Cultura </item>
         <item>Assistência</item>
-        <item>Beleza</item>
-        <item>Bem-Estar</item>
-        <item>Cultura</item>
-        <item>Construção Civil</item>
+        <item>Áudio e Vídeo</item>
+        <item>Automóveis e Veículos</item>  
+        <item>Beleza e Estética</item>
+        <item>Bem-estar</item>
+        <item>Casa e Decoração </item> 
+        <item>Construção</item>
         <item>Educação</item>
-        <item>Esportes</item>
-        <item>Lazer</item>
+        <item>Entretenimento e Lazer</item> 
+        <item>Esportes</item> 
+        <item> Farmácias e Drogarias</item>
+        <item>Festas e Eventos</item>
+        <item>Flores, Presentes e Datas Comemorativas</item>
+        <item> Funerárias e Cemitérios</item>
+        <item>Hospedagem e Turismo </item>
+        <item>Imóveis</item>
+        <item>Indústria e Comércio </item>
+        <item>Informática e Software</item>
         <item>Meio Ambiente</item>
-        <item>Moda</item>
+        <item> Moda e Acessórios  </item>
+        <item>Música</item>
+        <item>Papelaria e Escritório</item>
         <item>Publicidade</item>
         <item>Recursos Humanos</item>
-        <item>Seguros/Consórcios</item>
-        <item>Saúde</item>
-        <item>Software/TI</item>
+        <item>Religião </item>
+        <item> Saúde</item>
+        <item>Segurança</item>
+        <item>Seguros e Consórcios  </item>
+        <item>Serviços Advocatícios</item>
+        <item>Serviços de Assessoria </item>
+        <item>Serviços de Comunicação  </item>
+        <item>Serviços de Consultoria  </item>
+        <item>Serviços de Engenharia e Arquitetura </item>
+        <item>Serviços de Limpeza  </item>
+        <item>Serviços em Agricultura E Pecuária</item>
+        <item> Serviços Esotéricos e Místicos </item>
+        <item>Serviços Financeiros e Administrativos </item>
+        <item> Serviços Odontológicos  </item>
+        <item>Terapia </item>
+        <item>Terceiro Setor  </item>
+        <item>Transporte   </item>
+        <item>Outros</item>
+    </string-array>
+    <string-array  name="categories_list">
+        <item>Alimentação</item>
+        <item>Animais</item>
+         <item> Arte e Cultura</item>
+        <item>Assistência</item>
+        <item>Áudio e Vídeo</item>
+        <item>Automóveis e Veículos</item>  
+        <item>Beleza e Estética</item>
+        <item>Bem-estar</item>
+        <item>Casa e Decoração </item> 
+        <item>Construção</item>
+        <item>Educação</item>
+        <item>Entretenimento e Lazer</item> 
+        <item>Esportes</item> 
+        <item> Farmácias e Drogarias</item>
+        <item>Festas e Eventos</item>
+        <item>Flores, Presentes e Datas Comemorativas</item>
+        <item> Funerárias e Cemitérios</item>
+        <item>Hospedagem e Turismo </item>
+        <item>Imóveis</item>
+        <item>Indústria e Comércio </item>
+        <item>Informática e Software</item>
+        <item>Meio Ambiente</item>
+        <item> Moda e Acessórios </item>
+        <item>Música</item>
+        <item>Papelaria e Escritório</item>
+        <item>Publicidade</item>
+        <item>Recursos Humanos</item>
+        <item>Religião</item>
+        <item> Saúde</item>
+        <item>Segurança</item>
+        <item>Seguros e Consórcios </item>
+        <item>Serviços Advocatícios</item>
+        <item>Serviços de Assessoria</item>
+        <item>Serviços de Comunicação</item>
+        <item>Serviços de Consultoria</item>
+        <item>Serviços de Engenharia e Arquitetura</item>
+        <item>Serviços de Limpeza</item>
+        <item>Serviços em Agricultura E Pecuária</item>
+        <item> Serviços Esotéricos e Místicos </item>
+        <item>Serviços Financeiros e Administrativos</item>
+        <item> Serviços Odontológicos</item>
+        <item>Terapia </item>
+        <item>Terceiro Setor</item>
+        <item>Transporte</item>
+        <item>Outros</item>
     </string-array>
 </resources>
