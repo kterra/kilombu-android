@@ -186,6 +186,16 @@
                 android:background="@drawable/category_button"
                 android:onClick="changeCategory"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:text="@string/category_all"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/category_button"
+                android:onClick="showListWithAllCategories"/>
+
         </LinearLayout>
 
     </HorizontalScrollView>
