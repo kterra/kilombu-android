@@ -3,6 +3,7 @@ package kilombu.kilombuapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,21 +16,24 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Map;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
 
     private Firebase detailsRef;
     private final String TAG = "Business Details";
+    String businessKey;
     LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_details);
 
-        detailsRef = new Firebase(getString(R.string.firebase_url)).child("BusinessDetails");
+        detailsRef = new Firebase(getString(R.string.firebase_url))
+                        .child(getString(R.string.child_business_details));
         setupBusinessDetails();
-
     }
 
 
@@ -40,7 +44,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         currentText = (TextView) findViewById(R.id.business_description_detail);
         currentText.setText(intent.getStringExtra("business_description"));
 
-        String businessKey = intent.getStringExtra("business_key");
+        businessKey = intent.getStringExtra("business_key");
         Query detailsQuery = detailsRef.orderByKey().equalTo(businessKey).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
