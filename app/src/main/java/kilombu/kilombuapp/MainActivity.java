@@ -186,6 +186,11 @@ public class MainActivity extends AppCompatActivity
         adsView.swapAdapter(firebaseAdsAdapter, true);
     }
 
+    public void showListWithAllCategories(View button){
+        Intent intent = new Intent(MainActivity.this, CategoriesListActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
