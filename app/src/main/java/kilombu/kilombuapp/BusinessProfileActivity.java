@@ -38,14 +38,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_business_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
         //retrieveBusinessdata();
-
-        if (currentBusiness == null || currentDetails == null || currentStatistics == null){
-            //TODO: deal with this problem!!!!
-        }
 
         setupBusinessCard();
         //setupBusinessDetailsCard();
