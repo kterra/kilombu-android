@@ -146,10 +146,22 @@ public class CreateBusinessActivity extends AppCompatActivity {
         if(!validateState(state, city)){
             return;
         }
-        if(!validatePhone(phoneNumber)){
+        if(!validateCity(city)){
             return;
         }
-        if(!validatePhone(sacPhone)){
+        if(!validateDistrict(district)){
+            return;
+        }
+        if(!validateStreet(street)){
+            return;
+        }
+        if(!validateBusinessHours(businessHours)){
+            return;
+        }
+        if(!validatePhone(phoneNumber)) {
+            return;
+        }
+        if(!validateSacPhone(sacPhone)){
             return;
         }
         if(!validateEmail(email)){
@@ -236,6 +248,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         if (!ValidationTools.isValidName(name)){
             inputLayoutName.setError(getString(R.string.err_msg_bus_name));
             requestFocus(nameField);
+            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
             return false;
         }else {
             inputLayoutName.setErrorEnabled(false);
@@ -249,6 +262,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         if (!ValidationTools.isValidDescription(description)){
             inputLayoutDescrption.setError(getString(R.string.err_msg_descripiton));
             requestFocus(descriptionField);
+            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
             return false;
         }else {
             inputLayoutDescrption.setErrorEnabled(false);
@@ -278,14 +292,40 @@ public class CreateBusinessActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean validateCity(String city){
+        inputLayoutCity.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateDistrict(String district){
+        inputLayoutDistrict.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateStreet(String street){
+        inputLayoutStreet.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateBusinessHours(String businessHours){
+        inputLayoutBusinessHours.setErrorEnabled(false);
+        return true;
+    }
+
     private boolean validatePhone(String phone){
-        //TODO: Check how to validate a phone and give visual feedback
+        inputLayoutPhone.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateSacPhone(String phone){
+        inputLayoutSacPhone.setErrorEnabled(false);
         return true;
     }
 
     private boolean validateEmail(String email){
         if(!ValidationTools.isValidEmail(email)){
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
             requestFocus(emailField);
             return false;
         }else{
