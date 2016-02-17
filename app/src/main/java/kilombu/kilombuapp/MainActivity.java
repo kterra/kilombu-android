@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,10 +153,11 @@ public class MainActivity extends AppCompatActivity
         adsView.setAdapter(firebaseAdsAdapter);
     }
 
+
     //TODO: consider rewriting own adapter
     public void changeCategory(View button){
 
-        currentCategory = ((Button) button).getText().toString();
+        currentCategory = button.getTag().toString();
         Log.d("MAIN", currentCategory);
         if (currentCategory != getString(R.string.category_all)){
             businessQuery = businessRef.orderByChild("category").equalTo(currentCategory).limitToFirst(adsPerPage);
