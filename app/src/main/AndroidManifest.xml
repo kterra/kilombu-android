@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="kilombu.kilombuapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-sdk
         android:minSdkVersion="10"
-        tools:overrideLibrary="com.firebase.ui"
-        />
+        tools:overrideLibrary="com.firebase.ui" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".KilombuApplication"
         android:allowBackup="true"
@@ -64,6 +69,33 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".EditBusinessInfoActivity"
+            android:label="@string/title_activity_edit_business_info"
+            android:parentActivityName=".BusinessProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.BusinessProfileActivity" />
+        </activity>
+        <activity
+            android:name=".EditContactInfoActivity"
+            android:label="@string/title_activity_edit_contact_info"
+            android:parentActivityName=".BusinessProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.BusinessProfileActivity" />
+        </activity>
+        <activity
+            android:name=".EditStoreInfoActivity"
+            android:label="@string/title_activity_edit_store_info"
+            android:parentActivityName=".BusinessProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.BusinessProfileActivity" />
         </activity>
     </application>
 

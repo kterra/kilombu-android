@@ -119,6 +119,9 @@
     <string name="toast_failure_change_password">Ocorreu um erro :( Por favor, tente novamente</string>
     <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
     <string name="title_activity_business_profile">BusinessProfileActivity</string>
+    <string name="title_activity_edit_business_info">EditBusinessInfoActivity</string>
+    <string name="title_activity_edit_contact_info">EditContactInfoActivity</string>
+    <string name="title_activity_edit_store_info">EditStoreInfoActivity</string>
 
 
 </resources>

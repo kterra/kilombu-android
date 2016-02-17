@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:id="@+id/profile_business_name_detail"
+                    android:id="@+id/profile_business_name"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -62,12 +62,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profile_business_description_detail"
+                    android:id="@+id/profile_business_description"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/colorDescription"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-condensed"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_edit_business"
+                    android:src="@drawable/ic_mode_edit_black_24dp"
+                    android:layout_gravity="right"
+                    android:onClick="goToEditBusinessInfo"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -98,7 +106,7 @@
             >
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -144,7 +152,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/profile_group1"
                     android:orientation="horizontal"
                     android:id="@+id/profile_group2"
                     android:visibility="gone">
@@ -172,7 +179,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/profile_group2"
                     android:orientation="horizontal"
                     android:id="@+id/profile_group3"
                     android:visibility="gone">
@@ -201,7 +207,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/profile_group3"
                     android:orientation="horizontal"
                     android:id="@+id/profile_group4"
                     android:visibility="gone">
@@ -229,7 +234,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/profile_group4"
                     android:orientation="horizontal"
                     android:id="@+id/profile_group5"
                     android:visibility="gone">
@@ -259,7 +263,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/profile_group5"
                     android:orientation="horizontal"
                     android:id="@+id/profile_group6"
                     android:visibility="gone">
@@ -282,9 +285,18 @@
                         android:textColor="@color/colorDescription"
                         android:fontFamily="sans-serif-condensed"/>
 
+
                 </LinearLayout>
 
-            </RelativeLayout>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_edit_contact_info"
+                    android:src="@drawable/ic_mode_edit_black_24dp"
+                    android:layout_gravity="right"
+                    android:onClick="goToEditContactInfo"/>
+
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -360,6 +372,14 @@
                     android:textColor="@color/colorDescription"
                     android:fontFamily="sans-serif-condensed"
                     android:visibility="gone"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_edit_store_info"
+                    android:src="@drawable/ic_mode_edit_black_24dp"
+                    android:layout_gravity="right"
+                    android:onClick="goToEditStoreInfo"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 

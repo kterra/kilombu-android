@@ -68,9 +68,9 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     businessId = currentSnapShot.getKey();
                     currentBusiness = currentSnapShot.getValue(Business.class);
 
-                    TextView currentText = (TextView) findViewById(R.id.profile_business_name_detail);
+                    TextView currentText = (TextView) findViewById(R.id.profile_business_name);
                     currentText.setText(currentBusiness.getName());
-                    currentText = (TextView) findViewById(R.id.profile_business_description_detail);
+                    currentText = (TextView) findViewById(R.id.profile_business_description);
                     currentText.setText(currentBusiness.getDescription());
                     setupBusinessDetailsCard();
                     setupStatisticsCards();
@@ -86,9 +86,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     private void setupBusinessDetailsCard(){
         Firebase detailsRef = appRef.child(getString(R.string.child_business_details));
-        //Query detailsQuery = detailsRef.orderByKey().equalTo(businessKey).limitToFirst(1);
         Query detailsQuery = detailsRef.orderByKey().equalTo(businessId).limitToFirst(1);
-        Log.e(TAG, businessId);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -209,6 +207,21 @@ public class BusinessProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void goToEditBusinessInfo(View editButton){
+        Intent intent = new Intent(this, EditBusinessInfoActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToEditContactInfo(View editButton){
+        Intent intent = new Intent(this, EditContactInfoActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToEditStoreInfo(View editButton){
+        Intent intent = new Intent(this, EditStoreInfoActivity.class);
+        startActivity(intent);
     }
 
     private void setupStatisticsCards(){
