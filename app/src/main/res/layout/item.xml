@@ -52,7 +52,7 @@
             android:layout_height="1dp"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="35dp"
             android:layout_below="@id/business_name"
             android:background="@color/colorDescription"
