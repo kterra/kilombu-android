@@ -8,7 +8,7 @@
     card_view:cardUseCompatPadding="true"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectable">
+    android:foreground="?selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
