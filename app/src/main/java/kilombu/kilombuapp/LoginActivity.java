@@ -3,6 +3,8 @@ package kilombu.kilombuapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +23,16 @@ public class LoginActivity extends AppCompatActivity {
     private Firebase appRef;
     private static final String TAG = "LoginActivity";
     private ProgressDialog dialog;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                .coordinatorLayout);
         dialog = new ProgressDialog(this);
 
         appRef = new Firebase(getString(R.string.firebase_url));
@@ -53,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String provider;
 
+
         public AuthResultHandler(String provider) {
             this.provider = provider;
         }
@@ -60,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onAuthenticated(AuthData authData) {
             Log.i(TAG, provider + " auth successful");
+            //Snackbar.make(coordinatorLayout, authData.getUid().toString(), Snackbar.LENGTH_LONG).show();
             Toast.makeText(LoginActivity.this, authData.getUid().toString(), Toast.LENGTH_LONG).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -72,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onAuthenticationError(FirebaseError firebaseError) {
             dialog.hide();
             Toast.makeText(LoginActivity.this, firebaseError.toString(), Toast.LENGTH_LONG).show();
+           // Snackbar.make(coordinatorLayout, firebaseError.toString(), Snackbar.LENGTH_LONG).show();
         }
     }
 

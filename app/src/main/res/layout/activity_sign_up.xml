@@ -1,13 +1,17 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" >
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".SignUpActivity">
 
-
-<!--Signup form -->
-
-<ScrollView
-    android:id="@+id/signup_form"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <LinearLayout
         android:orientation="vertical"
@@ -30,13 +34,13 @@ xmlns:tools="http://schemas.android.com/tools" >
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-20dp"
+            android:id="@+id/username_edit_layout"
             >
             <EditText  android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_name"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
+                android:inputType="text"
                 android:textColorHint="@color/colorDescription"
                 android:textColor="@color/colorDescription"
                 android:fontFamily="sans-serif-condensed"/>
@@ -46,13 +50,13 @@ xmlns:tools="http://schemas.android.com/tools" >
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/email_edit_layout"
             >
             <EditText  android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
-                android:maxLines="1"
                 android:textColorHint="@color/colorDescription"
                 android:textColor="@color/colorDescription"
                 android:fontFamily="sans-serif-condensed"/>
@@ -62,6 +66,7 @@ xmlns:tools="http://schemas.android.com/tools" >
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/password_edit_layout"
            >
             <EditText android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
@@ -79,6 +84,7 @@ xmlns:tools="http://schemas.android.com/tools" >
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:id="@+id/password_again_edit_layout"
             >
             <EditText android:id="@+id/password_again_edit_text"
                 android:layout_width="match_parent"
@@ -108,6 +114,5 @@ xmlns:tools="http://schemas.android.com/tools" >
             android:onClick="signup"/>
 
     </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
 </ScrollView>
-
-</merge>

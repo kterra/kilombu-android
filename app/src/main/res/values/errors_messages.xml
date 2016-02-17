@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_msg_name"> Por favor insira o seu nome</string>
+    <string name="err_msg_email"> Por favor insira um email válido</string>
+    <string name="err_msg_password"> Por favor insira uma senha</string>
+    <string name="err_msg_password_again"> Senha não confere com a anterior</string>
+
+    <string name="err_msg_bus_name"> Por favor insira o do seu negócio nome</string>
+    <string name="err_msg_descripiton"> Por favor insira uma descrição</string>
+    <string name="err_msg_category"> Por favor selecione uma categoria</string>
+
+    <string name="err_msg_state"> Por favor selecione um estado</string>
+
+</resources>
