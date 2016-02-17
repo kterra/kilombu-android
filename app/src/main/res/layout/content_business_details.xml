@@ -24,7 +24,6 @@
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
             <android.support.v7.widget.LinearLayoutCompat
@@ -47,18 +46,17 @@
             android:textStyle="bold"
             android:textColor="@color/secondary_text_material_light"/>
 
-                <TextView
+
+
+                <View
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="-12dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="16dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="@string/line"
-                    android:textSize="15sp"
-                    android:textColor="@color/secondary_text_material_light"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@color/secondary_text_material_light"
                     />
 
             <TextView
@@ -97,7 +95,6 @@
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
 
@@ -333,7 +330,6 @@
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
 

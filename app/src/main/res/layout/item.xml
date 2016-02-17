@@ -7,9 +7,9 @@
     android:id="@+id/cv"
     card_view:cardUseCompatPadding="true"
     android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    >
+    android:focusable="true">
+    <!--android:foreground="?android:attr/selectableItemBackground"-->
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,22 +46,19 @@
 
             />
 
-        <TextView
+        <View
             android:id="@+id/line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="-12dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="35dp"
             android:layout_below="@id/business_name"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/line"
-            android:textSize="15sp"
-            android:textColor="@color/colorDescription"
+            android:background="@color/colorDescription"
+
 
             />
-
 
         <TextView
             android:layout_width="wrap_content"

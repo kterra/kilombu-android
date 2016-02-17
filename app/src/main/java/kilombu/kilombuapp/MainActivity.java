@@ -2,6 +2,7 @@ package kilombu.kilombuapp;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -27,6 +30,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,9 +153,11 @@ public class MainActivity extends AppCompatActivity
         adsView.setAdapter(firebaseAdsAdapter);
     }
 
+
     //TODO: consider rewriting own adapter
     public void changeCategory(View button){
-        currentCategory = ((Button) button).getText().toString();
+
+        currentCategory = button.getTag().toString();
         Log.d("MAIN", currentCategory);
         if (currentCategory != getString(R.string.category_all)){
             businessQuery = businessRef.orderByChild("category").equalTo(currentCategory).limitToFirst(adsPerPage);
@@ -178,6 +185,7 @@ public class MainActivity extends AppCompatActivity
                         intent.putExtra("business_key", itemKey);
 
                         MainActivity.this.startActivity(intent);
+
 
                     }
                 });

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="kilombu.kilombuapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-sdk
+        android:minSdkVersion="10"
+        tools:overrideLibrary="com.firebase.ui"
+        />
     <application
         android:name=".KilombuApplication"
         android:allowBackup="true"
