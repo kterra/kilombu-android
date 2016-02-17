@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_marginTop="-7dp"
         android:layout_marginBottom="10dp"
         android:scrollbars="none"
         >
@@ -33,8 +32,8 @@
             android:layout_marginRight="10dp">
 
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_home_white_24dp"
                 android:background="@drawable/category_button"
@@ -62,8 +61,8 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/category_button"
                 android:src="@drawable/ic_beleza_white_24dp"
                 android:onClick="changeCategory"
@@ -91,8 +90,8 @@
             android:layout_marginRight="10dp">
 
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/category_button"
                 android:src="@drawable/ic_arte_white_24dp"
                 android:onClick="changeCategory"
@@ -121,8 +120,8 @@
             android:layout_marginRight="10dp">
 
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_edu_white_24dp"
                 android:background="@drawable/category_button"
                 android:onClick="changeCategory"
@@ -151,8 +150,8 @@
                 android:layout_marginRight="10dp">
 
                 <ImageButton
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/ic_esportes_white_24dp"
                     android:fontFamily="sans-serif-condensed"
                     android:background="@drawable/category_button"
@@ -184,8 +183,8 @@
             android:layout_marginRight="10dp">
 
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_moda_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
@@ -215,8 +214,8 @@
                 android:layout_marginRight="10dp">
 
                 <ImageButton
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/ic_publi_white_24dp"
                     android:fontFamily="sans-serif-condensed"
                     android:background="@drawable/category_button"
@@ -245,8 +244,8 @@
             android:layout_marginRight="10dp">
 
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_rh_white_24dp"
                 android:background="@drawable/category_button"
                 android:onClick="changeCategory"
@@ -274,8 +273,8 @@
             android:layout_marginRight="10dp">
 
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_saude_white_24dp"
                 android:background="@drawable/category_button"
                 android:onClick="changeCategory"
@@ -302,8 +301,8 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
             <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/category_button"
                 android:src="@drawable/ic_info_white_24dp"
                 android:onClick="changeCategory"
@@ -332,8 +331,8 @@
                 android:orientation="vertical"
                 android:layout_marginRight="10dp">
                 <ImageButton
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_more_horiz_red_24dp"
                     android:background="@drawable/category_list_all_button"

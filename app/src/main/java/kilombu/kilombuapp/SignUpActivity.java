@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,31 +24,52 @@ public class SignUpActivity extends Activity {
     private ProgressDialog dialog;
     private final String TAG = "SignUp";
     private User newuser;
+    private EditText nameEditText, emailEditText, passwordEditText, passwordAgainEditText;
+    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword, inputLayoutPasswordAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        nameEditText = (EditText) findViewById(R.id.username_edit_text);
+        emailEditText = (EditText) findViewById(R.id.email_edit_text);
+        passwordEditText = (EditText) findViewById(R.id.password_edit_text);
+        passwordAgainEditText = (EditText) findViewById(R.id.password_again_edit_text);
+
+        inputLayoutName = (TextInputLayout) findViewById(R.id.username_edit_layout);
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.email_edit_layout);
+        inputLayoutPassword = (TextInputLayout) findViewById(R.id.password_edit_layout);
+        inputLayoutPasswordAgain = (TextInputLayout) findViewById(R.id.password_again_edit_layout);
+
         appRef = new Firebase(getString(R.string.firebase_url));
         usersRef = appRef.child("users");
     }
 
-    public void signup(View view){
-        EditText nameEditText = (EditText) findViewById(R.id.username_edit_text);
-        EditText emailEditText = (EditText) findViewById(R.id.email_edit_text);
-        EditText passwordEditText = (EditText) findViewById(R.id.password_edit_text);
-        EditText passwordAgainEditText = (EditText) findViewById(R.id.password_again_edit_text);
-
+    public void signup(View view) {
         String name = nameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String passwordAgain = passwordAgainEditText.getText().toString().trim();
 
-        if(validateData(name, email, password, passwordAgain)){
-            newuser = new User(name, email, null);
-            Log.d(TAG, "Validou!!!");
+        if (!validateName(name)) {
+            return;
         }
+
+        if (!validateEmail(email)) {
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            return;
+        }
+
+        if (!validatePasswordAgain(password,passwordAgain)) {
+            return;
+        }
+
+        newuser = new User(name, email, null);
+        Log.d(TAG, "Validou!!!");
 
         // Set up a progress dialog
         dialog = new ProgressDialog(SignUpActivity.this);
@@ -53,7 +77,31 @@ public class SignUpActivity extends Activity {
         dialog.show();
 
         createUser(email, password);
+        Toast.makeText(getApplicationContext(), "Bem-vind@ à família Kilombu!", Toast.LENGTH_SHORT).show();
     }
+//    public void signup(View view){
+//        EditText nameEditText = (EditText) findViewById(R.id.username_edit_text);
+//        EditText emailEditText = (EditText) findViewById(R.id.email_edit_text);
+//        EditText passwordEditText = (EditText) findViewById(R.id.password_edit_text);
+//        EditText passwordAgainEditText = (EditText) findViewById(R.id.password_again_edit_text);
+//
+//        String name = nameEditText.getText().toString().trim();
+//        String email = emailEditText.getText().toString().trim();
+//        String password = passwordEditText.getText().toString().trim();
+//        String passwordAgain = passwordAgainEditText.getText().toString().trim();
+//
+//        if(validateData(name, email, password, passwordAgain)){
+//            newuser = new User(name, email, null);
+//            Log.d(TAG, "Validou!!!");
+//        }
+//
+//        // Set up a progress dialog
+//        dialog = new ProgressDialog(SignUpActivity.this);
+//        dialog.setMessage(getString(R.string.progress_signup));
+//        dialog.show();
+//
+//        createUser(email, password);
+//    }
 
     public void createUser(String email, String password){
         appRef.createUser(email, password,
@@ -79,42 +127,105 @@ public class SignUpActivity extends Activity {
                 });
     }
 
-    private boolean validateData(String name, String email, String password, String passwordAgain) {
-        boolean validationError = false;
-        StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro));
-        if (name.length() == 0) {
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_username));
+    private boolean validateName(String name) {
+
+        if (name.isEmpty()) {
+            inputLayoutName.setError(getString(R.string.err_msg_name));
+            requestFocus(nameEditText);
+            return false;
+        } else {
+            inputLayoutName.setErrorEnabled(false);
         }
 
-
-        if (email.length() == 0) {
-            if (validationError) {
-                validationErrorMessage.append(getString(R.string.error_join));
-            }
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_email));
-        }
-
-        if (password.length() == 0) {
-            if (validationError) {
-                validationErrorMessage.append(getString(R.string.error_join));
-            }
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_password));
-        }
-        if (!password.equals(passwordAgain)) {
-            if (validationError) {
-                validationErrorMessage.append(getString(R.string.error_join));
-            }
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_mismatched_passwords));
-        }
-        validationErrorMessage.append(getString(R.string.error_end));
-
-        if (validationError) {
-            Toast.makeText(SignUpActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG).show();
-        }
-        return !validationError;
+        return true;
     }
+
+    private boolean validateEmail(String email) {
+
+        if (email.isEmpty() || !isValidEmail(email)) {
+            inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            requestFocus(emailEditText);
+            return false;
+        } else {
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword(String password) {
+
+        if (password.isEmpty()) {
+            inputLayoutPassword.setError(getString(R.string.err_msg_password));
+            requestFocus(passwordEditText);
+            return false;
+        } else {
+            inputLayoutPassword.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePasswordAgain(String password, String passwordAgain) {
+
+        if (passwordAgain.isEmpty() ||
+                passwordAgain.compareTo(password)!=0) {
+            inputLayoutPasswordAgain.setError(getString(R.string.err_msg_password_again));
+            requestFocus(passwordAgainEditText);
+            return false;
+        } else {
+            inputLayoutPasswordAgain.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+//    private boolean validateData(String name, String email, String password, String passwordAgain) {
+//        boolean validationError = false;
+//        StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro));
+//        if (name.length() == 0) {
+//            validationError = true;
+//            validationErrorMessage.append(getString(R.string.error_blank_username));
+//        }
+//
+//
+//        if (email.length() == 0) {
+//            if (validationError) {
+//                validationErrorMessage.append(getString(R.string.error_join));
+//            }
+//            validationError = true;
+//            validationErrorMessage.append(getString(R.string.error_blank_email));
+//        }
+//
+//        if (password.length() == 0) {
+//            if (validationError) {
+//                validationErrorMessage.append(getString(R.string.error_join));
+//            }
+//            validationError = true;
+//            validationErrorMessage.append(getString(R.string.error_blank_password));
+//        }
+//        if (!password.equals(passwordAgain)) {
+//            if (validationError) {
+//                validationErrorMessage.append(getString(R.string.error_join));
+//            }
+//            validationError = true;
+//            validationErrorMessage.append(getString(R.string.error_mismatched_passwords));
+//        }
+//        validationErrorMessage.append(getString(R.string.error_end));
+//
+//        if (validationError) {
+//            Toast.makeText(SignUpActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG).show();
+//        }
+//        return !validationError;
+//    }
 }

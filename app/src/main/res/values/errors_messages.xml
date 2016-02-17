@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_msg_name"> Por favor insira o seu nome</string>
+    <string name="err_msg_email"> Por favor insira um email válido</string>
+    <string name="err_msg_password"> Por favor insira uma senha</string>
+    <string name="err_msg_password_again"> Senha não confere com a anterior</string>
+</resources>

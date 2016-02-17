@@ -59,8 +59,10 @@
         android:hint="@string/hint_description"
         android:gravity="top"
         android:fontFamily="sans-serif-condensed"
-        android:lines="4"
-        android:inputType="textMultiLine|textLongMessage"/>
+        android:minLines="1"
+        android:lines="6"
+        android:inputType="textMultiLine|textCapSentences"
+        android:scrollbars="vertical"/>
     </android.support.design.widget.TextInputLayout>
 
     <Spinner
