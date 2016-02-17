@@ -19,7 +19,7 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cv"
+            android:id="@+id/profile_business_card"
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:id="@+id/business_name_detail"
+                    android:id="@+id/profile_business_name_detail"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -46,7 +46,7 @@
                     android:textColor="@color/secondary_text_material_light"/>
 
                 <TextView
-                    android:id="@+id/line2"
+                    android:id="@+id/profile_line2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -62,7 +62,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/business_description_detail"
+                    android:id="@+id/profile_business_description_detail"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/colorDescription"
@@ -82,7 +82,7 @@
             android:textAllCaps="true"
             android:textSize="16sp"
             android:fontFamily="sans-serif-condensed"
-            android:id="@+id/business_sac_title"
+            android:id="@+id/profile_business_sac_title"
             android:textColor="@color/business_details_card_title_color"
             android:text="@string/business_sac_card_tilte"/>
 
@@ -91,7 +91,7 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cv2"
+            android:id="@+id/profile_contact_info_card"
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
@@ -108,7 +108,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/no_info_message"
+                    android:id="@+id/profile_no_contactinfo_message"
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/noinfo_message"
                     android:textSize="16sp"
@@ -119,20 +119,20 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id="@+id/gruop1"
+                    android:id="@+id/profile_group1"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:id="@+id/ic_phone"
+                        android:id="@+id/profile_ic_phone"
                         android:layout_marginRight="5dp"
                         android:src="@drawable/ic_phone_red_24dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/business_sac_phone"
+                        android:id="@+id/profile_business_sac_phone"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/secondary_text_material_light"
@@ -144,15 +144,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/gruop1"
+                    android:layout_below="@id/profile_group1"
                     android:orientation="horizontal"
-                    android:id="@+id/gruop2"
+                    android:id="@+id/profile_group2"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:id="@+id/ic_email"
+                        android:id="@+id/profile_ic_email"
                         android:layout_marginRight="5dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_email_red_24dp"/>
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/business_email"
+                        android:id="@+id/profile_business_email"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/secondary_text_material_light"
@@ -172,16 +172,16 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/gruop2"
+                    android:layout_below="@id/profile_group2"
                     android:orientation="horizontal"
-                    android:id="@+id/gruop3"
+                    android:id="@+id/profile_group3"
                     android:visibility="gone">
 
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:id="@+id/ic_website"
+                        android:id="@+id/profile_ic_website"
                         android:layout_marginRight="5dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_public_red_24dp"/>
@@ -189,7 +189,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/business_website"
+                        android:id="@+id/profile_business_website"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/secondary_text_material_light"
@@ -201,15 +201,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/gruop3"
+                    android:layout_below="@id/profile_group3"
                     android:orientation="horizontal"
-                    android:id="@+id/gruop4"
+                    android:id="@+id/profile_group4"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:id="@+id/ic_whastapp"
+                        android:id="@+id/profile_ic_whastapp"
                         android:layout_marginLeft="2dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/whatsapp_logo"/>
@@ -217,7 +217,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/business_whatsapp"
+                        android:id="@+id/profile_business_whatsapp"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/secondary_text_material_light"
@@ -229,25 +229,25 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/gruop4"
+                    android:layout_below="@id/profile_group4"
                     android:orientation="horizontal"
-                    android:id="@+id/gruop5"
+                    android:id="@+id/profile_group5"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:id="@+id/ic_facebook"
+                        android:id="@+id/profile_ic_facebook"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="5dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_below="@id/ic_whastapp"
+                        android:layout_below="@id/profile_ic_whastapp"
                         android:src="@drawable/facebook_logo_blue"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/business_facebook"
+                        android:id="@+id/profile_business_facebook"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/colorDescription"
@@ -259,15 +259,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/gruop5"
+                    android:layout_below="@id/profile_group5"
                     android:orientation="horizontal"
-                    android:id="@+id/gruop6"
+                    android:id="@+id/profile_group6"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:id="@+id/ic_instagram"
+                        android:id="@+id/profile_ic_instagram"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="5dp"
                         android:layout_gravity="center_vertical"
@@ -276,7 +276,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/business_instagram"
+                        android:id="@+id/profile_business_instagram"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/colorDescription"
@@ -298,7 +298,7 @@
             android:textSize="16sp"
 
             android:fontFamily="sans-serif-condensed"
-            android:id="@+id/business_address_card_tilte"
+            android:id="@+id/profile_business_address_card_tilte"
             android:textColor="@color/business_details_card_title_color"
             android:text="@string/business_address_card_tilte"/>
 
@@ -307,7 +307,7 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cv3"
+            android:id="@+id/profile_stores_card"
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
@@ -319,14 +319,14 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:orientation="vertical"
-                android:id="@+id/comercial_address"
+                android:id="@+id/profile_commercial_address"
                 >
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/noinfo_message"
+                    android:id="@+id/profile_no_storesinfo_message"
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/noinfo_message"
                     android:textSize="16sp"
@@ -336,7 +336,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/business_address"
+                    android:id="@+id/profile_business_address"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
@@ -345,7 +345,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/business_phone_number"
+                    android:id="@+id/profile_business_phone_number"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/colorDescription"
@@ -355,7 +355,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/business_working_hours"
+                    android:id="@+id/profile_business_working_hours"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
                     android:fontFamily="sans-serif-condensed"

@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GalleryActivity" />
         <activity
             android:name=".BusinessDetailsActivity"
             android:label="@string/title_activity_business_details"
@@ -33,11 +32,11 @@
         <activity
             android:name=".CreateBusinessActivity"
             android:label="@string/title_activity_create_business"
-            android:parentActivityName=".GalleryActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="kilombu.kilombuapp.GalleryActivity" />
+                android:value="kilombu.kilombuapp.MainActivity" />
         </activity>
         <activity
             android:name=".LoginActivity"

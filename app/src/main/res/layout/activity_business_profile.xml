@@ -51,5 +51,4 @@
 
 <include layout="@layout/content_business_profile" />
 
-
 </android.support.design.widget.CoordinatorLayout>
