@@ -129,7 +129,7 @@ public class SignUpActivity extends Activity {
 
     private boolean validateName(String name) {
 
-        if (name.isEmpty()) {
+        if (ValidationTools.isValidName(name)) {
             inputLayoutName.setError(getString(R.string.err_msg_name));
             requestFocus(nameEditText);
             return false;

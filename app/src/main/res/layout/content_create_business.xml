@@ -34,6 +34,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_name_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -49,6 +50,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_description_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -78,6 +80,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_corporate_number_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -107,8 +110,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
     <android.support.design.widget.TextInputLayout
-    android:layout_width="250dp"
-    android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_city_layout"
     >
     <EditText
         android:layout_width="250dp"
@@ -135,6 +139,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_street_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -150,6 +155,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_district_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -164,6 +170,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_business_hours_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -178,6 +185,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_phone_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -207,6 +215,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_sac_phone_layout"
         >
         <EditText
             android:layout_width="match_parent"
@@ -221,6 +230,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_email_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -236,6 +246,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_website_layout"
         >
         <EditText
             android:layout_width="match_parent"
@@ -250,6 +261,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_whatsapp_layout"
         >
         <EditText
             android:layout_width="match_parent"
@@ -264,6 +276,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_facebook_layout"
         >
 
     <EditText
@@ -279,6 +292,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/form_instagram_layout"
         >
     <EditText
         android:layout_width="match_parent"
@@ -292,7 +306,7 @@
     </android.support.design.widget.TextInputLayout>
 
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/signup_button_again"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

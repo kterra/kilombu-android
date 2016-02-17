@@ -2,12 +2,15 @@ package kilombu.kilombuapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -27,6 +30,13 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private Spinner categorySelection;
     private Spinner stateSelection;
     private int storeIndex = 1;
+    private EditText nameField, descriptionField, corporateNumberField, cityField, streetField,
+            districtField, businessHoursField,phoneField, sacPhoneField, emailField, websiteField,
+            whatsappField, facebookField, instagramField;
+    private TextInputLayout inputLayoutName, inputLayoutDescrption, inputLayoutCorporateNumber,
+            inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,  inputLayoutBusinessHours, inputLayoutPhone,
+            inputLayoutSacPhone, inputLayoutEmail, inputLayoutWebsite, inputLayoutWhatsapp,
+            inputLayoutFacebook, inputLayoutInstagram;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,41 @@ public class CreateBusinessActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.title_activity_create_business));
+
+        nameField = (EditText) findViewById(R.id.form_name);
+        descriptionField = (EditText) findViewById(R.id.form_description);
+        corporateNumberField = (EditText) findViewById(R.id.form_corporate_number);
+
+        cityField = (EditText) findViewById(R.id.form_city);
+        streetField = (EditText) findViewById(R.id.form_street);
+        districtField = (EditText) findViewById(R.id.form_district);
+        businessHoursField = (EditText) findViewById(R.id.form_business_hours);
+        phoneField = (EditText) findViewById(R.id.form_phone);
+
+        sacPhoneField = (EditText) findViewById(R.id.form_sac_phone);
+        emailField = (EditText) findViewById(R.id.form_email);
+        websiteField = (EditText) findViewById(R.id.form_website);
+        whatsappField = (EditText) findViewById(R.id.form_whatsapp);
+        facebookField = (EditText) findViewById(R.id.form_facebook);
+        instagramField = (EditText) findViewById(R.id.form_instagram);
+
+        inputLayoutName = (TextInputLayout) findViewById(R.id.form_name_layout);
+        inputLayoutDescrption = (TextInputLayout) findViewById(R.id.form_description_layout);
+        inputLayoutCorporateNumber = (TextInputLayout) findViewById(R.id.form_corporate_number_layout);
+
+
+        inputLayoutCity = (TextInputLayout) findViewById(R.id.form_city_layout);
+        inputLayoutDistrict = (TextInputLayout) findViewById(R.id.form_district_layout);
+        inputLayoutStreet = (TextInputLayout) findViewById(R.id.form_street_layout);
+        inputLayoutBusinessHours = (TextInputLayout) findViewById(R.id.form_business_hours_layout);
+        inputLayoutPhone = (TextInputLayout) findViewById(R.id.form_phone_layout);
+
+        inputLayoutSacPhone = (TextInputLayout) findViewById(R.id.form_sac_phone_layout);
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.form_email_layout);
+        inputLayoutWebsite = (TextInputLayout) findViewById(R.id.form_website_layout);
+        inputLayoutWhatsapp = (TextInputLayout) findViewById(R.id.form_whatsapp_layout);
+        inputLayoutFacebook = (TextInputLayout) findViewById(R.id.form_facebook_layout);
+        inputLayoutInstagram = (TextInputLayout) findViewById(R.id.form_instagram_layout);
 
         appRef = new Firebase(getString(R.string.firebase_url));
         businessRef = appRef.child(getString(R.string.child_business));
@@ -63,22 +108,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
     //Floating send button action
     public void sendForm(View sendButton){
-        EditText nameField = (EditText) findViewById(R.id.form_name);
-        EditText descriptionField = (EditText) findViewById(R.id.form_description);
-        EditText corporateNumberField = (EditText) findViewById(R.id.form_corporate_number);
 
-        EditText cityField = (EditText) findViewById(R.id.form_city);
-        EditText streetField = (EditText) findViewById(R.id.form_street);
-        EditText districtField = (EditText) findViewById(R.id.form_district);
-        EditText businessHoursField = (EditText) findViewById(R.id.form_business_hours);
-        EditText phoneField = (EditText) findViewById(R.id.form_phone);
-
-        EditText sacPhoneField = (EditText) findViewById(R.id.form_sac_phone);
-        EditText emailField = (EditText) findViewById(R.id.form_email);
-        EditText websiteField = (EditText) findViewById(R.id.form_website);
-        EditText whatsappField = (EditText) findViewById(R.id.form_whatsapp);
-        EditText facebookField = (EditText) findViewById(R.id.form_facebook);
-        EditText instagramField = (EditText) findViewById(R.id.form_instagram);
 
         String name = nameField.getText().toString();
         String description = descriptionField.getText().toString();
@@ -97,15 +127,47 @@ public class CreateBusinessActivity extends AppCompatActivity {
         String facebook = facebookField.getText().toString();
         String instagram = instagramField.getText().toString();
 
-        //TODO: deal with category as droplist or similar
-
         String category = categorySelection.getSelectedItem().toString();
         String state = stateSelection.getSelectedItem().toString();
 
-        if (dataIsValid(name, description, corporateNumber,
-                    category, state, city, phoneNumber,
-                    email, sacPhone, businessHours,
-                    whatsapp, facebook, instagram)){
+        if(!validateName(name)){
+            return;
+        }
+        if(!validateDescription(description)){
+            return;
+        }
+        if(!validateCorporateNumber(corporateNumber)){
+            return;
+        }
+
+        if(!validateCategory(category)){
+            return;
+        }
+        if(!validateState(state, city)){
+            return;
+        }
+        if(!validatePhone(phoneNumber)){
+            return;
+        }
+        if(!validatePhone(sacPhone)){
+            return;
+        }
+        if(!validateEmail(email)){
+            return;
+        }
+        if(!validateWebsite(website)){
+            return;
+        }
+        if(!validateWhatsApp(whatsapp)){
+            return;
+        }
+        if(!validateFacebookPage(facebook)){
+            return;
+        }
+        if(!validateInstagramPage(instagram)){
+            return;
+        }
+
             BusinessAddress address = validateAddress(street, district, city, state);
             Store store = validateStore(address, phoneNumber, businessHours);
 
@@ -136,7 +198,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
                 }
             });
 
-        }
+
     }
 
     private void createBusinessStatistics(String businessId){
@@ -169,41 +231,49 @@ public class CreateBusinessActivity extends AppCompatActivity {
         return isValid;
     }
 
-    //Obrigatory
+    //Mandatory
     private boolean validateName(String name){
-        if (name.isEmpty()){
-            //TODO: Visual Feedback for user
+        if (!ValidationTools.isValidName(name)){
+            inputLayoutName.setError(getString(R.string.err_msg_bus_name));
+            requestFocus(nameField);
             return false;
+        }else {
+            inputLayoutName.setErrorEnabled(false);
         }
+
         return true;
     }
 
+    //Mandatory
     private boolean validateDescription(String description){
-        if (description.isEmpty()){
-            //TODO: Visual Feedback for user
+        if (!ValidationTools.isValidDescription(description)){
+            inputLayoutDescrption.setError(getString(R.string.err_msg_descripiton));
+            requestFocus(descriptionField);
             return false;
+        }else {
+            inputLayoutDescrption.setErrorEnabled(false);
         }
         return  true;
     }
 
-    private boolean validateCorporateNumber(String number){
-        return true;
+    private boolean validateCorporateNumber(String corporateNumber){
+
+        inputLayoutCorporateNumber.setErrorEnabled(false);
+        return  true;
     }
 
     private boolean validateCategory(String category){
         if (category.equals(getString(R.string.prompt_category))){
-            //TODO: visual feedback
+            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_category, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
     private boolean validateState(String state, String city){
-        if (state.equals(getString(R.string.prompt_uf))){
-            //TODO: visual feedback
-            if (! city.isEmpty()) {
-                return false;
-            }
+        if (state.equals(getString(R.string.prompt_uf)) &&  ! city.isEmpty()){
+            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_state, Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
@@ -213,21 +283,32 @@ public class CreateBusinessActivity extends AppCompatActivity {
         return true;
     }
 
-//    private boolean validateEmail(String email){
-//        //Very simple email validation. We should not be very concerned about it, because to provide
-//        //a valid email is a concern of the advertiser. So, keeping it simple will do
-//        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
-//        Matcher matcher = pattern.matcher(email);
-//        return matcher.matches();
-//    }
+    private boolean validateEmail(String email){
+        if(!ValidationTools.isValidEmail(email)){
+            inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            requestFocus(emailField);
+            return false;
+        }else{
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+        return true;
+    }
 
+    private boolean validateWebsite(String page){
+        inputLayoutWebsite.setErrorEnabled(false);
+        return true;
+    }
+    private boolean validateWhatsApp(String page){
+        inputLayoutWhatsapp.setErrorEnabled(false);
+        return true;
+    }
     private boolean validateFacebookPage(String page){
-        //TODO: check how to validate a facebook page
+        inputLayoutFacebook.setErrorEnabled(false);
         return true;
     }
 
     private boolean validateInstagramPage(String page){
-        //TODO: check how to validate instagram page
+        inputLayoutInstagram.setErrorEnabled(false);
         return true;
     }
 
@@ -243,6 +324,12 @@ public class CreateBusinessActivity extends AppCompatActivity {
             return  new Store(address, phone, hours);
         }
         return null;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
 }
