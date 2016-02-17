@@ -30,8 +30,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_details);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
         detailsRef = new Firebase(getString(R.string.firebase_url))
                         .child(getString(R.string.child_business_details));

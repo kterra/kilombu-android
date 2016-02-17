@@ -23,7 +23,6 @@
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
             <android.support.v7.widget.LinearLayoutCompat
@@ -96,7 +95,6 @@
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
 
@@ -313,7 +311,6 @@
             card_view:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
 
