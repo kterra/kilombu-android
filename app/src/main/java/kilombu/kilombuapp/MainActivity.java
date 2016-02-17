@@ -241,9 +241,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.business_menu) {
+            Intent intent = new Intent(this, BusinessProfileActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.settings_menu) {
-            Intent intent = new Intent(this, UserSettingsActivity.class);
+            Intent intent = new Intent(this, UserInfoActivity.class);
             startActivity(intent);
         }
 

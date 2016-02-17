@@ -112,5 +112,13 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_user_info">UserInfoActivity</string>
+
+    <string name="toast_success_change_password">Senha Alterada</string>
+    <string name="toast_success_change_email">Email Alterado</string>
+    <string name="toast_failure_change_password">Ocorreu um erro :( Por favor, tente novamente</string>
+    <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
+    <string name="title_activity_business_profile">BusinessProfileActivity</string>
+
 
 </resources>

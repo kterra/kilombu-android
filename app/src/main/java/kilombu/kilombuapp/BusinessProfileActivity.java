@@ -1,0 +1,309 @@
+package kilombu.kilombuapp;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BusinessProfileActivity extends AppCompatActivity {
+    private Firebase appRef;
+    private String businessId;
+    private Business currentBusiness;
+    private BusinessDetails currentDetails;
+    private BusinessStatistics currentStatistics;
+    private Map<String, Object> updatesOnBusiness;
+    private Map<String, Object> updatesOnDetails;
+
+    private final String TAG = "Business Profile";
+    LinearLayout linearLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_business_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        appRef = new Firebase(getString(R.string.firebase_url));
+
+        //retrieveBusinessdata();
+
+        if (currentBusiness == null || currentDetails == null || currentStatistics == null){
+            //TODO: deal with this problem!!!!
+        }
+
+        setupBusinessCard();
+        //setupBusinessDetailsCard();
+        //setupStatisticsCards();
+
+        updatesOnBusiness = new HashMap<String, Object>();
+        updatesOnDetails = new HashMap<String, Object>();
+
+    }
+
+
+    private void setupBusinessCard(){
+        Firebase businessRef = appRef.child(getString(R.string.child_business));
+
+        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_business_admin))
+                        .equalTo(appRef.getAuth().getUid()).limitToFirst(1);
+
+        businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    businessId = dataSnapshot.getKey();
+                    currentBusiness = dataSnapshot.getChildren().iterator().next().getValue(Business.class);
+
+                    TextView currentText = (TextView) findViewById(R.id.business_name_detail);
+                    currentText.setText(currentBusiness.getName());
+                    currentText = (TextView) findViewById(R.id.business_description_detail);
+                    currentText.setText(currentBusiness.getDescription());
+                    setupBusinessDetailsCard();
+                    setupStatisticsCards();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void setupBusinessDetailsCard(){
+        Firebase detailsRef = appRef.child(getString(R.string.child_business_details));
+
+        Query detailsQuery = detailsRef.orderByKey()
+                    .equalTo(businessId).limitToFirst(1);
+        detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    currentDetails = dataSnapshot.getChildren().iterator().
+                            next().getValue(BusinessDetails.class);
+                    //TODO: configure details cell
+
+                    TextView currentText;
+                    if (currentDetails.getStores() != null) {
+                        Map<String, Store> stores = currentDetails.getStores();
+                        for (Store store : stores.values()) {
+                            //TODO: deal with many stores and phone number
+
+
+                            String address = store.getAddress().toString();
+
+                            if (address != null && !address.isEmpty()) {
+                                currentText = (TextView) findViewById(R.id.business_address);
+                                currentText.setText(address);
+                                currentText.setVisibility(View.VISIBLE);
+                            }
+
+                            String workingHours = store.getBusinessHours();
+                            if (workingHours != null && !workingHours.isEmpty()) {
+                                currentText = (TextView) findViewById(R.id.business_working_hours);
+                                currentText.setText(workingHours);
+                                currentText.setVisibility(View.VISIBLE);
+                            }
+
+
+                            String phone = store.getPhoneNumber();
+                            if (phone != null && !phone.isEmpty()) {
+                                currentText = (TextView) findViewById(R.id.business_phone_number);
+                                currentText.setText("Tel: " + phone);
+                                currentText.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                    } else {
+                        Log.d("flag", "true");
+                        currentText = (TextView) findViewById(R.id.noinfo_message);
+                        currentText.setVisibility(View.VISIBLE);
+                    }
+
+                    boolean sacAllEmptyFlag = true;
+
+                    if (currentDetails.getSacNumber() != null &&
+                            !currentDetails.getSacNumber().isEmpty()) {
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop1);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        currentText = (TextView) findViewById(R.id.business_sac_phone);
+                        currentText.setText(currentDetails.getSacNumber());
+                    }
+
+                    /**TODO: Must setup the images so they can send an intent for each app**/
+                    if (currentDetails.getEmail() != null &&
+                            !currentDetails.getEmail().isEmpty()) {
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop2);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        currentText = (TextView) findViewById(R.id.business_email);
+                        currentText.setText(currentDetails.getEmail());
+                    }
+
+                    if (currentDetails.getWebsite() != null &&
+                            !currentDetails.getWebsite().isEmpty()) {
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop3);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        currentText = (TextView) findViewById(R.id.business_website);
+                        currentText.setText(currentDetails.getWebsite());
+                    }
+
+                    if (currentDetails.getWhatsapp() != null &&
+                            !currentDetails.getWebsite().isEmpty()) {
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop4);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        currentText = (TextView) findViewById(R.id.business_whatsapp);
+                        currentText.setText(currentDetails.getWhatsapp());
+                    }
+
+                    if (currentDetails.getFacebookPage() != null &&
+                            !currentDetails.getFacebookPage().isEmpty()) {
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop5);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        currentText = (TextView) findViewById(R.id.business_facebook);
+                        currentText.setText(currentDetails.getFacebookPage());
+                    }
+
+                    if (currentDetails.getInstagramPage() != null &&
+                            !currentDetails.getInstagramPage().isEmpty()) {
+                        sacAllEmptyFlag = false;
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop6);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        currentText = (TextView) findViewById(R.id.business_instagram);
+                        currentText.setText(currentDetails.getInstagramPage());
+                    }
+                    Log.d("flag_sac_before", Boolean.toString(sacAllEmptyFlag));
+
+                    if (sacAllEmptyFlag == true) {
+                        Log.d("flag_sac", Boolean.toString(sacAllEmptyFlag));
+                        currentText = (TextView) findViewById(R.id.no_info_message);
+                        currentText.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Toast.makeText(BusinessProfileActivity.this,
+                        "An error ocureed during details retrieval", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void setupStatisticsCards(){
+        Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics));
+        Query statisticsQuery = statisticsRef.orderByKey().equalTo(businessId);
+        statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    currentStatistics = dataSnapshot.getChildren().iterator()
+                            .next().getValue(BusinessStatistics.class);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void retrieveBusinessdata(){
+        Firebase businessRef = appRef.child(getString(R.string.child_business));
+
+        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_business_admin))
+                .equalTo(appRef.getAuth().getUid());
+
+        businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    businessId = dataSnapshot.getKey();
+                    currentBusiness = dataSnapshot.getChildren().iterator().next().getValue(Business.class);
+                    retrieveDetails();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+
+    private void retrieveDetails(){
+        Firebase detailsRef = appRef.child(getString(R.string.child_business_details));
+        Query detailsQuery = detailsRef.orderByKey().equalTo(businessId);
+        detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    currentDetails = dataSnapshot.getChildren().iterator()
+                            .next().getValue(BusinessDetails.class);
+                    //retrieveStatistics();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void retrieveStatistics(){
+        Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics));
+        Query statisticsQuery = statisticsRef.orderByKey().equalTo(businessId);
+        statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    currentStatistics = dataSnapshot.getChildren().iterator()
+                            .next().getValue(BusinessStatistics.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void saveUpdatesOnBusiness(View confirmationButton){
+        Firebase currentBusinessRef = appRef.child(getString(R.string.child_business))
+                .child(businessId);
+
+        currentBusinessRef.updateChildren(updatesOnBusiness);
+
+        Firebase currentDetailsRef = appRef.child(getString(R.string.child_business_details))
+                .child(businessId);
+        currentDetailsRef.updateChildren(updatesOnDetails);
+
+    }
+
+}

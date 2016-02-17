@@ -45,9 +45,19 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".CategoriesListActivity" />
         <activity
-            android:name=".UserSettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
+            android:name=".UserInfoActivity"
+            android:label="@string/title_activity_user_info"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".BusinessProfileActivity"
+            android:label="@string/title_activity_business_profile"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />

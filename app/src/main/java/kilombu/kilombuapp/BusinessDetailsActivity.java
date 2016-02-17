@@ -86,8 +86,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                                 currentText.setVisibility(View.VISIBLE);
                             }
 
-
-
                         }
                     }else{
                         Log.d("flag", "true");
