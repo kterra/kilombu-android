@@ -160,7 +160,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
                 && validateCategory(category)
                 && validateState(state, city)
                 && validatePhone(phoneNumber)
-                && validateEmail(email)
+                && ValidationTools.isValidEmail(email)
                 && validatePhone(sacPhone)
                 && validatePhone(whatsapp)
                 && validateFacebookPage(facebook)
@@ -213,13 +213,13 @@ public class CreateBusinessActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean validateEmail(String email){
-        //Very simple email validation. We should not be very concerned about it, because to provide
-        //a valid email is a concern of the advertiser. So, keeping it simple will do
-        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+//    private boolean validateEmail(String email){
+//        //Very simple email validation. We should not be very concerned about it, because to provide
+//        //a valid email is a concern of the advertiser. So, keeping it simple will do
+//        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
+//        Matcher matcher = pattern.matcher(email);
+//        return matcher.matches();
+//    }
 
     private boolean validateFacebookPage(String page){
         //TODO: check how to validate a facebook page

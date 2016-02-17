@@ -142,7 +142,7 @@ public class SignUpActivity extends Activity {
 
     private boolean validateEmail(String email) {
 
-        if (email.isEmpty() || !isValidEmail(email)) {
+        if (email.isEmpty() || !ValidationTools.isValidEmail(email)) {
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             requestFocus(emailEditText);
             return false;
@@ -180,9 +180,6 @@ public class SignUpActivity extends Activity {
         return true;
     }
 
-    private static boolean isValidEmail(String email) {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
 
     private void requestFocus(View view) {
         if (view.requestFocus()) {
