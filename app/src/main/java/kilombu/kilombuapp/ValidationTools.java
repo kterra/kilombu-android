@@ -5,7 +5,7 @@ package kilombu.kilombuapp;
  */
 public class ValidationTools {
     public static boolean isValidEmail(String email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return !email.isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public static boolean isValidName(String name){
@@ -20,6 +20,15 @@ public class ValidationTools {
             return false;
         }
         return  true;
+    }
+
+    public static boolean isValidPassword(String password){
+
+        if (password.isEmpty()){
+            return false;
+        }
+        return true;
+
     }
 
     public static boolean isValidPasswordAgain(String password, String passwordAgain){

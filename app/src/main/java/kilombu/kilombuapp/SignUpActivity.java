@@ -142,7 +142,7 @@ public class SignUpActivity extends Activity {
 
     private boolean validateEmail(String email) {
 
-        if (email.isEmpty() || !ValidationTools.isValidEmail(email)) {
+        if (!ValidationTools.isValidEmail(email)) {
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             requestFocus(emailEditText);
             return false;
@@ -155,7 +155,7 @@ public class SignUpActivity extends Activity {
 
     private boolean validatePassword(String password) {
 
-        if (password.isEmpty()) {
+        if (!ValidationTools.isValidPassword(password)) {
             inputLayoutPassword.setError(getString(R.string.err_msg_password));
             requestFocus(passwordEditText);
             return false;

@@ -3,10 +3,12 @@ package kilombu.kilombuapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.firebase.client.Firebase;
@@ -16,8 +18,9 @@ import java.util.Map;
 
 public class EditUserNameActivity extends AppCompatActivity {
 
-    String id, name;
-    EditText usernameProfile;
+    private  String id, name;
+    private  EditText usernameProfile;
+    private TextInputLayout inputLayoutName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,12 @@ public class EditUserNameActivity extends AppCompatActivity {
 
     private void changeUserName(){
 
+        name = ((EditText)findViewById(R.id.edit_username)).getText().toString();
+
+        if (!validateName(name)) {
+            return;
+        }
+
 
         Map<String, Object> name = new HashMap<String, Object>();
         String newUserName =  usernameProfile.getText().toString();
@@ -66,6 +75,26 @@ public class EditUserNameActivity extends AppCompatActivity {
         startActivity(intent);
 
 
+    }
+
+    private boolean validateName(String name) {
+        inputLayoutName = (TextInputLayout) findViewById(R.id.username_edit_layout);
+
+        if (!ValidationTools.isValidName(name)) {
+            inputLayoutName.setError(getString(R.string.err_msg_name));
+            requestFocus((EditText) findViewById(R.id.edit_username));
+            return false;
+        } else {
+            inputLayoutName.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
 }
