@@ -48,10 +48,14 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         businessId = intent.getStringExtra("businessId");
 
-        String businessName = intent.getStringExtra("businessName");
-        String businessCategory = intent.getStringExtra("businessCategory");
-        String businessDescription = intent.getStringExtra("businessDescription");
-        String businessCorporateNumber = intent.getStringExtra("corporateNumber");
+        String businessName = intent.getStringExtra(
+                                getString(R.string.child_business_this_name));
+        String businessCategory = intent.getStringExtra(
+                                getString(R.string.child_business_this_category));
+        String businessDescription = intent.getStringExtra(
+                                getString(R.string.child_business_this_description));
+        String businessCorporateNumber = intent.getStringExtra(
+                                getString(R.string.child_business_this_corporate_number));
 
         EditText currentText = (EditText) findViewById(R.id.edit_name);
         currentText.setText(businessName);
@@ -77,16 +81,20 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
 
     public void saveAndUpdateData(){
         EditText currentText = (EditText) findViewById(R.id.edit_name);
-        businessUpdates.put("name", currentText.getText().toString());
+        businessUpdates.put(getString(R.string.child_business_this_name),
+                            currentText.getText().toString());
 
         currentText = (EditText) findViewById(R.id.edit_description);
-        businessUpdates.put("description", currentText.getText().toString());
+        businessUpdates.put(getString(R.string.child_business_this_description),
+                            currentText.getText().toString());
 
         currentText = (EditText) findViewById(R.id.edit_corporate_number);
-        businessUpdates.put("corporateNumber", currentText.getText().toString());
+        businessUpdates.put(getString(R.string.child_business_this_corporate_number),
+                            currentText.getText().toString());
 
         Spinner category = (Spinner) findViewById(R.id.edit_category);
-        businessUpdates.put("category", category.getSelectedItem().toString());
+        businessUpdates.put(getString(R.string.child_business_this_category),
+                            category.getSelectedItem().toString());
 
         Firebase currentBusinessRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business)).child(businessId);

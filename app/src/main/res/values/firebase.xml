@@ -21,4 +21,14 @@
     <string name="child_details_this_instagram">instagramPage</string>
 
 
+    <string name="child_details_stores">stores</string>
+    <string name="child_details_store_address_country">country</string>
+    <string name="child_details_store_address_state">state</string>
+    <string name="child_details_store_address_city">city</string>
+    <string name="child_details_store_address_district">district</string>
+    <string name="child_details_store_address_street">street</string>
+    <string name="child_details_store_address_complement">complement</string>
+    <string name="child_details_store_phone">phoneNumber</string>
+    <string name="child_details_store_business_hours">businessHours</string>
+
 </resources>

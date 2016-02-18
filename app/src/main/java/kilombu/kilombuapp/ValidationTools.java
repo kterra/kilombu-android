@@ -22,5 +22,19 @@ public class ValidationTools {
         return  true;
     }
 
+    public static BusinessAddress validateAddress(String street, String district, String city, String state){
+        if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
+            return new BusinessAddress(street, district, city, state);
+        }
+        return null;
+    }
+
+    public static Store validateStore(BusinessAddress address, String phone, String hours){
+        if (address != null || !phone.isEmpty() || !hours.isEmpty()){
+            return  new Store(address, phone, hours);
+        }
+        return null;
+    }
+
 
 }

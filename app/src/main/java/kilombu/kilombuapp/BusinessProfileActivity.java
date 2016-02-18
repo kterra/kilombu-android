@@ -209,9 +209,15 @@ public class BusinessProfileActivity extends AppCompatActivity {
     public void goToEditBusinessInfo(View editButton){
         Intent intent = new Intent(this, EditBusinessInfoActivity.class);
         intent.putExtra("businessId", businessId);
-        intent.putExtra("businessName", currentBusiness.getName());
-        intent.putExtra("businessCategory", currentBusiness.getCategory());
-        intent.putExtra("businessDescription", currentBusiness.getDescription());
+        intent.putExtra(getString(R.string.child_business_this_name),
+                                    currentBusiness.getName());
+        intent.putExtra(getString(R.string.child_business_this_category),
+                                    currentBusiness.getCategory());
+        intent.putExtra(getString(R.string.child_business_this_description),
+                                    currentBusiness.getDescription());
+        intent.putExtra(getString(R.string.child_business_this_corporate_number),
+                currentBusiness.getCorporateNumber());
+
         startActivity(intent);
     }
 
@@ -229,6 +235,19 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     public void goToEditStoreInfo(View editButton){
         Intent intent = new Intent(this, EditStoreInfoActivity.class);
+        //TODO: find a new way when we support multiple stores
+        Store currentStore = currentDetails.getStores().values().iterator().next();
+        BusinessAddress currentAddress = currentStore.getAddress();
+
+        intent.putExtra("businessId", businessId);
+        intent.putExtra(getString(R.string.child_details_store_address_country), currentAddress.getCountry());
+        intent.putExtra(getString(R.string.child_details_store_address_state), currentAddress.getState());
+        intent.putExtra(getString(R.string.child_details_store_address_city), currentAddress.getCity());
+        intent.putExtra(getString(R.string.child_details_store_address_district), currentAddress.getDistrict());
+        intent.putExtra(getString(R.string.child_details_store_address_street), currentAddress.getStreet());
+        intent.putExtra(getString(R.string.child_details_store_phone), currentStore.getPhoneNumber());
+        intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
+
         startActivity(intent);
     }
 

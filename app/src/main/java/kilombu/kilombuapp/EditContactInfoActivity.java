@@ -26,7 +26,6 @@ public class EditContactInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         contactInfoUpdates = new HashMap<String, Object>();
         setupContactInfo();
 
