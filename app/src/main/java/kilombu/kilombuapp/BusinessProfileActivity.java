@@ -2,7 +2,6 @@ package kilombu.kilombuapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -55,7 +54,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private void setupBusinessCard(){
         Firebase businessRef = appRef.child(getString(R.string.child_business));
 
-        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_business_admin))
+        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
                         .equalTo(appRef.getAuth().getUid()).limitToFirst(1);
 
         businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -219,6 +218,12 @@ public class BusinessProfileActivity extends AppCompatActivity {
     public void goToEditContactInfo(View editButton){
         Intent intent = new Intent(this, EditContactInfoActivity.class);
         intent.putExtra("businessId", businessId);
+        intent.putExtra(getString(R.string.child_details_this_email), currentDetails.getEmail());
+        intent.putExtra(getString(R.string.child_details_this_website), currentDetails.getWebsite());
+        intent.putExtra(getString(R.string.child_details_this_sac), currentDetails.getSacNumber());
+        intent.putExtra(getString(R.string.child_details_this_whatsapp), currentDetails.getWhatsapp());
+        intent.putExtra(getString(R.string.child_details_this_facebook), currentDetails.getFacebookPage());
+        intent.putExtra(getString(R.string.child_details_this_instagram), currentDetails.getInstagramPage());
         startActivity(intent);
     }
 
@@ -253,7 +258,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private void retrieveBusinessdata(){
         Firebase businessRef = appRef.child(getString(R.string.child_business));
 
-        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_business_admin))
+        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
                 .equalTo(appRef.getAuth().getUid());
 
         businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
