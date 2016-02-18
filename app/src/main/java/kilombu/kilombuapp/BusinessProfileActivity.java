@@ -225,8 +225,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     Calendar cal = Calendar.getInstance(Locale.getDefault());
                     cal.setTimeInMillis(currentStatistics.getTimestamp());
                     String registrationDate = DateFormat.format("dd-MM-yyyy", cal).toString();
-                    //TODO: write date to a textview
-
+                    ((TextView)findViewById(R.id.business_timestamp)).setText("Na família Kilombu desde: " + registrationDate);
 
                 }
             }
