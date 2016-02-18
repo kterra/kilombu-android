@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.Query;
@@ -23,6 +26,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
 
     private String businessId;
     private Map<String, Object> businessUpdates;
+    private TextInputLayout inputLayoutName, inputLayoutDescrption, inputLayoutCorporateNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,11 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         String businessCorporateNumber = intent.getStringExtra(
                                 getString(R.string.child_business_this_corporate_number));
 
+
+        inputLayoutName = (TextInputLayout) findViewById(R.id.edit_name_layout);
+        inputLayoutDescrption = (TextInputLayout) findViewById(R.id.edit_description_layout);
+        inputLayoutCorporateNumber = (TextInputLayout) findViewById(R.id.edit_corporate_number_layout);
+
         EditText currentText = (EditText) findViewById(R.id.edit_name);
         currentText.setText(businessName);
 
@@ -81,20 +90,36 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
 
     public void saveAndUpdateData(){
         EditText currentText = (EditText) findViewById(R.id.edit_name);
-        businessUpdates.put(getString(R.string.child_business_this_name),
-                            currentText.getText().toString());
+        String name = currentText.getText().toString();
+        if(!validateName(name)){
+            return;
+        }
+        businessUpdates.put(getString(R.string.child_business_this_name), name);
 
         currentText = (EditText) findViewById(R.id.edit_description);
+        String description = currentText.getText().toString();
+
         businessUpdates.put(getString(R.string.child_business_this_description),
-                            currentText.getText().toString());
-
+                            description);
+        if(!validateDescription(description)){
+            return;
+        }
         currentText = (EditText) findViewById(R.id.edit_corporate_number);
+        String corporateNumber = currentText.getText().toString();
+        if(!validateCorporateNumber(corporateNumber)){
+            return;
+        }
         businessUpdates.put(getString(R.string.child_business_this_corporate_number),
-                            currentText.getText().toString());
+                corporateNumber);
 
-        Spinner category = (Spinner) findViewById(R.id.edit_category);
+        Spinner categorySelection = (Spinner) findViewById(R.id.edit_category);
+        String category = categorySelection.getSelectedItem().toString();
         businessUpdates.put(getString(R.string.child_business_this_category),
-                            category.getSelectedItem().toString());
+                category);
+
+        if(!validateCategory(category)){
+            return;
+        }
 
         Firebase currentBusinessRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business)).child(businessId);
@@ -105,6 +130,53 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         //could use noHistory=true on manifest
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    //Mandatory
+    private boolean validateName(String name){
+        if (!ValidationTools.isValidName(name)){
+            inputLayoutName.setError(getString(R.string.err_msg_bus_name));
+            //requestFocus(nameField);
+            Toast.makeText(EditBusinessInfoActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            inputLayoutName.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    //Mandatory
+    private boolean validateDescription(String description){
+        if (!ValidationTools.isValidDescription(description)){
+            inputLayoutDescrption.setError(getString(R.string.err_msg_descripiton));
+            //requestFocus(descriptionField);
+            Toast.makeText(EditBusinessInfoActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            inputLayoutDescrption.setErrorEnabled(false);
+        }
+        return  true;
+    }
+
+    private boolean validateCorporateNumber(String corporateNumber){
+        inputLayoutCorporateNumber.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateCategory(String category){
+        if (category.equals(getString(R.string.prompt_category))){
+            Toast.makeText(EditBusinessInfoActivity.this, R.string.err_msg_category, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    //TODO: check why it is not working
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
 }

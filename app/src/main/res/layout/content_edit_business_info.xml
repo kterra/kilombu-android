@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:id="@+id/edit_name_layout"
             >
             <EditText
                 android:layout_width="match_parent"
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:id="@+id/edit_description_layout"
             >
             <EditText
                 android:layout_width="match_parent"
@@ -65,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:id="@+id/edit_corporate_number_layout"
             >
             <EditText
                 android:layout_width="match_parent"
