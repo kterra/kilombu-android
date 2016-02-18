@@ -24,12 +24,13 @@ public class ValidationTools {
         return  true;
     }
 
-    public static boolean isValidPassword(String password){
+    public static boolean isValidPassword(String password) {
 
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             return false;
         }
         return true;
+    }
 
         public static boolean isValidPasswordAgain(String password, String passwordAgain){
             if(passwordAgain.isEmpty() ||
@@ -54,7 +55,7 @@ public class ValidationTools {
 
     }
 
-    
+
 
 
 }

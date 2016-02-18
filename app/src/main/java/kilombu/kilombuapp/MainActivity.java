@@ -1,5 +1,6 @@
 package kilombu.kilombuapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -85,27 +87,27 @@ public class MainActivity extends AppCompatActivity
 
             //set nav header text
             Query getUser = appRef.child("users").orderByKey().equalTo(userId);
-            getUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                Log.d("auth", Long.toString(dataSnapshot.getChildrenCount()));
-                                currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
+            getUser.addValueEventListener(new ValueEventListener() {
+                                              @Override
+                                              public void onDataChange(DataSnapshot dataSnapshot) {
+                                                  if (dataSnapshot.exists()) {
+                                                      Log.d("auth", Long.toString(dataSnapshot.getChildrenCount()));
+                                                      currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
 
-                                TextView username = (TextView) findViewById(R.id.user_name_header);
-                                username.setText(currentUser.getName());
-                                TextView usermail = (TextView) findViewById(R.id.user_mail_header);
-                                usermail.setText(currentUser.getEmail());
-                            }else{
-                                //TODO: what if user data is not found?
-                            }
-                        }
+                                                      TextView username = (TextView) findViewById(R.id.user_name_header);
+                                                      username.setText(currentUser.getName());
+                                                      TextView usermail = (TextView) findViewById(R.id.user_mail_header);
+                                                      usermail.setText(currentUser.getEmail());
+                                                  } else {
+                                                      //TODO: what if user data is not found?
+                                                  }
+                                              }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                                              @Override
+                                              public void onCancelled(FirebaseError firebaseError) {
 
-                        }
-                    }
+                                              }
+                                          }
             );
         }
     }
@@ -141,11 +143,10 @@ public class MainActivity extends AppCompatActivity
         adsView.setAdapter(firebaseAdsAdapter);
     }
 
+    public void changeCategory(String category){
 
-    //TODO: consider rewriting own adapter
-    public void changeCategory(View button){
+        currentCategory = category;
 
-        currentCategory = button.getTag().toString();
         Log.d("MAIN", currentCategory);
         if (currentCategory != getString(R.string.category_all)){
             businessQuery = businessRef.orderByChild("category").equalTo(currentCategory).limitToFirst(adsPerPage);
@@ -180,11 +181,32 @@ public class MainActivity extends AppCompatActivity
             }
         };
         adsView.swapAdapter(firebaseAdsAdapter, true);
+
     }
+
+
+    //TODO: consider rewriting own adapter
+    public void changeCategoryOnClick(View button){
+
+        changeCategory(button.getTag().toString());
+
+    }
+
+
 
     public void showListWithAllCategories(View button){
         Intent intent = new Intent(MainActivity.this, CategoriesListActivity.class);
-        MainActivity.this.startActivity(intent);
+        MainActivity.this.startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                changeCategory(data.getStringExtra("result"));
+            }
+        }
     }
 
     @Override
