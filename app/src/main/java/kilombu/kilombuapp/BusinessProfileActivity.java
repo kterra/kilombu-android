@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,7 +17,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class BusinessProfileActivity extends AppCompatActivity {
@@ -40,8 +43,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_business_profile));
 
         appRef = new Firebase(getString(R.string.firebase_url));
-
-        //retrieveBusinessdata();
 
         setupBusinessCard();
 
@@ -206,15 +207,46 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     }
 
+    private void setupStatisticsCards(){
+        Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics));
+        Query statisticsQuery = statisticsRef.orderByKey().equalTo(businessId);
+        statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    currentStatistics = dataSnapshot.getChildren().iterator()
+                            .next().getValue(BusinessStatistics.class);
+                    TextView viewsCount = (TextView) findViewById(R.id.profile_number_view);
+                    viewsCount.setText(Long.toString(currentStatistics.getVisualizations()));
+                    viewsCount = (TextView) findViewById(R.id.profile_number_likes);
+                    viewsCount.setText(Long.toString(currentStatistics.getRecommendations()));
+
+
+                    Calendar cal = Calendar.getInstance(Locale.getDefault());
+                    cal.setTimeInMillis(currentStatistics.getTimestamp());
+                    String registrationDate = DateFormat.format("dd-MM-yyyy", cal).toString();
+                    //TODO: write date to a textview
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
     public void goToEditBusinessInfo(View editButton){
         Intent intent = new Intent(this, EditBusinessInfoActivity.class);
         intent.putExtra("businessId", businessId);
         intent.putExtra(getString(R.string.child_business_this_name),
-                                    currentBusiness.getName());
+                currentBusiness.getName());
         intent.putExtra(getString(R.string.child_business_this_category),
-                                    currentBusiness.getCategory());
+                currentBusiness.getCategory());
         intent.putExtra(getString(R.string.child_business_this_description),
-                                    currentBusiness.getDescription());
+                currentBusiness.getDescription());
         intent.putExtra(getString(R.string.child_business_this_corporate_number),
                 currentBusiness.getCorporateNumber());
 
@@ -249,104 +281,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
         intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
 
         startActivity(intent);
-    }
-
-    private void setupStatisticsCards(){
-        Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics));
-        Query statisticsQuery = statisticsRef.orderByKey().equalTo(businessId);
-        statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    currentStatistics = dataSnapshot.getChildren().iterator()
-                            .next().getValue(BusinessStatistics.class);
-                    TextView viewsCount = (TextView) findViewById(R.id.profile_number_view);
-                    viewsCount.setText(Long.toString(currentStatistics.getVisualizations()));
-                    viewsCount = (TextView) findViewById(R.id.profile_number_likes);
-                    viewsCount.setText(Long.toString(currentStatistics.getRecommendations()));
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-
-    private void retrieveBusinessdata(){
-        Firebase businessRef = appRef.child(getString(R.string.child_business));
-
-        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
-                .equalTo(appRef.getAuth().getUid());
-
-        businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    businessId = dataSnapshot.getKey();
-                    currentBusiness = dataSnapshot.getChildren().iterator().next().getValue(Business.class);
-                    retrieveDetails();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-
-
-    private void retrieveDetails(){
-        Firebase detailsRef = appRef.child(getString(R.string.child_business_details));
-        Query detailsQuery = detailsRef.orderByKey().equalTo(businessId);
-        detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    currentDetails = dataSnapshot.getChildren().iterator()
-                            .next().getValue(BusinessDetails.class);
-                    //retrieveStatistics();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-
-    private void retrieveStatistics(){
-        Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics));
-        Query statisticsQuery = statisticsRef.orderByKey().equalTo(businessId);
-        statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    currentStatistics = dataSnapshot.getChildren().iterator()
-                            .next().getValue(BusinessStatistics.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-
-    private void saveUpdatesOnBusiness(View confirmationButton){
-        Firebase currentBusinessRef = appRef.child(getString(R.string.child_business))
-                .child(businessId);
-
-        currentBusinessRef.updateChildren(updatesOnBusiness);
-
-        Firebase currentDetailsRef = appRef.child(getString(R.string.child_business_details))
-                .child(businessId);
-        currentDetailsRef.updateChildren(updatesOnDetails);
-
     }
 
 }
