@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +28,8 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
     private String businessId;
     private Map<String, Object> businessUpdates;
     private TextInputLayout inputLayoutName, inputLayoutDescrption, inputLayoutCorporateNumber;
+    private SharedPreferences busPreferences;
+    private android.content.Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        context = EditBusinessInfoActivity.this;
         businessUpdates = new HashMap<String, Object>();
         setupBusinessData();
 
@@ -52,14 +56,12 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         businessId = intent.getStringExtra("businessId");
 
-        String businessName = intent.getStringExtra(
-                                getString(R.string.child_business_this_name));
-        String businessCategory = intent.getStringExtra(
-                                getString(R.string.child_business_this_category));
-        String businessDescription = intent.getStringExtra(
-                                getString(R.string.child_business_this_description));
-        String businessCorporateNumber = intent.getStringExtra(
-                                getString(R.string.child_business_this_corporate_number));
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        businessId = busPreferences.getString(getString(R.string.businessid_key), "");
+        String businessName = busPreferences.getString(getString(R.string.businessname_key), "");
+        String businessDescription = busPreferences.getString(getString(R.string.businessdescription_key), "");
+        String businessCategory = busPreferences.getString(getString(R.string.businesscategory_key), "");
+        String businessCorporateNumber = busPreferences.getString(getString(R.string.businesscorpnumber_key), "");
 
 
         inputLayoutName = (TextInputLayout) findViewById(R.id.edit_name_layout);
@@ -96,14 +98,24 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         }
         businessUpdates.put(getString(R.string.child_business_this_name), name);
 
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor busEditor = busPreferences.edit();
+        busEditor.putString(getString(R.string.businessname_key), name);
+        busEditor.commit();
+
         currentText = (EditText) findViewById(R.id.edit_description);
         String description = currentText.getText().toString();
-
-        businessUpdates.put(getString(R.string.child_business_this_description),
-                            description);
         if(!validateDescription(description)){
             return;
         }
+        businessUpdates.put(getString(R.string.child_business_this_description),
+                description);
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        busEditor = busPreferences.edit();
+        busEditor.putString(getString(R.string.businessdescription_key), description);
+        busEditor.commit();
+
+
         currentText = (EditText) findViewById(R.id.edit_corporate_number);
         String corporateNumber = currentText.getText().toString();
         if(!validateCorporateNumber(corporateNumber)){
@@ -112,14 +124,24 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         businessUpdates.put(getString(R.string.child_business_this_corporate_number),
                 corporateNumber);
 
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        busEditor = busPreferences.edit();
+        busEditor.putString(getString(R.string.businesscorpnumber_key),corporateNumber);
+        busEditor.commit();
+
         Spinner categorySelection = (Spinner) findViewById(R.id.edit_category);
         String category = categorySelection.getSelectedItem().toString();
-        businessUpdates.put(getString(R.string.child_business_this_category),
-                category);
-
         if(!validateCategory(category)){
             return;
         }
+        businessUpdates.put(getString(R.string.child_business_this_category),
+                category);
+
+
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        busEditor = busPreferences.edit();
+        busEditor.putString(getString(R.string.businesscategory_key), category);
+        busEditor.commit();
 
         Firebase currentBusinessRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business)).child(businessId);

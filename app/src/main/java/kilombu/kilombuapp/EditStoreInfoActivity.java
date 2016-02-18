@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
@@ -20,7 +22,9 @@ import java.util.Map;
 
 public class EditStoreInfoActivity extends AppCompatActivity {
 
-    private String businessId;
+    private String businessId, state, city, district, street, phone, hours;
+    private TextInputLayout inputLayoutCorporateNumber,inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,
+    inputLayoutBusinessHours, inputLayoutPhone;
     private Map<String, Object> storeUpdates;
 
     @Override
@@ -48,12 +52,12 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         businessId = intent.getStringExtra("businessId");
 
-        String state = intent.getStringExtra(getString(R.string.child_details_store_address_state));
-        String city = intent.getStringExtra(getString(R.string.child_details_store_address_city));
-        String district = intent.getStringExtra(getString(R.string.child_details_store_address_district));
-        String street = intent.getStringExtra(getString(R.string.child_details_store_address_street));
-        String phone = intent.getStringExtra(getString(R.string.child_details_store_phone));
-        String hours = intent.getStringExtra(getString(R.string.child_details_store_business_hours));
+        state = intent.getStringExtra(getString(R.string.child_details_store_address_state));
+        city = intent.getStringExtra(getString(R.string.child_details_store_address_city));
+        district = intent.getStringExtra(getString(R.string.child_details_store_address_district));
+        street = intent.getStringExtra(getString(R.string.child_details_store_address_street));
+        phone = intent.getStringExtra(getString(R.string.child_details_store_phone));
+        hours = intent.getStringExtra(getString(R.string.child_details_store_business_hours));
 
         EditText currentText = (EditText) findViewById(R.id.edit_city);
         currentText.setText(city);
@@ -88,23 +92,43 @@ public class EditStoreInfoActivity extends AppCompatActivity {
 
     public void saveAndUpdateStoreInfo(){
         int index = 1;
-        EditText currentText = (EditText) findViewById(R.id.edit_city);
-        String city = currentText.getText().toString();
-
-        currentText = (EditText) findViewById(R.id.edit_district);
-        String district = currentText.getText().toString();
-
-        currentText = (EditText) findViewById(R.id.edit_street);
-        String street = currentText.getText().toString();
-
-        currentText = (EditText) findViewById(R.id.edit_phone);
-        String phone = currentText.getText().toString();
-
-        currentText = (EditText) findViewById(R.id.edit_business_hours);
-        String hours = currentText.getText().toString();
 
         Spinner stateSelection = (Spinner) findViewById(R.id.edit_state);
-        String state = stateSelection.getSelectedItem().toString();
+        state = stateSelection.getSelectedItem().toString();
+        EditText currentText = (EditText) findViewById(R.id.edit_city);
+        city = currentText.getText().toString();
+
+        if(!validateState(state, city)){
+            return;
+        }
+        if(!validateCity(city)){
+            return;
+        }
+
+        currentText = (EditText) findViewById(R.id.edit_district);
+        district = currentText.getText().toString();
+        if(!validateDistrict(district)){
+            return;
+        }
+
+        currentText = (EditText) findViewById(R.id.edit_street);
+        street = currentText.getText().toString();
+        if(!validateStreet(street)){
+            return;
+        }
+
+        currentText = (EditText) findViewById(R.id.edit_phone);
+        phone = currentText.getText().toString();
+        if(!validatePhone(phone)) {
+            return;
+        }
+
+        currentText = (EditText) findViewById(R.id.edit_business_hours);
+        hours = currentText.getText().toString();
+        if(!validateBusinessHours(hours)){
+            return;
+        }
+
 
         BusinessAddress address = ValidationTools.validateAddress(street, district, city, state);
         Store newStore = ValidationTools.validateStore(address, phone, hours);
@@ -123,6 +147,44 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
+    }
+
+    private boolean validateState(String state, String city){
+        if (state.equals(getString(R.string.prompt_uf)) &&  ! city.isEmpty()){
+            Toast.makeText(EditStoreInfoActivity.this, R.string.err_msg_state, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateCity(String city){
+        inputLayoutCity = (TextInputLayout) findViewById(R.id.edit_city_layout);
+        inputLayoutCity.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateDistrict(String district){
+        inputLayoutDistrict = (TextInputLayout) findViewById(R.id.edit_district_layout);
+        inputLayoutDistrict.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateStreet(String street){
+        inputLayoutStreet = (TextInputLayout) findViewById(R.id.edit_street_layout);
+        inputLayoutStreet.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateBusinessHours(String businessHours){
+        inputLayoutBusinessHours = (TextInputLayout) findViewById(R.id.edit_business_hours_layout);
+        inputLayoutBusinessHours.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validatePhone(String phone){
+        inputLayoutPhone  = (TextInputLayout) findViewById(R.id.edit_phone_layout);
+        inputLayoutPhone.setErrorEnabled(false);
+        return true;
     }
 
 }

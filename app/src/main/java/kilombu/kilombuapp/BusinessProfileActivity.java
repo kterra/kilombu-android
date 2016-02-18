@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,8 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private BusinessStatistics currentStatistics;
     private Map<String, Object> updatesOnBusiness;
     private Map<String, Object> updatesOnDetails;
+    private SharedPreferences busPreferences;
+    private android.content.Context context;
 
     private final String TAG = "Business Profile";
     LinearLayout linearLayout;
@@ -44,6 +47,8 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
+        context = BusinessProfileActivity.this;
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
         setupBusinessCard();
 
         updatesOnBusiness = new HashMap<String, Object>();
@@ -53,34 +58,20 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
 
     private void setupBusinessCard(){
-        Firebase businessRef = appRef.child(getString(R.string.child_business));
 
-        businessId = getIntent().getStringExtra("businessId");
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        businessId = busPreferences.getString(getString(R.string.businessid_key), "");
+        String businessName = busPreferences.getString(getString(R.string.businessname_key), "");
+        String businessDescription = busPreferences.getString(getString(R.string.businessdescription_key), "");
 
-        Query businessQuery = businessRef.orderByKey().equalTo(businessId).limitToFirst(1);
+        TextView currentText = (TextView) findViewById(R.id.profile_business_name);
+        currentText.setText(businessName);
+        currentText = (TextView) findViewById(R.id.profile_business_description);
+        currentText.setText(businessDescription);
 
-        businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    DataSnapshot currentSnapShot = dataSnapshot.getChildren().iterator().next();
-                    //businessId = currentSnapShot.getKey();
-                    currentBusiness = currentSnapShot.getValue(Business.class);
+        setupBusinessDetailsCard();
+        setupStatisticsCards();
 
-                    TextView currentText = (TextView) findViewById(R.id.profile_business_name);
-                    currentText.setText(currentBusiness.getName());
-                    currentText = (TextView) findViewById(R.id.profile_business_description);
-                    currentText.setText(currentBusiness.getDescription());
-                    setupBusinessDetailsCard();
-                    setupStatisticsCards();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
     }
 
     private void setupBusinessDetailsCard(){
@@ -95,11 +86,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     //TODO: configure details cell
 
                     TextView currentText;
+
                     if (currentDetails.getStores() != null) {
                         Map<String, Store> stores = currentDetails.getStores();
                         for (Store store : stores.values()) {
                             //TODO: deal with many stores and phone number
-
 
                             String address = store.getAddress().toString();
 
@@ -107,6 +98,8 @@ public class BusinessProfileActivity extends AppCompatActivity {
                                 currentText = (TextView) findViewById(R.id.profile_business_address);
                                 currentText.setText(address);
                                 currentText.setVisibility(View.VISIBLE);
+
+
                             }
 
                             String workingHours = store.getBusinessHours();
@@ -132,60 +125,96 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     }
 
                     boolean sacAllEmptyFlag = true;
-
-                    if (currentDetails.getSacNumber() != null &&
-                            !currentDetails.getSacNumber().isEmpty()) {
+                    String sacNumber = currentDetails.getSacNumber();
+                    if (sacNumber != null &&
+                            !sacNumber.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group1);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.profile_business_sac_phone);
-                        currentText.setText(currentDetails.getSacNumber());
+                        currentText.setText(sacNumber);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessdetails_sacnumber_key), sacNumber);
+                        busEditor.commit();
+
                     }
 
+                    String email = currentDetails.getEmail();
                     /**TODO: Must setup the images so they can send an intent for each app**/
-                    if (currentDetails.getEmail() != null &&
-                            !currentDetails.getEmail().isEmpty()) {
+                    if (email != null &&
+                            !email.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group2);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.profile_business_email);
-                        currentText.setText(currentDetails.getEmail());
+                        currentText.setText(email);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessdetails_email_key), email);
+                        busEditor.commit();
                     }
 
-                    if (currentDetails.getWebsite() != null &&
-                            !currentDetails.getWebsite().isEmpty()) {
+                    String website = currentDetails.getWebsite();
+                    if ( website != null &&
+                            !website.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group3);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.profile_business_website);
-                        currentText.setText(currentDetails.getWebsite());
+                        currentText.setText(website);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessdetails_website_key), website);
+                        busEditor.commit();
                     }
 
-                    if (currentDetails.getWhatsapp() != null &&
-                            !currentDetails.getWebsite().isEmpty()) {
+                    String whatsapp = currentDetails.getWhatsapp();
+                    if ( whatsapp!= null &&
+                            !whatsapp.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group4);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.profile_business_whatsapp);
-                        currentText.setText(currentDetails.getWhatsapp());
+                        currentText.setText(whatsapp);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessdetails_whatsapp_key), whatsapp);
+                        busEditor.commit();
                     }
 
-                    if (currentDetails.getFacebookPage() != null &&
-                            !currentDetails.getFacebookPage().isEmpty()) {
+                    String facebookPage = currentDetails.getFacebookPage();
+                    if ( facebookPage != null &&
+                            !facebookPage.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group5);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.profile_business_facebook);
                         currentText.setText(currentDetails.getFacebookPage());
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessdetails_facebook_key), facebookPage);
+                        busEditor.commit();
                     }
 
-                    if (currentDetails.getInstagramPage() != null &&
-                            !currentDetails.getInstagramPage().isEmpty()) {
+                    String instagramPage = currentDetails.getInstagramPage();
+                    if (instagramPage != null &&
+                            !instagramPage.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group6);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.profile_business_instagram);
-                        currentText.setText(currentDetails.getInstagramPage());
+                        currentText.setText(instagramPage);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessdetails_instagram_key), instagramPage);
+                        busEditor.commit();
                     }
                     Log.d("flag_sac_before", Boolean.toString(sacAllEmptyFlag));
 
@@ -240,28 +269,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     public void goToEditBusinessInfo(View editButton){
         Intent intent = new Intent(this, EditBusinessInfoActivity.class);
-        intent.putExtra("businessId", businessId);
-        intent.putExtra(getString(R.string.child_business_this_name),
-                currentBusiness.getName());
-        intent.putExtra(getString(R.string.child_business_this_category),
-                currentBusiness.getCategory());
-        intent.putExtra(getString(R.string.child_business_this_description),
-                currentBusiness.getDescription());
-        intent.putExtra(getString(R.string.child_business_this_corporate_number),
-                currentBusiness.getCorporateNumber());
-
         startActivity(intent);
     }
 
     public void goToEditContactInfo(View editButton){
         Intent intent = new Intent(this, EditContactInfoActivity.class);
-        intent.putExtra("businessId", businessId);
-        intent.putExtra(getString(R.string.child_details_this_email), currentDetails.getEmail());
-        intent.putExtra(getString(R.string.child_details_this_website), currentDetails.getWebsite());
-        intent.putExtra(getString(R.string.child_details_this_sac), currentDetails.getSacNumber());
-        intent.putExtra(getString(R.string.child_details_this_whatsapp), currentDetails.getWhatsapp());
-        intent.putExtra(getString(R.string.child_details_this_facebook), currentDetails.getFacebookPage());
-        intent.putExtra(getString(R.string.child_details_this_instagram), currentDetails.getInstagramPage());
         startActivity(intent);
     }
 

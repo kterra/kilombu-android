@@ -2,6 +2,7 @@ package kilombu.kilombuapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.core.Context;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 public class MainActivity extends AppCompatActivity
@@ -41,6 +43,11 @@ public class MainActivity extends AppCompatActivity
     private Firebase businessRef;
     private Query businessQuery;
     private Query getUser;
+    private SharedPreferences busPreferences;
+    private SharedPreferences userPreferences;
+    private android.content.Context context;
+    private DrawerLayout drawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        context = MainActivity.this;
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+
+
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
@@ -61,19 +75,36 @@ public class MainActivity extends AppCompatActivity
                             .child(getString(R.string.child_business));
         initializeAdapter();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            public void onDrawerOpened(View drawerView) {
+                setNavigationHeader();
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
 
         appRef = new Firebase(getString(R.string.firebase_url));
         setUpCustomDrawer();
         Log.d("MAIN", "ON CREATE");
     }
 
+    private void setNavigationHeader(){
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        String userName = userPreferences.getString(getString(R.string.username_key),"");
+        Log.d("MAIN", userName);
+        ((TextView) findViewById(R.id.user_name_header)).setText(userName);
+
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        String businessName = busPreferences.getString(getString(R.string.businessname_key),"");
+        Log.d("MAIN", businessName);
+        ((TextView) findViewById(R.id.user_mail_header)).setText(businessName);
+    }
     @Override
     protected void onStart() {
+
         super.onStart();
         Log.d("MAIN", "ON START");
     }
@@ -90,10 +121,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         if (appRef.getAuth() != null) {
             String userId = appRef.getAuth().getUid();
+            SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putString(getString(R.string.userid_key),userId);
+            userEditor.commit();
             navigationView.getMenu().clear(); //clear old inflated items.
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
 
             //set nav header text
+
             getUser = appRef.child("users").orderByKey().equalTo(userId);
             getUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -101,10 +136,19 @@ public class MainActivity extends AppCompatActivity
                     if (dataSnapshot.exists()) {
                         currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
 
-                        TextView username = (TextView) findViewById(R.id.user_name_header);
-                        username.setText(currentUser.getName());
-                      /*TextView usermail = (TextView) findViewById(R.id.user_mail_header);
-                      usermail.setText(currentUser.getEmail());*/
+                        String userName = currentUser.getName();
+
+                        SharedPreferences.Editor userEditor = userPreferences.edit();
+
+                        userEditor.putString(getString(R.string.username_key), userName);
+                        userEditor.putString(getString(R.string.useremail_key), currentUser.getEmail());
+                        userEditor.commit();
+
+                        ((TextView) findViewById(R.id.user_name_header)).setText(userName);
+
+                        /*TextView usermail = (TextView) findViewById(R.id.user_mail_header);
+                        usermail.setText(currentUser.getEmail());*/
+
                     } else {
                         //TODO: what if user data is not found?
                     }
@@ -124,11 +168,27 @@ public class MainActivity extends AppCompatActivity
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         DataSnapshot currentSnapShot = dataSnapshot.getChildren().iterator().next();
+
                         currentBusinessId = currentSnapShot.getKey();
                         currentBusiness = currentSnapShot.getValue(Business.class);
 
-                        TextView userBusinessName = (TextView) findViewById(R.id.user_mail_header);
-                        userBusinessName.setText(currentBusiness.getName());
+                        String currentBusinessAdmin = currentBusiness.getAdmin();
+                        String currentBusinessName = currentBusiness.getName();
+                        String currentBusinessDescription = currentBusiness.getDescription();
+                        String currentBusinessCorpNumber = currentBusiness.getCorporateNumber();
+                        String currentBusinessCategory = currentBusiness.getCategory();
+
+
+                        SharedPreferences.Editor busEditor = busPreferences.edit();
+                        busEditor.putString(getString(R.string.businessid_key), currentBusinessId);
+                        busEditor.putString(getString(R.string.businessadmin_key), currentBusinessAdmin);
+                        busEditor.putString(getString(R.string.businessname_key), currentBusinessName);
+                        busEditor.putString(getString(R.string.businessdescription_key), currentBusinessDescription);
+                        busEditor.putString(getString(R.string.businesscorpnumber_key), currentBusinessCorpNumber);
+                        busEditor.putString(getString(R.string.businesscategory_key), currentBusinessCategory);
+                        busEditor.commit();
+
+                        ((TextView) findViewById(R.id.user_mail_header)).setText(currentBusinessName);
 
                         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                         navigationView.setNavigationItemSelectedListener(MainActivity.this);
@@ -296,6 +356,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.signout_menu) {
             appRef.unauth();
+            
+            busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+            busPreferences.edit().clear().commit();
+            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            userPreferences.edit().clear().commit();
+
             Intent intent = new Intent(this, MainActivity.class);
             finish();
             startActivity(intent);
@@ -306,7 +372,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.business_menu) {
             Intent intent = new Intent(this, BusinessProfileActivity.class);
-            intent.putExtra("businessId", currentBusinessId);
             startActivity(intent);
 
         } else if (id == R.id.settings_menu) {
@@ -334,4 +399,6 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+
+
 }

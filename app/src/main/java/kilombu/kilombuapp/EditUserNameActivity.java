@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
@@ -21,6 +22,8 @@ public class EditUserNameActivity extends AppCompatActivity {
     private  String id, name;
     private  EditText usernameProfile;
     private TextInputLayout inputLayoutName;
+    private SharedPreferences userPreferences;
+    private android.content.Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,15 @@ public class EditUserNameActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.title_activity_edit_name));
 
-        setup();
+        context = EditUserNameActivity.this;
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        name = userPreferences.getString(getString(R.string.username_key),"");
+        id = userPreferences.getString(getString(R.string.userid_key), "");
+
+
+        usernameProfile = (EditText) findViewById(R.id.edit_username);
+        usernameProfile.setText(name);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,15 +53,6 @@ public class EditUserNameActivity extends AppCompatActivity {
         });
     }
 
-    private void setup(){
-        Intent intent = getIntent();
-        id = intent.getStringExtra("userId");
-        name = intent.getStringExtra("userName");
-
-        usernameProfile = (EditText) findViewById(R.id.edit_username);
-        usernameProfile.setText(name);
-
-    }
 
     private void changeUserName(){
 
@@ -69,6 +71,11 @@ public class EditUserNameActivity extends AppCompatActivity {
         Log.d("id", id);
         Log.d("name", newUserName);
         userRef.child(id).updateChildren(name);
+
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPreferences.edit();
+        userEditor.putString(getString(R.string.username_key), newUserName);
+        userEditor.commit();
 
         Intent intent = new Intent(EditUserNameActivity.this, UserProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
