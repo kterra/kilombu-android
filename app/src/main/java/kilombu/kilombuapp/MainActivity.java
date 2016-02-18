@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 
                         Firebase itemRef = firebaseAdsAdapter.getRef(position);
                         String itemKey = itemRef.getKey();
-                        intent.putExtra("business_key", itemKey);
+                        intent.putExtra("businessId", itemKey);
 
                         MainActivity.this.startActivity(intent);
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
 
                         Firebase itemRef = firebaseAdsAdapter.getRef(position);
                         String itemKey = itemRef.getKey();
-                        intent.putExtra("business_key", itemKey);
+                        intent.putExtra("businessId", itemKey);
 
                         MainActivity.this.startActivity(intent);
 
@@ -250,21 +250,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*private void initializeData(){
-        businesses = new ArrayList<>();
-
-        businesses.add(new Business(getString(R.string.nome1), null, "098687333/78",
-                getString(R.string.cat1), getString(R.string.descricao1)));
-        businesses.add(new Business(getString(R.string.nome2), null, "098687333/78",
-                getString(R.string.cat2), getString(R.string.descricao2)));
-        businesses.add(new Business(getString(R.string.nome3), null, "098687333/78",
-                getString(R.string.cat3), getString(R.string.descricao3)));
-        businesses.add(new Business(getString(R.string.nome4), null, "098687333/78",
-                getString(R.string.cat4), getString(R.string.descricao4)));
-        businesses.add(new Business(getString(R.string.nome5), null, "098687333/78",
-                getString(R.string.cat5), getString(R.string.descricao5)));
-
-    }*/
 
     public static class BusinessViewHolder extends RecyclerView.ViewHolder {
 

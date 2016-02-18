@@ -91,9 +91,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void gotosignup(View view){
-        final ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
+        /*final ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
         dialog.setMessage(getString(R.string.progress_signup));
-        dialog.show();
+        dialog.show();*/
 
         startActivity(new Intent(this, SignUpActivity.class));
     }

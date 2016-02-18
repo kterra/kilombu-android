@@ -3,7 +3,6 @@ package kilombu.kilombuapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,18 +12,18 @@ import android.widget.Toast;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
 import com.firebase.client.Query;
+import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.Map;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
 
     private Firebase detailsRef;
     private final String TAG = "Business Details";
-    String businessKey;
+    String businessId;
     LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +43,8 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         currentText = (TextView) findViewById(R.id.business_description_detail);
         currentText.setText(intent.getStringExtra("business_description"));
 
-        businessKey = intent.getStringExtra("business_key");
-        Query detailsQuery = detailsRef.orderByKey().equalTo(businessKey).limitToFirst(1);
+        businessId = intent.getStringExtra("businessId");
+        Query detailsQuery = detailsRef.orderByKey().equalTo(businessId).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -59,8 +58,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         Map<String, Store> stores = businessDetails.getStores();
                         for (Store store : stores.values()){
                             //TODO: deal with many stores and phone number
-
-
 
                             String address = store.getAddress().toString();
 
@@ -166,6 +163,31 @@ public class BusinessDetailsActivity extends AppCompatActivity {
             }
         });
 
-        return businessKey;
+        updateVisualizationsCounter();
+
+        return businessId;
+    }
+
+    private void updateVisualizationsCounter(){
+        Firebase viewsCountRef = new Firebase(getString(R.string.firebase_url))
+                .child(getString(R.string.child_business_statistics)).child(businessId)
+                .child(getString(R.string.child_statistics_visualizations));
+
+        viewsCountRef.runTransaction(new Transaction.Handler(){
+            @Override
+            public Transaction.Result doTransaction(MutableData currentData) {
+                if(currentData.getValue() == null) {
+                    currentData.setValue(1);
+                } else {
+                    currentData.setValue((Long) currentData.getValue() + 1);
+                }
+                return Transaction.success(currentData); //we can also abort by calling Transaction.abort()
+            }
+            @Override
+            public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                //This method will be called once with the results of the transaction.
+                //TODO: do we need to do anything here?
+            }
+        });
     }
 }

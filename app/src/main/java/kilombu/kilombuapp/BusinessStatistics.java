@@ -32,7 +32,7 @@ private void displayDate(){
         Firebase statisticsRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business_statistics));
 
-        Query businessStatistics = statisticsRef.orderByKey().equalTo(businessKey);
+        Query businessStatistics = statisticsRef.orderByKey().equalTo(businessId);
         businessStatistics.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
