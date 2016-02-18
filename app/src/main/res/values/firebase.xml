@@ -31,4 +31,7 @@
     <string name="child_details_store_phone">phoneNumber</string>
     <string name="child_details_store_business_hours">businessHours</string>
 
+
+
+    <string name="child_statistics_visualizations">visualizations</string>
 </resources>

@@ -36,7 +36,7 @@
 
     <string name="signin_menu">Fazer Login</string>
     <string name="signup_menu">Cadastrar</string>
-    <string name="business_menu">Ver Negócio</string>
+    <string name="business_menu">Meu Negócio</string>
     <string name="business_create_menu">Cadastrar Negócio</string>
     <string name="settings_menu">Configurações Pessoais</string>
     <string name="signout_menu">Sair</string>

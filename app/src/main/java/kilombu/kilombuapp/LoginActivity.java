@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String provider;
 
-
         public AuthResultHandler(String provider) {
             this.provider = provider;
         }
@@ -67,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onAuthenticated(AuthData authData) {
             Log.i(TAG, provider + " auth successful");
-            //Snackbar.make(coordinatorLayout, authData.getUid().toString(), Snackbar.LENGTH_LONG).show();
-            Toast.makeText(LoginActivity.this, authData.getUid().toString(), Toast.LENGTH_LONG).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -91,10 +88,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void gotosignup(View view){
-        final ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
-        dialog.setMessage(getString(R.string.progress_signup));
-        dialog.show();
-
         startActivity(new Intent(this, SignUpActivity.class));
     }
 }

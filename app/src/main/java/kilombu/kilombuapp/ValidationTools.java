@@ -32,13 +32,13 @@ public class ValidationTools {
         return true;
     }
 
-        public static boolean isValidPasswordAgain(String password, String passwordAgain){
-            if(passwordAgain.isEmpty() ||
-                    passwordAgain.compareTo(password)!=0){
-                return false;
-            }
-            return true;
+    public static boolean isValidPasswordAgain(String password, String passwordAgain){
+        if(passwordAgain.isEmpty() ||
+                passwordAgain.compareTo(password)!=0){
+            return false;
         }
+        return true;
+    }
 
     public static BusinessAddress validateAddress(String street, String district, String city, String state){
         if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){

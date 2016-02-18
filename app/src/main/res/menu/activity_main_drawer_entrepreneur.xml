@@ -6,6 +6,10 @@
         android:checkableBehavior="single">
 
         <item
+            android:id="@+id/business_menu"
+            android:icon="@drawable/ic_location_city_black_24dp"
+            android:title="@string/business_menu" />
+        <item
             android:id="@+id/business_create_menu"
             android:icon="@drawable/ic_queue_black_24dp"
             android:title="@string/business_create_menu" />
