@@ -25,7 +25,7 @@ public class ChangePassword extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle(getString(R.string.title_activity_change_password);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_change_password));
 
         appRef = new Firebase(getString(R.string.firebase_url));
         setup();
