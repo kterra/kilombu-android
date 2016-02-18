@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,8 @@ public class ChangePassword extends AppCompatActivity {
     private EditText passwordField, newPasswordField, newPasswordAgainField;
     private Firebase appRef;
     private TextInputLayout inputLayoutPassword,  inputLayoutNewPassword, inputLayoutNewPasswordAgain;
+    private SharedPreferences userPreferences;
+    private android.content.Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,10 @@ public class ChangePassword extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_change_password));
 
         appRef = new Firebase(getString(R.string.firebase_url));
-        setup();
+        context = ChangePassword.this;
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        userId = userPreferences.getString(getString(R.string.userid_key), "");
+        userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -44,12 +50,6 @@ public class ChangePassword extends AppCompatActivity {
         });
     }
 
-    private void setup(){
-        Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
-        userEmail = intent.getStringExtra("userEmail");
-
-    }
 
     private void changeUserPassword(){
 

@@ -57,5 +57,20 @@
     <string name="username_key">userName</string>
     <string name="useremail_key">userEmail</string>
 
+    <string name="businessid_key">businessId</string>
+    <string name="businessadmin_key">businessAdmin</string>
+    <string name="businessname_key">businessName</string>
+    <string name="businessdescription_key">businessDescription</string>
+    <string name="businesscorpnumber_key">businessCorpNumber</string>
+    <string name="businesscategory_key">businessCategory</string>
+
+    <string name="businessdetails_sacnumber_key">businessSacNumber</string>
+    <string name="businessdetails_email_key">businessEmail</string>
+    <string name="businessdetails_website_key">businessWebsite</string>
+    <string name="businessdetails_whatsapp_key">businessWhatsapp</string>
+    <string name="businessdetails_facebook_key">businessFacebookPage</string>
+    <string name="businessdetails_instagram_key">businessInstagramPage</string>
+
+
 
 </resources>

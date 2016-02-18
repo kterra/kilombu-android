@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,8 +24,10 @@ public class EditUserEmailActivity extends AppCompatActivity {
 
     private String userId, currentUserEmail, newUserEmail, userPassword;
     private TextView currentUserEmailField;
-    private Firebase appRef;
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
+    private SharedPreferences userPreferences;
+    private android.content.Context context;
+    private Firebase appRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,14 @@ public class EditUserEmailActivity extends AppCompatActivity {
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
-        setup();
+        context = EditUserEmailActivity.this;
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        userId = userPreferences.getString(getString(R.string.userid_key), "");
+        currentUserEmail = userPreferences.getString(getString(R.string.useremail_key), "");
+
+
+        currentUserEmailField = (TextView) findViewById(R.id.current_email);
+        currentUserEmailField.setText(currentUserEmail);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,15 +58,6 @@ public class EditUserEmailActivity extends AppCompatActivity {
         });
     }
 
-    private void setup(){
-        Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
-        currentUserEmail = intent.getStringExtra("userEmail");
-
-        currentUserEmailField = (TextView) findViewById(R.id.current_email);
-        currentUserEmailField.setText(currentUserEmail);
-
-    }
 
     private void changeUserEmail(){
        userPassword = ((EditText) findViewById(R.id.password)).getText().toString();
@@ -77,6 +78,12 @@ public class EditUserEmailActivity extends AppCompatActivity {
                 email.put("email", newUserEmail);
                 appRef.child(getString(R.string.child_users))
                         .child(userId).updateChildren(email);
+
+                userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+                SharedPreferences.Editor userEditor = userPreferences.edit();
+                userEditor.putString(getString(R.string.useremail_key), newUserEmail);
+                userEditor.commit();
+
                 Intent intent = new Intent(EditUserEmailActivity.this, UserProfileActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
