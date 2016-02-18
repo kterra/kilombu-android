@@ -61,6 +61,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:background="@drawable/login_button"
             android:textColor="@color/button_text_color"
@@ -68,29 +69,28 @@
             android:text="@string/signin"
             android:onClick="login"/>
 
-        <android.support.v7.widget.AppCompatButton
+        <TextView
             android:id="@+id/signup_button"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="36dp"
             android:layout_marginBottom="24dp"
-            android:padding="10dp"
-            android:background="@drawable/signup_button"
+            android:layout_gravity="center"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/button_text_color"
-            android:text="@string/signup"
+            android:textSize="18sp"
+            android:text="@string/signup_login"
             android:onClick="gotosignup"/>
 
         <TextView
-        android:id="@+id/forgot_password_button"
+            android:id="@+id/forgot_password_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/signup_button"
-        android:layout_marginTop="10dp"
-        android:text="@string/forgot_password"
-        android:fontFamily="sans-serif-condensed"/>
+            android:layout_marginTop="10dp"
+            android:text="@string/forgot_password"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="18sp"
+            android:onClick="forgotpassword"/>
 
     </LinearLayout>
 

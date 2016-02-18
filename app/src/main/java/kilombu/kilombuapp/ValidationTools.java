@@ -1,5 +1,7 @@
 package kilombu.kilombuapp;
 
+import android.telephony.PhoneNumberUtils;
+
 /**
  * Created by kizzyterra on 17/02/16.
  */
@@ -22,7 +24,6 @@ public class ValidationTools {
         return  true;
     }
 
-<<<<<<< HEAD
     public static boolean isValidPassword(String password){
 
         if (password.isEmpty()){
@@ -52,6 +53,8 @@ public class ValidationTools {
         return null;
 
     }
+
+    
 
 
 }
