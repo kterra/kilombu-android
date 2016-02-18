@@ -14,8 +14,8 @@
         android:id="@+id/scrollview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_marginBottom="10dp"
         android:scrollbars="none"
         >
@@ -31,12 +31,12 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_home_white_24dp"
-                android:background="@drawable/category_button"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_all"/>
@@ -60,10 +60,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/category_button"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_beleza_white_24dp"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
@@ -89,10 +89,10 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/category_button"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_arte_white_24dp"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
@@ -119,11 +119,11 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_edu_white_24dp"
-                android:background="@drawable/category_button"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:tag="@string/category_education"/>
@@ -149,12 +149,12 @@
                 android:orientation="vertical"
                 android:layout_marginRight="10dp">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/ic_esportes_white_24dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:background="@drawable/category_button"
+                    app:backgroundTint="@color/secondary_text_material_light"
                     android:onClick="changeCategoryOnClick"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"
@@ -182,12 +182,12 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_moda_white_24dp"
                 android:fontFamily="sans-serif-condensed"
-                android:background="@drawable/category_button"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
@@ -213,12 +213,12 @@
                 android:orientation="vertical"
                 android:layout_marginRight="10dp">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/ic_publi_white_24dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:background="@drawable/category_button"
+                    app:backgroundTint="@color/secondary_text_material_light"
                     android:onClick="changeCategoryOnClick"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"
@@ -243,11 +243,11 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_rh_white_24dp"
-                android:background="@drawable/category_button"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
@@ -272,11 +272,11 @@
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_saude_white_24dp"
-                android:background="@drawable/category_button"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
@@ -300,10 +300,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/category_button"
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_info_white_24dp"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
@@ -330,12 +330,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginRight="10dp">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_more_horiz_red_24dp"
-                    android:background="@drawable/category_list_all_button"
+                    app:backgroundTint="@color/colorPrimary"
                     android:fontFamily="sans-serif-condensed"
                     android:onClick="showListWithAllCategories"
                     />
