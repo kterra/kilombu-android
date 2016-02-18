@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="title_activity_user_profile">Configurações Pessoais</string>
+
 
     <string name="user_name_card_title">Editar Nome</string>
     <string name="email_card_title">Editar Email</string>
@@ -13,4 +13,13 @@
 
     <string name="current_email_title">Email Atual</string>
     <string name="new_email_title">Novo Email</string>
+
+
+
+    <string name="toast_success_change_password">Senha Alterada</string>
+    <string name="toast_success_change_email">Email Alterado</string>
+    <string name="toast_failure_change_password">Ocorreu um erro :( Por favor, tente novamente</string>
+    <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
+
+
 </resources>

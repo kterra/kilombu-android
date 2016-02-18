@@ -1,6 +1,8 @@
 package kilombu.kilombuapp;
 
+import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 public class CategoriesListActivity extends AppCompatActivity {
 
     ListView listView;
-
+    String [] categories;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +36,10 @@ public class CategoriesListActivity extends AppCompatActivity {
         // Second parameter - Layout for the row
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
+        categories = getResources().getStringArray(R.array.categories_list);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.list_item, R.id.list_textview, getResources().getStringArray(R.array.categories_list));
+                R.layout.list_item, R.id.list_textview, categories);
 
 
         // Assign adapter to ListView
@@ -50,12 +53,12 @@ public class CategoriesListActivity extends AppCompatActivity {
                 int itemPosition     = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                String  categorySelected    = (String) listView.getItemAtPosition(position);
 
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", categorySelected);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
             }
         });
 

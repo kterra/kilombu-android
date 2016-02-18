@@ -37,7 +37,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/ic_home_white_24dp"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_all"/>
 
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/category_button"
                 android:src="@drawable/ic_beleza_white_24dp"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_beauty"/>
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/category_button"
                 android:src="@drawable/ic_arte_white_24dp"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_culture"/>
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_edu_white_24dp"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:tag="@string/category_education"/>
 
@@ -155,7 +155,7 @@
                     android:src="@drawable/ic_esportes_white_24dp"
                     android:fontFamily="sans-serif-condensed"
                     android:background="@drawable/category_button"
-                    android:onClick="changeCategory"
+                    android:onClick="changeCategoryOnClick"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"
                     android:tag="@string/category_sport"/>
@@ -188,7 +188,7 @@
                 android:src="@drawable/ic_moda_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_fashion"/>
@@ -219,7 +219,7 @@
                     android:src="@drawable/ic_publi_white_24dp"
                     android:fontFamily="sans-serif-condensed"
                     android:background="@drawable/category_button"
-                    android:onClick="changeCategory"
+                    android:onClick="changeCategoryOnClick"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"
                     android:tag="@string/category_advertising"/>
@@ -248,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_rh_white_24dp"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_human_resources"/>
@@ -277,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_saude_white_24dp"
                 android:background="@drawable/category_button"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_health"/>
@@ -305,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/category_button"
                 android:src="@drawable/ic_info_white_24dp"
-                android:onClick="changeCategory"
+                android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_software"/>

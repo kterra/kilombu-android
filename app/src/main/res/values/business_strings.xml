@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="business_timestamp">Na família Kilombu desde: </string>
+
+    <string name="business_statistics_card_title">Estatísticas</string>
+    <string name="views">viram</string>
+    <string name="likes">recomendam</string>
+
+    <string name="business_edit_card_title">Informações do Negócio/Serviço</string>
+    <string name="business_sac_card_tilte">Atendimento ao Cliente</string>
+    <string name="business_address_card_tilte">Endereço Comercial</string>
+
+
+    <string name="business_create_main_info_title">Informações Principais</string>
+    <string name="business_create_comercial_address_title">Endereço Comercial</string>
+    <string name="business_create_sac_title"> Atendimento ao Cliente</string>
+
+
+</resources>

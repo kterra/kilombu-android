@@ -16,6 +16,7 @@
     <string name="hint_facebook">Página no Facebook</string>
     <string name="hint_instagram">Página no Instagram</string>
 
+    <string name="prompt_header">Bem Vindo! Vamos começar!</string>
     <string name="prompt_name">Nome</string>
     <string name="prompt_email">E-mail</string>
     <string name="prompt_new_email">Digite seu novo e-mail</string>
@@ -30,8 +31,5 @@
     <string name="prompt_category">Selecione uma categoria</string>
     <string name="prompt_uf">UF</string>
 
-    <string name="business_create_main_info_title">Informações Principais</string>
-    <string name="business_create_comercial_address_title">Endereço Comercial</string>
-    <string name="business_create_sac_title"> Atendimento ao Cliente</string>
 
 </resources>
