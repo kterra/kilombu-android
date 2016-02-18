@@ -168,8 +168,7 @@ public class SignUpActivity extends Activity {
 
     private boolean validatePasswordAgain(String password, String passwordAgain) {
 
-        if (passwordAgain.isEmpty() ||
-                passwordAgain.compareTo(password)!=0) {
+        if (!ValidationTools.isValidPasswordAgain(password, passwordAgain)) {
             inputLayoutPasswordAgain.setError(getString(R.string.err_msg_password_again));
             requestFocus(passwordAgainEditText);
             return false;

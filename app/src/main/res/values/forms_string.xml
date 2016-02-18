@@ -18,9 +18,12 @@
 
     <string name="prompt_name">Nome</string>
     <string name="prompt_email">E-mail</string>
+    <string name="prompt_new_email">Digite seu novo e-mail</string>
     <string name="prompt_phone">Celular</string>
-    <string name="prompt_password">  Digite uma senha</string>
+    <string name="prompt_password">  Digite sua senha</string>
     <string name="prompt_password_again">Repita a senha</string>
+    <string name="prompt_new_password">  Digite sua nova senha</string>
+    <string name="prompt_new_password_again">Repita a nova senha</string>
     <string name="prompt_contact_username">Email do seu contato</string>
     <string name="login_email">Digite seu email</string>
     <string name="login_password">Digite sua senha</string>

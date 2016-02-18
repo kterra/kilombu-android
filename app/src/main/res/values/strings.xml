@@ -20,8 +20,8 @@
     <string name="business_address_card_tilte">Endereço Comercial</string>
     <string name="business_edit_card_title">Informações do Negócio/Serviço</string>
     <string name="business_statistics_card_title">Estatísticas</string>
-    <string name="views">visualizações</string>
-    <string name="likes">recomendações</string>
+    <string name="views">viram</string>
+    <string name="likes">recomendam</string>
 
 
     <string name="title_activity_business_details">BusinessDetailsActivity</string>
@@ -127,6 +127,9 @@
     <string name="title_activity_edit_business_info">Informações Principais</string>
     <string name="title_activity_edit_contact_info">Atendimento ao Cliente</string>
     <string name="title_activity_edit_store_info">Endereço Comercial</string>
+    <string name="title_activity_edit_name">Editar Nome</string>
+    <string name="title_activity_edit_user_email">Editar Email</string>
+    <string name="title_activity_change_password">Alterar senha</string>
 
 
 </resources>

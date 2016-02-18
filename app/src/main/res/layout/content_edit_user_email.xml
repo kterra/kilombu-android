@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="kilombu.kilombuapp.EditUserEmailActivity"
+    tools:showIn="@layout/activity_edit_user_email">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed"
+        android:id="@+id/current_email_title"
+        android:textColor="@color/business_details_card_title_color"
+        android:text="@string/current_email_title"/>
+
+        <TextView  android:id="@+id/current_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/current_email_title"
+            android:layout_marginLeft="5dp"
+            android:text="exemplo@email.com"
+            android:textColor="@color/colorDescription"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/current_email"
+        android:layout_marginLeft="5dp"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed"
+        android:id="@+id/new_email_title"
+        android:textColor="@color/business_details_card_title_color"
+        android:text="@string/new_email_title"/>
+
+
+    <!-- New Email Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_email_title"
+        android:layout_marginTop="5dp"
+        android:id="@+id/new_email_layout"
+        >
+        <EditText  android:id="@+id/new_useremail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_new_email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/colorDescription"
+            android:textColor="@color/colorDescription"
+            android:fontFamily="sans-serif-condensed"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Password Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_email_layout"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="@string/prompt_password"/>
+    </android.support.design.widget.TextInputLayout>
+
+</RelativeLayout>
