@@ -11,5 +11,68 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="kilombu.kilombuapp.EditBusinessInfoActivity"
     tools:showIn="@layout/activity_edit_business_info">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_name"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/colorDescription"
+                android:inputType="text"
+                android:hint="@string/hint_name"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_description"
+                android:hint="@string/hint_description"
+                android:gravity="top"
+                android:fontFamily="sans-serif-condensed"
+                android:minLines="1"
+                android:lines="6"
+                android:inputType="textMultiLine|textCapSentences"
+                android:scrollbars="vertical"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/edit_category"
+            android:fontFamily="sans-serif-condensed"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_corporate_number"
+                android:hint="@string/hint_corporate_number"
+                android:fontFamily="sans-serif-condensed"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
 </RelativeLayout>

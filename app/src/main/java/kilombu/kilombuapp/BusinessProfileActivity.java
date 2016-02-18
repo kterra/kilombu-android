@@ -45,8 +45,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
         //retrieveBusinessdata();
 
         setupBusinessCard();
-        //setupBusinessDetailsCard();
-        //setupStatisticsCards();
 
         updatesOnBusiness = new HashMap<String, Object>();
         updatesOnDetails = new HashMap<String, Object>();
@@ -211,11 +209,16 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     public void goToEditBusinessInfo(View editButton){
         Intent intent = new Intent(this, EditBusinessInfoActivity.class);
+        intent.putExtra("businessId", businessId);
+        intent.putExtra("businessName", currentBusiness.getName());
+        intent.putExtra("businessCategory", currentBusiness.getCategory());
+        intent.putExtra("businessDescription", currentBusiness.getDescription());
         startActivity(intent);
     }
 
     public void goToEditContactInfo(View editButton){
         Intent intent = new Intent(this, EditContactInfoActivity.class);
+        intent.putExtra("businessId", businessId);
         startActivity(intent);
     }
 
@@ -233,7 +236,10 @@ public class BusinessProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()){
                     currentStatistics = dataSnapshot.getChildren().iterator()
                             .next().getValue(BusinessStatistics.class);
-
+                    TextView viewsCount = (TextView) findViewById(R.id.profile_number_view);
+                    viewsCount.setText(Long.toString(currentStatistics.getVisualizations()));
+                    viewsCount = (TextView) findViewById(R.id.profile_number_likes);
+                    viewsCount.setText(Long.toString(currentStatistics.getRecommendations()));
                 }
             }
 
