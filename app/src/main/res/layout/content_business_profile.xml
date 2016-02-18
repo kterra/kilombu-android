@@ -31,7 +31,7 @@
         <android.support.v7.widget.CardView
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/profile_business_statistics"
@@ -40,42 +40,44 @@
             >
 
             <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:padding="16dp"
                 >
             <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_weight="0.5"
                 android:layout_gravity="center"
                 android:padding="16dp"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
                     android:id="@+id/profile_number_view"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:fontFamily="sans-serif-light"
                     android:text="20"
                     android:textSize="50sp"
                     android:textColor="@color/colorDescription"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
                     android:id="@+id/profile_view"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/views"
-                    android:textSize="14sp"
+
                     android:textColor="@color/colorDescription"/>
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -88,35 +90,37 @@
                     />
 
             <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:orientation="vertical"
                 android:layout_gravity="right"
                 android:padding="16dp"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
                     android:id="@+id/profile_number_likes"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:fontFamily="sans-serif-light"
                     android:text="10"
                     android:textSize="50sp"
                     android:textColor="@color/colorDescription"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
                     android:id="@+id/profile_likes"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/likes"
-                    android:textSize="14sp"
+
                     android:textColor="@color/colorDescription"/>
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -200,16 +204,17 @@
 
                     <View
                         android:layout_width="1dp"
-                        android:layout_height="25dp"
+                        android:layout_height="40dp"
                         android:background="@color/colorPrimaryDark"
                         android:layout_marginRight="5dp"
                         android:layout_gravity="center_vertical"/>
 
 
                     <ImageButton
-                        android:layout_width="30dp"
+                        android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/profile_edit_business"
+                        android:layout_marginLeft="5dp"
                         android:src="@drawable/ic_mode_edit_grey_24dp"
                         android:background="@android:color/transparent"
                         android:onClick="goToEditBusinessInfo"/>
@@ -438,14 +443,15 @@
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="25dp"
+                    android:layout_height="40dp"
                     android:background="@color/colorPrimaryDark"
                     android:layout_marginRight="5dp"
                     android:layout_gravity="center_vertical"/>
 
                 <ImageButton
-                    android:layout_width="30dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/profile_edit_contact_info"
                     android:src="@drawable/ic_mode_edit_grey_24dp"
                     android:background="@android:color/transparent"
@@ -538,14 +544,15 @@
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="25dp"
+                    android:layout_height="40dp"
                     android:background="@color/colorPrimaryDark"
                     android:layout_marginRight="5dp"
                     android:layout_gravity="center_vertical"/>
 
                 <ImageButton
-                    android:layout_width="30dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/profile_edit_store_info"
                     android:src="@drawable/ic_mode_edit_grey_24dp"
                     android:background="@android:color/transparent"

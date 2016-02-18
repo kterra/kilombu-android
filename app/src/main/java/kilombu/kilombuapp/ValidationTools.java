@@ -22,5 +22,11 @@ public class ValidationTools {
         return  true;
     }
 
-
+    public static boolean isValidPasswordAgain(String password, String passwordAgain){
+        if(passwordAgain.isEmpty() ||
+                passwordAgain.compareTo(password)!=0){
+            return false;
+        }
+        return true;
+    }
 }
