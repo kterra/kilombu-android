@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,8 +19,10 @@ import java.util.Map;
 
 public class EditContactInfoActivity extends AppCompatActivity {
 
-    String businessId;
+    String businessId, email, website, sacNumber, whatsapp,facebookPage, instagramPage;
     private Map<String, Object> contactInfoUpdates;
+    private TextInputLayout inputLayoutSacPhone, inputLayoutEmail, inputLayoutWebsite, inputLayoutWhatsapp,
+            inputLayoutFacebook, inputLayoutInstagram;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,12 @@ public class EditContactInfoActivity extends AppCompatActivity {
     private void setupContactInfo(){
         Intent intent = getIntent();
         businessId = intent.getStringExtra("businessId");
-        String email = intent.getStringExtra(getString(R.string.child_details_this_email));
-        String website = intent.getStringExtra(getString(R.string.child_details_this_website));
-        String sacNumber = intent.getStringExtra(getString(R.string.child_details_this_sac));
-        String whatsapp = intent.getStringExtra(getString(R.string.child_details_this_whatsapp));
-        String facebookPage = intent.getStringExtra(getString(R.string.child_details_this_facebook));
-        String instagramPage = intent.getStringExtra(getString(R.string.child_details_this_instagram));
+        email = intent.getStringExtra(getString(R.string.child_details_this_email));
+        website = intent.getStringExtra(getString(R.string.child_details_this_website));
+        sacNumber = intent.getStringExtra(getString(R.string.child_details_this_sac));
+        whatsapp = intent.getStringExtra(getString(R.string.child_details_this_whatsapp));
+        facebookPage = intent.getStringExtra(getString(R.string.child_details_this_facebook));
+        instagramPage = intent.getStringExtra(getString(R.string.child_details_this_instagram));
 
 
         EditText currentText = (EditText) findViewById(R.id.edit_email);
@@ -74,29 +77,48 @@ public class EditContactInfoActivity extends AppCompatActivity {
 
     public void saveAndUpdateInfo(){
 
+
         EditText currentText = (EditText) findViewById(R.id.edit_email);
-        contactInfoUpdates.put(getString(R.string.child_details_this_email),
-                            currentText.getText().toString());
+        email = currentText.getText().toString();
+        if(!validateEmail(email)){
+            return;
+        }
+        contactInfoUpdates.put(getString(R.string.child_details_this_email), email);
 
         currentText = (EditText) findViewById(R.id.edit_website);
-        contactInfoUpdates.put(getString(R.string.child_details_this_website),
-                currentText.getText().toString());
+        website = currentText.getText().toString();
+        if(!validateWebsite(website)){
+            return;
+        }
+        contactInfoUpdates.put(getString(R.string.child_details_this_website), website);
 
         currentText = (EditText) findViewById(R.id.edit_sac_phone);
-        contactInfoUpdates.put(getString(R.string.child_details_this_sac),
-                currentText.getText().toString());
+        sacNumber =  currentText.getText().toString();
+        if(!validateSacPhone(sacNumber)){
+            return;
+        }
+        contactInfoUpdates.put(getString(R.string.child_details_this_sac), sacNumber);
 
         currentText = (EditText) findViewById(R.id.edit_whatsapp);
-        contactInfoUpdates.put(getString(R.string.child_details_this_whatsapp),
-                currentText.getText().toString());
+        whatsapp = currentText.getText().toString();
+        if(!validateWhatsApp(whatsapp)){
+            return;
+        }
+        contactInfoUpdates.put(getString(R.string.child_details_this_whatsapp), whatsapp);
 
         currentText = (EditText) findViewById(R.id.edit_facebook);
-        contactInfoUpdates.put(getString(R.string.child_details_this_facebook),
-                currentText.getText().toString());
+        facebookPage = currentText.getText().toString();
+        if(!validateFacebookPage(facebookPage)){
+            return;
+        }
+        contactInfoUpdates.put(getString(R.string.child_details_this_facebook), facebookPage);
 
         currentText = (EditText) findViewById(R.id.edit_instagram);
-        contactInfoUpdates.put(getString(R.string.child_details_this_instagram),
-                currentText.getText().toString());
+        instagramPage = currentText.getText().toString();
+        if(!validateInstagramPage(instagramPage)){
+            return;
+        }
+        contactInfoUpdates.put(getString(R.string.child_details_this_instagram), instagramPage);
 
         Firebase currentDetailsRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business_details)).child(businessId);
@@ -105,6 +127,56 @@ public class EditContactInfoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BusinessProfileActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private boolean validateEmail(String email) {
+
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.edit_email_layout);
+
+        if (!ValidationTools.isValidEmail(email)) {
+            inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            requestFocus((EditText) findViewById(R.id.new_useremail));
+            return false;
+        } else {
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateWebsite(String page){
+        inputLayoutWebsite = (TextInputLayout) findViewById(R.id.edit_website_layout);
+        inputLayoutWebsite.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateSacPhone(String phone){
+        inputLayoutSacPhone = (TextInputLayout) findViewById(R.id.edit_sac_phone_layout);
+        inputLayoutSacPhone.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateWhatsApp(String page){
+        inputLayoutWhatsapp = (TextInputLayout) findViewById(R.id.edit_whatsapp_layout);
+        inputLayoutWhatsapp.setErrorEnabled(false);
+        return true;
+    }
+    private boolean validateFacebookPage(String page){
+        inputLayoutFacebook = (TextInputLayout) findViewById(R.id.edit_facebook_layout);
+        inputLayoutFacebook.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateInstagramPage(String page){
+        inputLayoutInstagram = (TextInputLayout) findViewById(R.id.edit_instagram_layout);;
+        inputLayoutInstagram.setErrorEnabled(false);
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
 }

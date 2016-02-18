@@ -51,8 +51,11 @@
     <string name="noinfo_message">Não há informações disponíves.</string>
     <string name="nobusiness_message">Você não possui um negócio/serviço cadastrado.</string>
 
-
-
+    <string name="preference_business_key">business</string>
+    <string name="preference_user_key">user</string>
+    <string name="userid_key">userId</string>
+    <string name="username_key">userName</string>
+    <string name="useremail_key">userEmail</string>
 
 
 </resources>

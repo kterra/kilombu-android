@@ -2,7 +2,9 @@ package kilombu.kilombuapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.core.Context;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 public class MainActivity extends AppCompatActivity
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseRecyclerAdapter<Business, BusinessViewHolder> firebaseAdsAdapter;
     private Firebase businessRef;
     private Query businessQuery;
+    private SharedPreferences busPreferences;
+    private SharedPreferences userPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        android.content.Context context = MainActivity.this;
+        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+
+
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         adsView =(RecyclerView)findViewById(R.id.rv);
@@ -82,6 +94,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         if( appRef.getAuth() != null){
             String userId = appRef.getAuth().getUid();
+            SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putString(getString(R.string.userid_key),userId);
+            userEditor.commit();
             navigationView.getMenu().clear(); //clear old inflated items.
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
 
@@ -94,10 +109,18 @@ public class MainActivity extends AppCompatActivity
                                                       Log.d("auth", Long.toString(dataSnapshot.getChildrenCount()));
                                                       currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
 
+                                                      String userName = currentUser.getName();
+
+                                                      SharedPreferences.Editor userEditor = userPreferences.edit();
+
+                                                      userEditor.putString(getString(R.string.username_key),);
+                                                      userEditor.putString(getString(R.string.useremail_key), currentUser.getEmail());
+                                                      userEditor.commit();
+
+
                                                       TextView username = (TextView) findViewById(R.id.user_name_header);
-                                                      username.setText(currentUser.getName());
-                                                      TextView usermail = (TextView) findViewById(R.id.user_mail_header);
-                                                      usermail.setText(currentUser.getEmail());
+                                                      username.setText(userName);
+
                                                   } else {
                                                       //TODO: what if user data is not found?
                                                   }
