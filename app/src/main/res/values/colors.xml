@@ -9,6 +9,7 @@
 
     <color name="textview_business_description">#7f7f7f</color>
     <color name="textview_item_list">#7f7f7f</color>
+    <color name="darkGrey">#7f7f7f</color>
 
     <color name="textview_category">#941100</color>
     <color name="textview_category_text">#941100</color>

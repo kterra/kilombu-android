@@ -18,6 +18,11 @@
 
     <string name="business_sac_card_tilte">Atendimento ao Cliente</string>
     <string name="business_address_card_tilte">Endereço Comercial</string>
+    <string name="business_edit_card_title">Informações do Negócio/Serviço</string>
+    <string name="business_statistics_card_title">Estatísticas</string>
+    <string name="views">visualizações</string>
+    <string name="likes">recomendações</string>
+
 
     <string name="title_activity_business_details">BusinessDetailsActivity</string>
     <string name="title_activity_create_business">Cadastro de Negócio</string>
@@ -118,10 +123,10 @@
     <string name="toast_success_change_email">Email Alterado</string>
     <string name="toast_failure_change_password">Ocorreu um erro :( Por favor, tente novamente</string>
     <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
-    <string name="title_activity_business_profile">BusinessProfileActivity</string>
-    <string name="title_activity_edit_business_info">EditBusinessInfoActivity</string>
-    <string name="title_activity_edit_contact_info">EditContactInfoActivity</string>
-    <string name="title_activity_edit_store_info">EditStoreInfoActivity</string>
+    <string name="title_activity_business_profile">Perfil de Negócio</string>
+    <string name="title_activity_edit_business_info">Informações Principais</string>
+    <string name="title_activity_edit_contact_info">Atendimento ao Cliente</string>
+    <string name="title_activity_edit_store_info">Endereço Comercial</string>
 
 
 </resources>

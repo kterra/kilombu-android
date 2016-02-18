@@ -12,7 +12,132 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+            android:paddingLeft="6dp"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-condensed"
+
+            android:id="@+id/profile_business_statistics_title"
+            android:textColor="@color/colorDescription"
+            android:text="@string/business_statistics_card_title"/>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/profile_business_statistics"
+            card_view:cardUseCompatPadding="true"
+            android:focusable="true"
+            >
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                >
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/profile_number_view"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="20"
+                    android:textSize="50sp"
+                    android:textColor="@color/colorDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/profile_view"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/views"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorDescription"/>
+            </android.support.v7.widget.LinearLayoutCompat>
+
+                <View
+                    android:id="@+id/vertical_line"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/darkGrey"
+                    />
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="right"
+                android:padding="16dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/profile_number_likes"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="10"
+                    android:textSize="50sp"
+                    android:textColor="@color/colorDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/profile_likes"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/likes"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorDescription"/>
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="1dp"
+            android:paddingLeft="6dp"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/profile_business_card_title"
+            android:textColor="@color/colorDescription"
+            android:text="@string/business_edit_card_title"/>
 
         <android.support.v7.widget.CardView
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,18 +170,15 @@
                     android:textStyle="bold"
                     android:textColor="@color/secondary_text_material_light"/>
 
-                <TextView
-                    android:id="@+id/profile_line2"
+                <View
+                    android:id="@+id/line2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="-12dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="16dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="@string/line"
-                    android:textSize="15sp"
-                    android:textColor="@color/secondary_text_material_light"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@color/secondary_text_material_light"
                     />
 
                 <TextView
@@ -69,13 +191,32 @@
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-condensed"/>
 
-                <ImageButton
+                <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profile_edit_business"
-                    android:src="@drawable/ic_mode_edit_black_24dp"
                     android:layout_gravity="right"
-                    android:onClick="goToEditBusinessInfo"/>
+                    android:orientation="horizontal"
+                    >
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="25dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center_vertical"/>
+
+
+                    <ImageButton
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profile_edit_business"
+                        android:src="@drawable/ic_mode_edit_grey_24dp"
+                        android:background="@android:color/transparent"
+                        android:onClick="goToEditBusinessInfo"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -288,13 +429,28 @@
 
                 </LinearLayout>
 
-                <ImageButton
+                <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profile_edit_contact_info"
-                    android:src="@drawable/ic_mode_edit_black_24dp"
                     android:layout_gravity="right"
+                    android:orientation="horizontal"
+                    >
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical"/>
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_edit_contact_info"
+                    android:src="@drawable/ic_mode_edit_grey_24dp"
+                    android:background="@android:color/transparent"
                     android:onClick="goToEditContactInfo"/>
+                </android.support.v7.widget.LinearLayoutCompat>
 
             </LinearLayout>
 
@@ -373,13 +529,28 @@
                     android:fontFamily="sans-serif-condensed"
                     android:visibility="gone"/>
 
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal"
+                >
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical"/>
+
                 <ImageButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_edit_store_info"
-                    android:src="@drawable/ic_mode_edit_black_24dp"
-                    android:layout_gravity="right"
+                    android:src="@drawable/ic_mode_edit_grey_24dp"
+                    android:background="@android:color/transparent"
                     android:onClick="goToEditStoreInfo"/>
+            </android.support.v7.widget.LinearLayoutCompat>
 
             </android.support.v7.widget.LinearLayoutCompat>
 

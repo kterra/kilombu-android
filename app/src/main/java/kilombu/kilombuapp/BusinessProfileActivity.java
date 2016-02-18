@@ -38,7 +38,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_business_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_business_profile));
 
         appRef = new Firebase(getString(R.string.firebase_url));
 

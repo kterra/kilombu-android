@@ -24,7 +24,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 }

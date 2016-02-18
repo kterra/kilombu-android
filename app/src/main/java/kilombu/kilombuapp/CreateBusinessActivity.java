@@ -205,6 +205,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                     createBusinessStatistics(businessId);
+                    Toast.makeText(getApplicationContext(), "Cadastro efetuado com sucesso!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -325,7 +326,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private boolean validateEmail(String email){
         if(!ValidationTools.isValidEmail(email)){
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
-            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_LONG).show();
             requestFocus(emailField);
             return false;
         }else{
