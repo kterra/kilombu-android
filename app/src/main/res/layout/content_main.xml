@@ -361,11 +361,40 @@
 
     </HorizontalScrollView>
 
+    <!--<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading_area"
+        android:layout_below="@id/scrollview">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:indeterminate="true"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
+    </LinearLayout> -->
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:indeterminate="true"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:visibility="visible"
+        android:layout_below="@id/scrollview"
+        android:layout_centerInParent="true"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_below="@id/scrollview"
-        android:id="@+id/rv"
+        android:id="@+id/ads_recycler_view"
+        android:visibility="gone"
         >
     </android.support.v7.widget.RecyclerView>
 

@@ -96,7 +96,15 @@
             android:clickable="true"
             android:focusable="true"
             >
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_contacts_loading"
+                android:indeterminate="true"
+                style="@android:style/Widget.ProgressBar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -331,7 +339,15 @@
             android:clickable="true"
             android:focusable="true"
             >
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_store_loading"
+                android:indeterminate="true"
+                style="@android:style/Widget.ProgressBar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

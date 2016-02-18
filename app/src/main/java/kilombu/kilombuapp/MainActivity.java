@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
-        adsView =(RecyclerView)findViewById(R.id.rv);
+        adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
 
@@ -153,6 +155,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeAdapter(){
+        ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
+        loadingArea.setVisibility(View.VISIBLE);
+        //loadingArea.showContextMenu();
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
                 R.layout.item, BusinessViewHolder.class, businessQuery) {
@@ -181,6 +186,9 @@ public class MainActivity extends AppCompatActivity
             }
         };
         adsView.setAdapter(firebaseAdsAdapter);
+        //TODO: move so they can realy happen
+        adsView.setVisibility(View.VISIBLE);
+        loadingArea.setVisibility(View.GONE);
     }
 
     public void changeCategory(String category){

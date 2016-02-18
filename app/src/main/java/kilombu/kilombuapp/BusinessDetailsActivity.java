@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,11 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         currentText = (TextView) findViewById(R.id.business_description_detail);
         currentText.setText(intent.getStringExtra("business_description"));
 
+        final ProgressBar contactsLoading = (ProgressBar) findViewById(R.id.details_contacts_loading);
+        contactsLoading.setVisibility(View.VISIBLE);
+        final ProgressBar storeLoading = (ProgressBar) findViewById(R.id.details_store_loading);
+        storeLoading.setVisibility(View.VISIBLE);
+
         businessId = intent.getStringExtra("businessId");
         Query detailsQuery = detailsRef.orderByKey().equalTo(businessId).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -54,14 +60,14 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     //TODO: configure details cell
 
                     TextView currentText;
-                    if (businessDetails.getStores() != null){
+                    if (businessDetails.getStores() != null) {
                         Map<String, Store> stores = businessDetails.getStores();
-                        for (Store store : stores.values()){
+                        for (Store store : stores.values()) {
                             //TODO: deal with many stores and phone number
 
                             String address = store.getAddress().toString();
 
-                            if(address != null && !address.isEmpty()) {
+                            if (address != null && !address.isEmpty()) {
                                 currentText = (TextView) findViewById(R.id.business_address);
                                 currentText.setText(address);
                                 currentText.setVisibility(View.VISIBLE);
@@ -69,7 +75,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                             }
 
                             String workingHours = store.getBusinessHours();
-                            if(workingHours != null && !workingHours.isEmpty()){
+                            if (workingHours != null && !workingHours.isEmpty()) {
                                 currentText = (TextView) findViewById(R.id.business_working_hours);
                                 currentText.setText(workingHours);
                                 currentText.setVisibility(View.VISIBLE);
@@ -77,51 +83,52 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
 
                             String phone = store.getPhoneNumber();
-                            if(phone != null && !phone.isEmpty()) {
+                            if (phone != null && !phone.isEmpty()) {
                                 currentText = (TextView) findViewById(R.id.business_phone_number);
                                 currentText.setText("Tel: " + phone);
                                 currentText.setVisibility(View.VISIBLE);
                             }
 
                         }
-                    }else{
+                    } else {
                         Log.d("flag", "true");
                         currentText = (TextView) findViewById(R.id.noinfo_message);
                         currentText.setVisibility(View.VISIBLE);
                     }
-                    
+                    storeLoading.setVisibility(View.GONE);
+
                     boolean sacAllEmptyFlag = true;
 
                     if (businessDetails.getSacNumber() != null &&
-                            !businessDetails.getSacNumber().isEmpty()){
+                            !businessDetails.getSacNumber().isEmpty()) {
                         sacAllEmptyFlag = false;
-                       linearLayout  = (LinearLayout) findViewById(R.id.gruop1);
-                        linearLayout .setVisibility(View.VISIBLE);
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop1);
+                        linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_sac_phone);
                         currentText.setText(businessDetails.getSacNumber());
                     }
 
                     /**TODO: Must setup the images so they can send an intent for each app**/
                     if (businessDetails.getEmail() != null &&
-                            !businessDetails.getEmail().isEmpty()){
+                            !businessDetails.getEmail().isEmpty()) {
                         sacAllEmptyFlag = false;
-                        linearLayout  = (LinearLayout) findViewById(R.id.gruop2);
-                        linearLayout .setVisibility(View.VISIBLE);
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop2);
+                        linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_email);
                         currentText.setText(businessDetails.getEmail());
                     }
 
                     if (businessDetails.getWebsite() != null &&
-                            !businessDetails.getWebsite().isEmpty()){
+                            !businessDetails.getWebsite().isEmpty()) {
                         sacAllEmptyFlag = false;
-                        linearLayout  = (LinearLayout) findViewById(R.id.gruop3);
-                        linearLayout .setVisibility(View.VISIBLE);
+                        linearLayout = (LinearLayout) findViewById(R.id.gruop3);
+                        linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_website);
                         currentText.setText(businessDetails.getWebsite());
                     }
 
                     if (businessDetails.getWhatsapp() != null &&
-                            !businessDetails.getWebsite().isEmpty()){
+                            !businessDetails.getWebsite().isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.gruop4);
                         linearLayout.setVisibility(View.VISIBLE);
@@ -130,7 +137,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     }
 
                     if (businessDetails.getFacebookPage() != null &&
-                            !businessDetails.getFacebookPage().isEmpty()){
+                            !businessDetails.getFacebookPage().isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.gruop5);
                         linearLayout.setVisibility(View.VISIBLE);
@@ -139,7 +146,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     }
 
                     if (businessDetails.getInstagramPage() != null &&
-                            !businessDetails.getInstagramPage().isEmpty()){
+                            !businessDetails.getInstagramPage().isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.gruop6);
                         linearLayout.setVisibility(View.VISIBLE);
@@ -148,12 +155,15 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     }
                     Log.d("flag_sac_before", Boolean.toString(sacAllEmptyFlag));
 
-                    if (sacAllEmptyFlag == true){
+                    if (sacAllEmptyFlag == true) {
                         Log.d("flag_sac", Boolean.toString(sacAllEmptyFlag));
                         currentText = (TextView) findViewById(R.id.no_info_message);
                         currentText.setVisibility(View.VISIBLE);
                     }
+                    contactsLoading.setVisibility(View.GONE);
                 }
+
+
             }
 
             @Override
