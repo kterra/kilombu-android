@@ -55,15 +55,16 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private void setupBusinessCard(){
         Firebase businessRef = appRef.child(getString(R.string.child_business));
 
-        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
-                        .equalTo(appRef.getAuth().getUid()).limitToFirst(1);
+        businessId = getIntent().getStringExtra("businessId");
+
+        Query businessQuery = businessRef.orderByKey().equalTo(businessId).limitToFirst(1);
 
         businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     DataSnapshot currentSnapShot = dataSnapshot.getChildren().iterator().next();
-                    businessId = currentSnapShot.getKey();
+                    //businessId = currentSnapShot.getKey();
                     currentBusiness = currentSnapShot.getValue(Business.class);
 
                     TextView currentText = (TextView) findViewById(R.id.profile_business_name);

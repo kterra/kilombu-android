@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -33,10 +32,13 @@ public class MainActivity extends AppCompatActivity
     private final int adsPerPage = 30;
     private String currentCategory;
     private RecyclerView adsView;
-    User currentUser;
+    private User currentUser;
+    private Business currentBusiness;
+    private String currentBusinessId;
     private FirebaseRecyclerAdapter<Business, BusinessViewHolder> firebaseAdsAdapter;
     private Firebase businessRef;
     private Query businessQuery;
+    private Query getUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,8 @@ public class MainActivity extends AppCompatActivity
         adsView.setHasFixedSize(true);
 
         currentCategory = getString(R.string.category_all);
-        businessRef = new Firebase(getString(R.string.firebase_url)).child("business");
+        businessRef = new Firebase(getString(R.string.firebase_url))
+                            .child(getString(R.string.child_business));
         initializeAdapter();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,51 +67,88 @@ public class MainActivity extends AppCompatActivity
 
         appRef = new Firebase(getString(R.string.firebase_url));
         setUpCustomDrawer();
+        Log.d("MAIN", "ON CREATE");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d("MAIN", "ON START");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("MAIN", "ON DESTROY");
         firebaseAdsAdapter.cleanup();
     }
 
-    private void setUpCustomDrawer(){
+    private void setUpCustomDrawer() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        if( appRef.getAuth() != null){
+        if (appRef.getAuth() != null) {
             String userId = appRef.getAuth().getUid();
             navigationView.getMenu().clear(); //clear old inflated items.
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
 
             //set nav header text
-            Query getUser = appRef.child("users").orderByKey().equalTo(userId);
-            getUser.addValueEventListener(new ValueEventListener() {
-                                              @Override
-                                              public void onDataChange(DataSnapshot dataSnapshot) {
-                                                  if (dataSnapshot.exists()) {
-                                                      Log.d("auth", Long.toString(dataSnapshot.getChildrenCount()));
-                                                      currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
+            getUser = appRef.child("users").orderByKey().equalTo(userId);
+            getUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        currentUser = dataSnapshot.getChildren().iterator().next().getValue(User.class);
 
-                                                      TextView username = (TextView) findViewById(R.id.user_name_header);
-                                                      username.setText(currentUser.getName());
-                                                      TextView usermail = (TextView) findViewById(R.id.user_mail_header);
-                                                      usermail.setText(currentUser.getEmail());
-                                                  } else {
-                                                      //TODO: what if user data is not found?
-                                                  }
-                                              }
+                        TextView username = (TextView) findViewById(R.id.user_name_header);
+                        username.setText(currentUser.getName());
+                      /*TextView usermail = (TextView) findViewById(R.id.user_mail_header);
+                      usermail.setText(currentUser.getEmail());*/
+                    } else {
+                        //TODO: what if user data is not found?
+                    }
+                }
 
-                                              @Override
-                                              public void onCancelled(FirebaseError firebaseError) {
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
 
-                                              }
-                                          }
-            );
+                }
+            });
+
+            Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
+                    .equalTo(userId).limitToFirst(1);
+
+            businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        DataSnapshot currentSnapShot = dataSnapshot.getChildren().iterator().next();
+                        currentBusinessId = currentSnapShot.getKey();
+                        currentBusiness = currentSnapShot.getValue(Business.class);
+
+                        TextView userBusinessName = (TextView) findViewById(R.id.user_mail_header);
+                        userBusinessName.setText(currentBusiness.getName());
+
+                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+                        navigationView.getMenu().clear(); //clear old inflated items.
+                        navigationView.inflateMenu(R.menu.activity_main_drawer_entrepreneur);
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+
+            if (currentBusiness != null){
+                Log.d("MAIN", "BUSINESS NAO NULO");
+                //navigationView.getMenu().clear(); //clear old inflated items.
+                //navigationView.inflateMenu(R.menu.activity_main_drawer_entrepreneur);
+            }else{
+                Log.d("MAIN", "BUSINESS NULO");
+            }
+
         }
     }
 
@@ -144,7 +184,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void changeCategory(String category){
-
         currentCategory = category;
 
         Log.d("MAIN", currentCategory);
@@ -174,8 +213,6 @@ public class MainActivity extends AppCompatActivity
                         intent.putExtra("businessId", itemKey);
 
                         MainActivity.this.startActivity(intent);
-
-
                     }
                 });
             }
@@ -252,6 +289,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.signout_menu) {
             appRef.unauth();
             Intent intent = new Intent(this, MainActivity.class);
+            finish();
             startActivity(intent);
 
         } else if (id == R.id.business_create_menu) {
@@ -260,6 +298,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.business_menu) {
             Intent intent = new Intent(this, BusinessProfileActivity.class);
+            intent.putExtra("businessId", currentBusinessId);
             startActivity(intent);
 
         } else if (id == R.id.settings_menu) {
