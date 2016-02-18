@@ -2,7 +2,6 @@ package kilombu.kilombuapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,8 +44,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
         //retrieveBusinessdata();
 
         setupBusinessCard();
-        //setupBusinessDetailsCard();
-        //setupStatisticsCards();
 
         updatesOnBusiness = new HashMap<String, Object>();
         updatesOnDetails = new HashMap<String, Object>();
@@ -57,7 +54,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private void setupBusinessCard(){
         Firebase businessRef = appRef.child(getString(R.string.child_business));
 
-        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_business_admin))
+        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
                         .equalTo(appRef.getAuth().getUid()).limitToFirst(1);
 
         businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -211,16 +208,46 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     public void goToEditBusinessInfo(View editButton){
         Intent intent = new Intent(this, EditBusinessInfoActivity.class);
+        intent.putExtra("businessId", businessId);
+        intent.putExtra(getString(R.string.child_business_this_name),
+                                    currentBusiness.getName());
+        intent.putExtra(getString(R.string.child_business_this_category),
+                                    currentBusiness.getCategory());
+        intent.putExtra(getString(R.string.child_business_this_description),
+                                    currentBusiness.getDescription());
+        intent.putExtra(getString(R.string.child_business_this_corporate_number),
+                currentBusiness.getCorporateNumber());
+
         startActivity(intent);
     }
 
     public void goToEditContactInfo(View editButton){
         Intent intent = new Intent(this, EditContactInfoActivity.class);
+        intent.putExtra("businessId", businessId);
+        intent.putExtra(getString(R.string.child_details_this_email), currentDetails.getEmail());
+        intent.putExtra(getString(R.string.child_details_this_website), currentDetails.getWebsite());
+        intent.putExtra(getString(R.string.child_details_this_sac), currentDetails.getSacNumber());
+        intent.putExtra(getString(R.string.child_details_this_whatsapp), currentDetails.getWhatsapp());
+        intent.putExtra(getString(R.string.child_details_this_facebook), currentDetails.getFacebookPage());
+        intent.putExtra(getString(R.string.child_details_this_instagram), currentDetails.getInstagramPage());
         startActivity(intent);
     }
 
     public void goToEditStoreInfo(View editButton){
         Intent intent = new Intent(this, EditStoreInfoActivity.class);
+        //TODO: find a new way when we support multiple stores
+        Store currentStore = currentDetails.getStores().values().iterator().next();
+        BusinessAddress currentAddress = currentStore.getAddress();
+
+        intent.putExtra("businessId", businessId);
+        intent.putExtra(getString(R.string.child_details_store_address_country), currentAddress.getCountry());
+        intent.putExtra(getString(R.string.child_details_store_address_state), currentAddress.getState());
+        intent.putExtra(getString(R.string.child_details_store_address_city), currentAddress.getCity());
+        intent.putExtra(getString(R.string.child_details_store_address_district), currentAddress.getDistrict());
+        intent.putExtra(getString(R.string.child_details_store_address_street), currentAddress.getStreet());
+        intent.putExtra(getString(R.string.child_details_store_phone), currentStore.getPhoneNumber());
+        intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
+
         startActivity(intent);
     }
 
@@ -233,7 +260,10 @@ public class BusinessProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()){
                     currentStatistics = dataSnapshot.getChildren().iterator()
                             .next().getValue(BusinessStatistics.class);
-
+                    TextView viewsCount = (TextView) findViewById(R.id.profile_number_view);
+                    viewsCount.setText(Long.toString(currentStatistics.getVisualizations()));
+                    viewsCount = (TextView) findViewById(R.id.profile_number_likes);
+                    viewsCount.setText(Long.toString(currentStatistics.getRecommendations()));
                 }
             }
 
@@ -247,7 +277,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private void retrieveBusinessdata(){
         Firebase businessRef = appRef.child(getString(R.string.child_business));
 
-        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_business_admin))
+        Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
                 .equalTo(appRef.getAuth().getUid());
 
         businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {

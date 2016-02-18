@@ -5,5 +5,30 @@
     <string name="child_users">users</string>
     <string name="child_business_details">BusinessDetails</string>
     <string name="child_business_statistics">BusinessStatistics</string>
-    <string name="child_business_business_admin">admin</string>
+
+
+    <string name="child_business_this_admin">admin</string>
+    <string name="child_business_this_name">name</string>
+    <string name="child_business_this_category">category</string>
+    <string name="child_business_this_description">description</string>
+    <string name="child_business_this_corporate_number">corporateNumber</string>
+
+    <string name="child_details_this_email">email</string>
+    <string name="child_details_this_website">website</string>
+    <string name="child_details_this_sac">sacNumber</string>
+    <string name="child_details_this_whatsapp">whatsapp</string>
+    <string name="child_details_this_facebook">facebookPage</string>
+    <string name="child_details_this_instagram">instagramPage</string>
+
+
+    <string name="child_details_stores">stores</string>
+    <string name="child_details_store_address_country">country</string>
+    <string name="child_details_store_address_state">state</string>
+    <string name="child_details_store_address_city">city</string>
+    <string name="child_details_store_address_district">district</string>
+    <string name="child_details_store_address_street">street</string>
+    <string name="child_details_store_address_complement">complement</string>
+    <string name="child_details_store_phone">phoneNumber</string>
+    <string name="child_details_store_business_hours">businessHours</string>
+
 </resources>

@@ -35,6 +35,10 @@ public class BusinessAddress {
         return city;
     }
 
+    public String getDistrict() {
+        return district;
+    }
+
     public String getStreet() {
         return street;
     }

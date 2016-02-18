@@ -180,8 +180,8 @@ public class CreateBusinessActivity extends AppCompatActivity {
             return;
         }
 
-            BusinessAddress address = validateAddress(street, district, city, state);
-            Store store = validateStore(address, phoneNumber, businessHours);
+            BusinessAddress address = ValidationTools.validateAddress(street, district, city, state);
+            Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
 
             String admin = appRef.getAuth().getUid();
             Business business = new Business(name, admin, category, description, corporateNumber);
@@ -351,20 +351,6 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private boolean validateInstagramPage(String page){
         inputLayoutInstagram.setErrorEnabled(false);
         return true;
-    }
-
-    private BusinessAddress validateAddress(String state, String city, String street, String district){
-        if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
-            return new BusinessAddress(state, city, street, district);
-        }
-        return null;
-    }
-
-    private Store validateStore(BusinessAddress address, String phone, String hours){
-        if (address != null || !phone.isEmpty() || !hours.isEmpty()){
-            return  new Store(address, phone, hours);
-        }
-        return null;
     }
 
     private void requestFocus(View view) {

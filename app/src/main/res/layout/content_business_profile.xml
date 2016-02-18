@@ -64,7 +64,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:fontFamily="sans-serif-light"
-                    android:text="20"
+                    android:text="N/D"
                     android:textSize="50sp"
                     android:textColor="@color/colorDescription"/>
 
@@ -107,7 +107,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:fontFamily="sans-serif-light"
-                    android:text="10"
+                    android:text="N/D"
                     android:textSize="50sp"
                     android:textColor="@color/colorDescription"/>
 

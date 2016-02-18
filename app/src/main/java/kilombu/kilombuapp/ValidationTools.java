@@ -22,6 +22,7 @@ public class ValidationTools {
         return  true;
     }
 
+<<<<<<< HEAD
     public static boolean isValidPassword(String password){
 
         if (password.isEmpty()){
@@ -29,13 +30,28 @@ public class ValidationTools {
         }
         return true;
 
+        public static boolean isValidPasswordAgain(String password, String passwordAgain){
+            if(passwordAgain.isEmpty() ||
+                    passwordAgain.compareTo(password)!=0){
+                return false;
+            }
+            return true;
+        }
+
+    public static BusinessAddress validateAddress(String street, String district, String city, String state){
+        if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
+            return new BusinessAddress(street, district, city, state);
+        }
+        return null;
     }
 
-    public static boolean isValidPasswordAgain(String password, String passwordAgain){
-        if(passwordAgain.isEmpty() ||
-                passwordAgain.compareTo(password)!=0){
-            return false;
+    public static Store validateStore(BusinessAddress address, String phone, String hours){
+        if (address != null || !phone.isEmpty() || !hours.isEmpty()){
+            return  new Store(address, phone, hours);
         }
-        return true;
+        return null;
+
     }
+
+
 }
