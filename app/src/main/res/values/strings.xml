@@ -52,6 +52,7 @@
     <string name="signout_menu">Sair</string>
 
     <string name="signup">Cadastrar</string>
+    <string name="signup_login">Ainda não tem cadastro? <u>Clique aqui</u></string>
     <string name="signin">Logar</string>
     <string name="logout">Logout</string>
     <string name="forgot_password"><u>Esqueceu sua senha?</u></string>
