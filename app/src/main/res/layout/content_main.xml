@@ -426,7 +426,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/scrollview"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:id="@+id/navigate_back_layout">
 
         <ImageView
             android:layout_width="30dp"
@@ -458,6 +459,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/scrollview"
+        android:id="@+id/navigate_next_layout"
         android:layout_alignParentRight="true">
 
         <TextView
