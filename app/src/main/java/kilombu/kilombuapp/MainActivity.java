@@ -16,9 +16,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -436,56 +438,115 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    class FirebaseAdsRecyclerAdapter extends FirebaseRecyclerAdapter<Business, BusinessViewHolder>{
+    class FirebaseAdsRecyclerAdapter extends FirebaseRecyclerAdapter<Business, RecyclerView.ViewHolder>{
+
+        private class VIEW_TYPES {
+            public static final int Header = 1;
+            public static final int Normal = 2;
+            public static final int Footer = 3;
+        }
 
         ProgressBar loadingArea;
 
         public FirebaseAdsRecyclerAdapter(Class<Business> modelClass, int modelLayout,
-                                         Class<BusinessViewHolder> viewHolderClass, Query ref) {
+                                         Class<RecyclerView.ViewHolder> viewHolderClass, Query ref) {
             super(modelClass, modelLayout, viewHolderClass, ref);
 
         }
 
         public FirebaseAdsRecyclerAdapter(Query ref){
-            super(Business.class, R.layout.item, BusinessViewHolder.class, ref);
+            super(Business.class, R.layout.item, RecyclerView.ViewHolder.class, ref);
             loadingArea = (ProgressBar) findViewById(R.id.progressBar);
             loadingArea.setVisibility(View.VISIBLE);
+            Log.d("NUMERO", Integer.toString(getItemCount()));
         }
 
         @Override
-        protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
-            businessViewHolder.businessName.setText(business.getName());
-            businessViewHolder.shortDescription.setText(business.getDescription());
+        public int getItemViewType(int position) {
+            if (position == getItemCount()-1){
+                return VIEW_TYPES.Footer;
+            }
+            return VIEW_TYPES.Normal;
+        }
 
-            Log.d("MAIN", Integer.toString(position));
-            if (position > minViewableAds || position >= (getItemCount()-1) ){
-                Log.d("MAIN", "ENTROU HAHAH");
-                loadingArea.setVisibility(View.GONE);
+        @Override
+        public int getItemCount() {
+            return (super.getItemCount()+1);
+        }
 
-                noAdsMessage.setVisibility(View.GONE);
-                noAdsImage.setVisibility(View.GONE);
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-                navigateBackLayout.setVisibility(View.VISIBLE);
-                navigateNextLayout.setVisibility(View.VISIBLE);
+            switch (viewType){
+                case VIEW_TYPES.Footer:
+                    ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(mModelLayout, parent, false);
+                    return new FooterViewHolder(view);
+                default:
+                    ViewGroup mview = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(mModelLayout, parent, false);
+                    return new BusinessViewHolder(mview);
             }
 
-            businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
 
-                    intent.putExtra("business_name", business.getName());
-                    intent.putExtra("business_category", business.getCategory());
-                    intent.putExtra("business_description", business.getDescription());
+        }
 
-                    Firebase itemRef = firebaseAdsAdapter.getRef(position);
-                    String itemKey = itemRef.getKey();
-                    intent.putExtra("businessId", itemKey);
+        @Override
+        protected void populateViewHolder(RecyclerView.ViewHolder viewHolder, final Business business, final int position) {
+            if (position >= getItemCount()-1){
+                FooterViewHolder footerViewHolder = (FooterViewHolder) viewHolder;
 
-                    MainActivity.this.startActivity(intent);
+            }else {
+                BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
+                businessViewHolder.businessName.setText(business.getName());
+                businessViewHolder.shortDescription.setText(business.getDescription());
 
+                Log.d("MAIN", Integer.toString(position));
+                Log.d("MAIN", Integer.toString(getItemCount()));
+                if (position > minViewableAds || position >= (getItemCount()-1) ){
+                    Log.d("MAIN", "ENTROU HAHAH");
+                    loadingArea.setVisibility(View.GONE);
+
+                    noAdsMessage.setVisibility(View.GONE);
+                    noAdsImage.setVisibility(View.GONE);
+
+                    navigateBackLayout.setVisibility(View.VISIBLE);
+                    navigateNextLayout.setVisibility(View.VISIBLE);
                 }
-            });
+
+
+                businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
+
+                        intent.putExtra("business_name", business.getName());
+                        intent.putExtra("business_category", business.getCategory());
+                        intent.putExtra("business_description", business.getDescription());
+
+                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
+                        String itemKey = itemRef.getKey();
+                        intent.putExtra("businessId", itemKey);
+
+                        MainActivity.this.startActivity(intent);
+
+                    }
+                });
+            }
+
+        }
+    }
+
+    public static class FooterViewHolder extends RecyclerView.ViewHolder {
+
+        CardView cv;
+        TextView businessName;
+        TextView shortDescription;
+
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cv);
+            businessName = (TextView)itemView.findViewById(R.id.business_name);
+            shortDescription = (TextView)itemView.findViewById(R.id.business_description);
+
         }
     }
 
