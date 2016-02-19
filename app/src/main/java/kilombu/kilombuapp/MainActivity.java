@@ -287,22 +287,21 @@ public class MainActivity extends AppCompatActivity
 
     public void nextPage(View nextButton){
         Query nextPageQuery;
-        String lastItemCategoryRankPoints = firebaseAdsAdapter
-                                        .getItem(firebaseAdsAdapter.getItemCount() - 2)
-                                        .getCategoryRankPoints();
-        //TODO: caso em que lastItemCategoryRankPoints é null
-        Log.d("ITEM ID", lastItemCategoryRankPoints);
+        Business lastItem = firebaseAdsAdapter.getItem(firebaseAdsAdapter.getItemCount() - 2);
+        //TODO: caso em que lastItem é null
+        Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
         if (currentCategory.equals(getString(R.string.category_all))){
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_rankpoints))
-                    .startAt(lastItemCategoryRankPoints).limitToFirst(adsPerPage);
+                    .startAt(lastItem.getRankPoints()).limitToFirst(adsPerPage);
         }
         else{
+            Log.d("ITEM CATRANK", Double.toString(lastItem.getRankPoints()));
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .startAt(lastItemCategoryRankPoints).endAt(currentCategory + "\uF8FF")
+                    .startAt(lastItem.getCategoryRankPoints()).endAt(currentCategory + "\uF8FF")
                     .limitToFirst(adsPerPage);
         }
 
@@ -313,20 +312,20 @@ public class MainActivity extends AppCompatActivity
 
     public void previousPage(View prevButton){
         Query previousPageQuery;
-        String firstItemCategoryRankPoints = firebaseAdsAdapter.getItem(0).getCategoryRankPoints();
-        //TODO: caso em que firstItemCategoryRankPoints é null
-        Log.d("ITEM ID", firstItemCategoryRankPoints);
+        Business firstItem = firebaseAdsAdapter.getItem(0);
+        //TODO: caso em que firstItem é null
+        Log.d("ITEM RANK", Double.toString(firstItem.getRankPoints()));
         if (currentCategory.equals(getString(R.string.category_all))){
             previousPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_rankpoints))
-                    .endAt(firstItemCategoryRankPoints).limitToFirst(adsPerPage);
+                    .endAt(firstItem.getRankPoints()).limitToFirst(adsPerPage);
         }
         else{
             previousPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_this_category))
-                    .startAt(currentCategory + "\uF8FF").endAt(firstItemCategoryRankPoints)
+                    .startAt(currentCategory + "\uF8FF").endAt(firstItem.getCategoryRankPoints())
                     .limitToFirst(adsPerPage);
         }
 
@@ -513,29 +512,33 @@ public class MainActivity extends AppCompatActivity
                     childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
                     footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
                 }
-                else{
-                    businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
 
-                            intent.putExtra("business_name", business.getName());
-                            intent.putExtra("business_category", business.getCategory());
-                            intent.putExtra("business_description", business.getDescription());
-
-                            Firebase itemRef = firebaseAdsAdapter.getRef(position);
-                            String itemKey = itemRef.getKey();
-                            intent.putExtra("businessId", itemKey);
-
-                            MainActivity.this.startActivity(intent);
-
+                businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("NOME", business.getName());
+                        if (business.getName().equals("Não há mais anúncios nesta categoria")){
+                            Log.d("IF", "RETORNA");
+                            return;
                         }
-                    });
-                }
+                        Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
+
+                        intent.putExtra("business_name", business.getName());
+                        intent.putExtra("business_category", business.getCategory());
+                        intent.putExtra("business_description", business.getDescription());
+
+                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
+                        String itemKey = itemRef.getKey();
+                        intent.putExtra("businessId", itemKey);
+
+                        MainActivity.this.startActivity(intent);
+
+                    }
+                });
 
                 Log.d("POSITION", Integer.toString(position));
                 Log.d("COUNTS", Integer.toString(getItemCount()));
-                if (position > 0 || position == getItemCount() - 2){
+                if (position > 0 || position == getItemCount() - 2) {
                     Log.d("MAIN", "TEM ANUNCIOS");
                     loadingArea.setVisibility(View.GONE);
                     //noAdsMessage.setVisibility(View.GONE);
