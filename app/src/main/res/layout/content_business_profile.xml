@@ -279,12 +279,14 @@
                     android:text="@string/noinfo_message"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
+                    android:layout_gravity="center_vertical"
                     android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/profile_group1"
                     android:visibility="gone">
 
@@ -293,6 +295,7 @@
                         android:layout_height="24dp"
                         android:id="@+id/profile_ic_phone"
                         android:layout_marginRight="5dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_phone_red_24dp"/>
 
                     <TextView
@@ -311,6 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/profile_group2"
                     android:visibility="gone">
 

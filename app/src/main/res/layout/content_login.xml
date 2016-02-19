@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp">
+            android:layout_marginRight="24dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center">
 
             <!-- Email Label -->
             <android.support.design.widget.TextInputLayout
@@ -73,6 +75,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="18sp"
                 android:text="@string/signup_login"
+                android:clickable="true"
                 android:onClick="gotosignup"/>
 
             <TextView
@@ -84,6 +87,7 @@
                 android:text="@string/forgot_password"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="18sp"
+                android:clickable="true"
                 android:onClick="goToResetPassword"/>
 
         </LinearLayout>

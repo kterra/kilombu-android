@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,12 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_login));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
 
 
         dialog = new ProgressDialog(this);
@@ -47,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         appRef = new Firebase(getString(R.string.firebase_url));
 
     }
+
 
 
     public void login(View view){

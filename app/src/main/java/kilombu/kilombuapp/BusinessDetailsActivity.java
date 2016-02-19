@@ -2,6 +2,8 @@ package kilombu.kilombuapp;
 
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +22,10 @@ import com.firebase.client.Query;
 import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
@@ -28,6 +34,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
     private final String TAG = "Business Details";
     String businessId;
     LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +44,15 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        checkInternetConnection();
+
         detailsRef = new Firebase(getString(R.string.firebase_url))
-                        .child(getString(R.string.child_business_details));
+                .child(getString(R.string.child_business_details));
         setupBusinessDetails();
     }
 
 
-    public String setupBusinessDetails(){
+    public String setupBusinessDetails() {
         Intent intent = getIntent();
         TextView currentText = (TextView) findViewById(R.id.business_name_detail);
         currentText.setText(intent.getStringExtra("business_name"));
@@ -58,6 +67,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         storeLoading.setVisibility(View.VISIBLE);
 
         businessId = intent.getStringExtra("businessId");
+
         Query detailsQuery = detailsRef.orderByKey().equalTo(businessId).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -186,21 +196,22 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         return businessId;
     }
 
-    private void updateVisualizationsCounter(){
+    private void updateVisualizationsCounter() {
         Firebase viewsCountRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business_statistics)).child(businessId)
                 .child(getString(R.string.child_statistics_visualizations));
 
-        viewsCountRef.runTransaction(new Transaction.Handler(){
+        viewsCountRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData currentData) {
-                if(currentData.getValue() == null) {
+                if (currentData.getValue() == null) {
                     currentData.setValue(1);
                 } else {
                     currentData.setValue((Long) currentData.getValue() + 1);
                 }
                 return Transaction.success(currentData); //we can also abort by calling Transaction.abort()
             }
+
             @Override
             public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
                 //This method will be called once with the results of the transaction.
@@ -208,4 +219,49 @@ public class BusinessDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            try {
+                URL url = new URL("http://www.google.com");
+                HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+                urlc.setConnectTimeout(3000);
+                urlc.connect();
+                if (urlc.getResponseCode() == 200) {
+                    return new Boolean(true);
+                }
+            } catch (MalformedURLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return false;
+
+    }
+
+    private void checkInternetConnection() {
+        // ask fo message '0' (not connected) or '1' (connected) on 'handler'
+        // the answer must be send before before within the 'timeout' (in milliseconds)
+
+        new Thread() {
+            private boolean responded = false;
+
+            @Override
+            public void run() {
+                // set 'responded' to TRUE if is able to connect with google mobile (responds fast)
+                if(isOnline()){
+
+                }else{
+                    Toast.makeText(BusinessDetailsActivity.this, "Sme internet", Toast.LENGTH_SHORT);
+                }
+            }
+        }.start();
+    }
 }
+

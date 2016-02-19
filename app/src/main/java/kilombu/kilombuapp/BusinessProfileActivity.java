@@ -32,6 +32,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private BusinessStatistics currentStatistics;
     private SharedPreferences busPreferences;
     private android.content.Context context;
+    private boolean sacAllEmptyFlag;
 
     private final String TAG = "Business Profile";
     LinearLayout linearLayout;
@@ -45,12 +46,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_business_profile));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
@@ -123,12 +118,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
                         }
                     } else {
-                        Log.d("flag", "true");
                         currentText = (TextView) findViewById(R.id.profile_no_storesinfo_message);
                         currentText.setVisibility(View.VISIBLE);
                     }
 
-                    boolean sacAllEmptyFlag = true;
+                   sacAllEmptyFlag = true;
                     String sacNumber = currentDetails.getSacNumber();
                     if (sacNumber != null &&
                             !sacNumber.isEmpty()) {
@@ -277,26 +271,33 @@ public class BusinessProfileActivity extends AppCompatActivity {
     }
 
     public void goToEditContactInfo(View editButton){
-        Intent intent = new Intent(this, EditContactInfoActivity.class);
-        startActivity(intent);
+        if(!sacAllEmptyFlag) {
+            Intent intent = new Intent(this, EditContactInfoActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void goToEditStoreInfo(View editButton){
         Intent intent = new Intent(this, EditStoreInfoActivity.class);
         //TODO: find a new way when we support multiple stores
-        Store currentStore = currentDetails.getStores().values().iterator().next();
-        BusinessAddress currentAddress = currentStore.getAddress();
 
-        intent.putExtra("businessId", businessId);
-        intent.putExtra(getString(R.string.child_details_store_address_country), currentAddress.getCountry());
-        intent.putExtra(getString(R.string.child_details_store_address_state), currentAddress.getState());
-        intent.putExtra(getString(R.string.child_details_store_address_city), currentAddress.getCity());
-        intent.putExtra(getString(R.string.child_details_store_address_district), currentAddress.getDistrict());
-        intent.putExtra(getString(R.string.child_details_store_address_street), currentAddress.getStreet());
-        intent.putExtra(getString(R.string.child_details_store_phone), currentStore.getPhoneNumber());
-        intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
+        if(currentDetails.getStores() != null){
+            Store currentStore = currentDetails.getStores().values().iterator().next();
+            BusinessAddress currentAddress = currentStore.getAddress();
 
-        startActivity(intent);
+            intent.putExtra("empty", "false");
+            intent.putExtra("businessId", businessId);
+            intent.putExtra(getString(R.string.child_details_store_address_country), currentAddress.getCountry());
+            intent.putExtra(getString(R.string.child_details_store_address_state), currentAddress.getState());
+            intent.putExtra(getString(R.string.child_details_store_address_city), currentAddress.getCity());
+            intent.putExtra(getString(R.string.child_details_store_address_district), currentAddress.getDistrict());
+            intent.putExtra(getString(R.string.child_details_store_address_street), currentAddress.getStreet());
+            intent.putExtra(getString(R.string.child_details_store_phone), currentStore.getPhoneNumber());
+            intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
+            startActivity(intent);
+        }
+
+
     }
 
     public void removeBusiness(View button){
