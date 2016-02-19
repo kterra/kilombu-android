@@ -510,7 +510,8 @@ public class MainActivity extends AppCompatActivity
                 BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
                 businessViewHolder.businessName.setText(businessName);
                 businessViewHolder.shortDescription.setText(business.getDescription());
-                if(businessName.compareTo(("Não há mais anúncios nesta categoria").trim())==0){
+
+                if(businessName.compareTo(getString(R.string.no_ads_left).trim())==0){
                     CardView cv = businessViewHolder.cv;
                     RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
                     LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
@@ -525,13 +526,29 @@ public class MainActivity extends AppCompatActivity
                     view.setVisibility(View.GONE);
 
                     footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
+                }else{
+                    CardView cv = businessViewHolder.cv;
+                    RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+                    LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
+                    childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);
+                    ((TextView)childView.findViewById(R.id.business_description)).setTextSize(16);
+
+
+                    TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+                    businessNameView.setTextSize(20);
+
+                    View view =  (View) relativeLayoutView.getChildAt(1);
+                    view.setVisibility(View.VISIBLE);
+
                 }
+
+
 
                 businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.d("NOME", business.getName());
-                        if (business.getName().equals("Não há mais anúncios nesta categoria")){
+                        if (business.getName().equals(getString(R.string.no_ads_left))){
                             Log.d("IF", "RETORNA");
                             return;
                         }
