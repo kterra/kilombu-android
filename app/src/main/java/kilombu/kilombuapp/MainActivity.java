@@ -3,6 +3,7 @@ package kilombu.kilombuapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity
         currentCategory = getString(R.string.category_all);
         businessRef = new Firebase(getString(R.string.firebase_url))
                             .child(getString(R.string.child_business));
+
+        noAdsMessage = (TextView) findViewById(R.id.no_ads_available);
+        noAdsImage = (ImageView)findViewById(R.id.no_ads_available_image);
         initializeAdapter();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,8 +95,7 @@ public class MainActivity extends AppCompatActivity
         setUpCustomDrawer();
         Log.d("MAIN", "ON CREATE");
 
-        noAdsMessage = (TextView) findViewById(R.id.no_ads_available);
-        noAdsImage = (ImageView)findViewById(R.id.no_ads_available_image);
+
     }
 
     private void setNavigationHeader(){
@@ -210,6 +213,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeAdapter(){
         final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
+        loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x00A5A9));
         loadingArea.setVisibility(View.VISIBLE);
 
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
@@ -225,6 +229,7 @@ public class MainActivity extends AppCompatActivity
                     Log.d("MAIN", "ENTROU HAHAH");
                     loadingArea.setVisibility(View.GONE);
                 }
+
 
                 businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -248,6 +253,16 @@ public class MainActivity extends AppCompatActivity
 
         adsView.setAdapter(firebaseAdsAdapter);
         //TODO: move so they can realy happen
+//        if (firebaseAdsAdapter.getItemCount() == 0){
+//            loadingArea.setVisibility(View.GONE);
+//            noAdsMessage.setVisibility(View.VISIBLE);
+//            noAdsImage.setVisibility(View.VISIBLE);
+//
+//
+//        }else {
+//            noAdsMessage.setVisibility(View.GONE);
+//            noAdsImage.setVisibility(View.GONE);
+//        }
         //loadingArea.setVisibility(View.GONE);
 
     }
@@ -288,6 +303,8 @@ public class MainActivity extends AppCompatActivity
         };
         adsView.swapAdapter(firebaseAdsAdapter, true);
         if (firebaseAdsAdapter.getItemCount() == 0){
+            final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
+            loadingArea.setVisibility(View.GONE);
             noAdsMessage.setVisibility(View.VISIBLE);
             noAdsImage.setVisibility(View.VISIBLE);
 
