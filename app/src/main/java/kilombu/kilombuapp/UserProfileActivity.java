@@ -103,7 +103,9 @@ public class UserProfileActivity extends AppCompatActivity {
                             String userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
 
                             appRef.child(getString(R.string.child_users)).child(userId).setValue(null);
-//                            appRef.unauth();
+                            Log.d("MAIN",userEmail);
+                            Log.d("MAIN", password);
+
                             appRef.removeUser(userEmail, password, new Firebase.ResultHandler() {
                                 @Override
                                 public void onSuccess() {
@@ -129,6 +131,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE);
                             userPreferences.edit().clear().commit();
 
+                            appRef.unauth();
                             Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
                             finish();
                             startActivity(intent);
