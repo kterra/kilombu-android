@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private android.content.Context context;
     private DrawerLayout drawer;
     private TextView noAdsMessage;
+    private ImageView noAdsImage;
 
 
     @Override
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("MAIN", "ON CREATE");
 
         noAdsMessage = (TextView) findViewById(R.id.no_ads_available);
+        noAdsImage = (ImageView)findViewById(R.id.no_ads_available_image);
     }
 
     private void setNavigationHeader(){
@@ -147,8 +150,6 @@ public class MainActivity extends AppCompatActivity
 
                         ((TextView) findViewById(R.id.user_name_header)).setText(userName);
 
-                        /*TextView usermail = (TextView) findViewById(R.id.user_mail_header);
-                        usermail.setText(currentUser.getEmail());*/
 
                     } else {
                         //TODO: what if user data is not found?
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity
     private void initializeAdapter(){
         final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
         loadingArea.setVisibility(View.VISIBLE);
-        //loadingArea.showContextMenu();
+
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
                 R.layout.item, BusinessViewHolder.class, businessQuery) {
@@ -288,8 +289,12 @@ public class MainActivity extends AppCompatActivity
         adsView.swapAdapter(firebaseAdsAdapter, true);
         if (firebaseAdsAdapter.getItemCount() == 0){
             noAdsMessage.setVisibility(View.VISIBLE);
+            noAdsImage.setVisibility(View.VISIBLE);
+
+
         }else {
             noAdsMessage.setVisibility(View.GONE);
+            noAdsImage.setVisibility(View.GONE);
         }
 
     }
@@ -377,6 +382,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.settings_menu) {
             Intent intent = new Intent(this, UserProfileActivity.class);
+            finish();
             startActivity(intent);
         }
 

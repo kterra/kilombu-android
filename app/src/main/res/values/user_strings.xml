@@ -24,4 +24,5 @@
     <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
 
     <string name="remove_user_account">Remover Conta</string>
+    <string name="remove_user_account_message">Você tem certeza que deseja remover sua conta? \nAtenção! Se você possui um negócio cadastrado ele também será removido!</string>
 </resources>
