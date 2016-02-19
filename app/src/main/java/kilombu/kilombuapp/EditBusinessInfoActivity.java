@@ -47,6 +47,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
                 saveAndUpdateData();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
