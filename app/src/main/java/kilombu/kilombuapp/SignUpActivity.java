@@ -97,7 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Log.d(TAG, "Created user with uid: " + result.get("uid"));
                         Firebase newuserRef = usersRef.child(result.get("uid").toString());
                         newuserRef.setValue(newuser);
-                        Toast.makeText(SignUpActivity.this, result.get("uid").toString(), Toast.LENGTH_LONG).show();
+                        Log.d(TAG, result.get("uid").toString());
                         dialog.hide();
                         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

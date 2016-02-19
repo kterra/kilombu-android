@@ -17,6 +17,6 @@
     <string name="business_create_sac_title"> Atendimento ao Cliente</string>
 
     <string name="remove_business">Remover este negócio</string>
-    <string name="remove_business_message">Você tem certeza que deseja remover este negócio?</string>
+
 
 </resources>

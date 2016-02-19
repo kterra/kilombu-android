@@ -95,9 +95,9 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         int index = 1;
 
         Spinner stateSelection = (Spinner) findViewById(R.id.edit_state);
-        state = stateSelection.getSelectedItem().toString();
+        state = stateSelection.getSelectedItem().toString().trim();
         EditText currentText = (EditText) findViewById(R.id.edit_city);
-        city = currentText.getText().toString();
+        city = currentText.getText().toString().trim();
 
         if(!validateState(state, city)){
             return;
@@ -107,25 +107,25 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         }
 
         currentText = (EditText) findViewById(R.id.edit_district);
-        district = currentText.getText().toString();
+        district = currentText.getText().toString().trim();
         if(!validateDistrict(district)){
             return;
         }
 
         currentText = (EditText) findViewById(R.id.edit_street);
-        street = currentText.getText().toString();
+        street = currentText.getText().toString().trim();
         if(!validateStreet(street)){
             return;
         }
 
         currentText = (EditText) findViewById(R.id.edit_phone);
-        phone = currentText.getText().toString();
+        phone = currentText.getText().toString().trim();
         if(!validatePhone(phone)) {
             return;
         }
 
         currentText = (EditText) findViewById(R.id.edit_business_hours);
-        hours = currentText.getText().toString();
+        hours = currentText.getText().toString().trim();
         if(!validateBusinessHours(hours)){
             return;
         }

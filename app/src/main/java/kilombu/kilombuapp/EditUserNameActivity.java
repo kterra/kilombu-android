@@ -58,7 +58,7 @@ public class EditUserNameActivity extends AppCompatActivity {
 
     private void changeUserName(){
 
-        name = ((EditText)findViewById(R.id.edit_username)).getText().toString();
+        name = ((EditText)findViewById(R.id.edit_username)).getText().toString().trim();
 
         if (!validateName(name)) {
             return;

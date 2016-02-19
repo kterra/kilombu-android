@@ -81,7 +81,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 .setView(input)
                 .setIcon(R.drawable.ic_report_problem_black_24dp)
                 .setTitle(getString(R.string.remove_user_account))
-                .setMessage(getString(R.string.remove_user_account_message))
+                .setMessage(getString(R.string.remove_user_account_msg))
                 .setPositiveButton(getString(R.string.alert_dialog_positive), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

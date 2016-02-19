@@ -61,8 +61,8 @@ public class EditUserEmailActivity extends AppCompatActivity {
 
 
     private void changeUserEmail(){
-       userPassword = ((EditText) findViewById(R.id.password)).getText().toString();
-       newUserEmail = ((EditText) findViewById(R.id.new_useremail)).getText().toString();
+       userPassword = ((EditText) findViewById(R.id.password)).getText().toString().trim();
+       newUserEmail = ((EditText) findViewById(R.id.new_useremail)).getText().toString().trim();
 
         if (!validateEmail(newUserEmail)) {
             return;

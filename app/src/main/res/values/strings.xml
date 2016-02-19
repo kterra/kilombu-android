@@ -48,9 +48,6 @@
     <string name="forgot_password"><u>Esqueceu sua senha?</u></string>
 
 
-    <string name="noinfo_message">Não há informações disponíves.</string>
-    <string name="nobusiness_message">Você não possui um negócio/serviço cadastrado.</string>
-    <string name="no_ads_available">Não há nenhum anúncio cadastrado nesta categoria</string>
 
     <string name="preference_business_key">business</string>
     <string name="preference_user_key">user</string>
@@ -78,7 +75,7 @@
     <string name="navigate_next">Próxima</string>
     <string name="navigate_back">Anterior</string>
 
-    <string name="no_connection_available">Verifique sua conexão</string>
+
 
 
 </resources>

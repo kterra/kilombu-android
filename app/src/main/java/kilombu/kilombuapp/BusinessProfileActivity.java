@@ -23,7 +23,6 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -69,6 +68,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
         currentText.setText(businessName);
         currentText = (TextView) findViewById(R.id.profile_business_description);
         currentText.setText(businessDescription);
+
+        if (! KilombuApplication.hasActiveNetworkConnection(getApplicationContext())){
+
+            Toast.makeText(BusinessProfileActivity.this, "Sem internet, Doido!", Toast.LENGTH_SHORT).show();
+        }
 
         setupBusinessDetailsCard();
         setupStatisticsCards();
@@ -235,7 +239,8 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     }
                     contactsLoading.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(BusinessProfileActivity.this, "Nao encontrou o details", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BusinessProfileActivity.this, getString(R.string.toast_no_datasnapshot), Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
 
@@ -324,7 +329,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_report_problem_black_24dp)
                 .setTitle(getString(R.string.remove_business))
-                .setMessage(getString(R.string.remove_business_message))
+                .setMessage(getString(R.string.remove_business_msg))
                 .setPositiveButton(getString(R.string.alert_dialog_positive), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
