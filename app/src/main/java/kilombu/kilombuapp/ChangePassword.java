@@ -32,6 +32,7 @@ public class ChangePassword extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle(getString(R.string.title_activity_change_password));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         appRef = new Firebase(getString(R.string.firebase_url));
         context = ChangePassword.this;

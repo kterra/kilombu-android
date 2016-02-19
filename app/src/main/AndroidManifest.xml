@@ -32,7 +32,12 @@
         <activity
             android:name=".BusinessDetailsActivity"
             android:label="@string/title_activity_business_details"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
         <activity
             android:name=".CreateBusinessActivity"
             android:label="@string/title_activity_create_business"
@@ -51,15 +56,7 @@
             android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme" />
         <activity android:name=".CategoriesListActivity" />
-        <activity
-            android:name=".UserInfoActivity"
-            android:label="@string/title_activity_user_info"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="kilombu.kilombuapp.MainActivity" />
-        </activity>
+
         <activity
             android:name=".BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
@@ -96,19 +93,42 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.BusinessProfileActivity" />
         </activity>
-        <activity android:name=".UserProfileActivity" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
         <activity
             android:name=".EditUserNameActivity"
             android:label="@string/title_activity_edit_name"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".UserProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.UserProfileActivity" />
+        </activity>
         <activity
             android:name=".EditUserEmailActivity"
             android:label="@string/title_activity_edit_user_email"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".UserProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.UserProfileActivity" />
+        </activity>
         <activity
             android:name=".ChangePassword"
             android:label="@string/title_activity_change_password"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".UserProfileActivity"
+            android:theme="@style/AppTheme">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="kilombu.kilombuapp.UserProfileActivity" />
+        </activity>
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"

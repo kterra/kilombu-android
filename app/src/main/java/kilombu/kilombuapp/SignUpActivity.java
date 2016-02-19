@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,7 +18,7 @@ import com.firebase.client.FirebaseError;
 
 import java.util.Map;
 
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends AppCompatActivity {
 
     private Firebase appRef;
     private Firebase usersRef;
@@ -30,6 +32,12 @@ public class SignUpActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_signup));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         nameEditText = (EditText) findViewById(R.id.username_edit_text);
         emailEditText = (EditText) findViewById(R.id.email_edit_text);
