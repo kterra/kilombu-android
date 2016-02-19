@@ -44,8 +44,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        checkInternetConnection();
-
+        
         detailsRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business_details));
         setupBusinessDetails();
@@ -65,6 +64,13 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         final ProgressBar storeLoading = (ProgressBar) findViewById(R.id.details_store_loading);
         storeLoading.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
         storeLoading.setVisibility(View.VISIBLE);
+
+
+        if (! KilombuApplication.hasActiveNetworkConnection(getApplicationContext())){
+
+            Toast.makeText(BusinessDetailsActivity.this, "Sem internet, Doido!", Toast.LENGTH_SHORT).show();
+        }
+
 
         businessId = intent.getStringExtra("businessId");
 
@@ -220,48 +226,5 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         });
     }
 
-
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnected()) {
-            try {
-                URL url = new URL("http://www.google.com");
-                HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-                urlc.setConnectTimeout(3000);
-                urlc.connect();
-                if (urlc.getResponseCode() == 200) {
-                    return new Boolean(true);
-                }
-            } catch (MalformedURLException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        return false;
-
-    }
-
-    private void checkInternetConnection() {
-        // ask fo message '0' (not connected) or '1' (connected) on 'handler'
-        // the answer must be send before before within the 'timeout' (in milliseconds)
-
-        new Thread() {
-            private boolean responded = false;
-
-            @Override
-            public void run() {
-                // set 'responded' to TRUE if is able to connect with google mobile (responds fast)
-                if(isOnline()){
-
-                }else{
-                    Toast.makeText(BusinessDetailsActivity.this, "Sme internet", Toast.LENGTH_SHORT);
-                }
-            }
-        }.start();
-    }
 }
 
