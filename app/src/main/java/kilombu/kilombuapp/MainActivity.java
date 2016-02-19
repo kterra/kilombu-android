@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase appRef;
-    private final int adsPerPage = 1;
+    private final int adsPerPage = 2;
     private final int minViewableAds = 2;
     private int currentPage = 1;
     private String currentCategory;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     private User currentUser;
     private Business currentBusiness;
     private String currentBusinessId;
-    private FirebaseRecyclerAdapter<Business, BusinessViewHolder> firebaseAdsAdapter;
+    private FirebaseAdsRecyclerAdapter firebaseAdsAdapter;
     private Firebase businessRef;
     private Query businessQuery;
     private Query getUser;
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private TextView noAdsMessage;
     private ImageView noAdsImage;
-    private LinearLayoutCompat navigateBackLayout, navigateNextLayout;
 
 
     @Override
@@ -76,8 +75,7 @@ public class MainActivity extends AppCompatActivity
         adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
-        navigateBackLayout = (LinearLayoutCompat) findViewById(R.id.navigate_back_layout);
-        navigateNextLayout = (LinearLayoutCompat) findViewById(R.id.navigate_next_layout);
+
 
         currentCategory = getString(R.string.category_all);
         businessRef = new Firebase(getString(R.string.firebase_url))
@@ -233,8 +231,8 @@ public class MainActivity extends AppCompatActivity
             loadingArea.setVisibility(View.GONE);
             noAdsMessage.setVisibility(View.VISIBLE);
             noAdsImage.setVisibility(View.VISIBLE);
-            navigateBackLayout.setVisibility(View.GONE);
-            navigateNextLayout.setVisibility(View.GONE);
+            //navigateBackLayout.setVisibility(View.GONE);
+            //navigateNextLayout.setVisibility(View.GONE);
 
 
         }/*else {
@@ -250,27 +248,9 @@ public class MainActivity extends AppCompatActivity
 
     private void updateFirebaseAdapter(Query query){
         firebaseAdsAdapter.cleanup();
-        firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
-
+        firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(query);
         adsView.swapAdapter(firebaseAdsAdapter, true);
-        Log.d("MAIN", Integer.toString(firebaseAdsAdapter.getItemCount()));
-        if (firebaseAdsAdapter.getItemCount() == 0){
-            final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
-            loadingArea.setVisibility(View.GONE);
-            noAdsMessage.setVisibility(View.VISIBLE);
-            noAdsImage.setVisibility(View.VISIBLE);
 
-            navigateBackLayout.setVisibility(View.GONE);
-            navigateNextLayout.setVisibility(View.GONE);
-
-
-        }/*else {
-            noAdsMessage.setVisibility(View.GONE);
-            noAdsImage.setVisibility(View.GONE);
-
-            navigateBackLayout.setVisibility(View.VISIBLE);
-            navigateNextLayout.setVisibility(View.VISIBLE);
-        }*/
     }
 
     //TODO: consider rewriting own adapter
@@ -319,34 +299,38 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void nextPage(View nextButton){
-        Query nextPageQuery = null;
-        String lastItemId = firebaseAdsAdapter.getRef(firebaseAdsAdapter.getItemCount()-1).getKey();
+        Query nextPageQuery;
+        String lastItemId = firebaseAdsAdapter.getRef(firebaseAdsAdapter.getItemCount()-2).getKey();
+        Log.d("ITEM ID", lastItemId);
         if (currentCategory.equals(getString(R.string.category_all))){
-            nextPageQuery.orderByKey();
+            nextPageQuery = new Firebase(getString(R.string.firebase_url))
+                    .child(getString(R.string.child_business)).orderByKey().startAt(lastItemId).limitToFirst(adsPerPage);
         }
         else{
-            nextPageQuery.orderByChild(getString(R.string.child_business_this_category))
-                            .equalTo(currentCategory);
+            nextPageQuery = new Firebase(getString(R.string.firebase_url))
+                    .child(getString(R.string.child_business)).orderByChild(getString(R.string.child_business_this_category))
+                            .equalTo(currentCategory).startAt(lastItemId).limitToFirst(adsPerPage);
         }
 
-        nextPageQuery = nextPageQuery.endAt(lastItemId).limitToLast(adsPerPage);
         updateFirebaseAdapter(nextPageQuery);
         currentPage += 1;
 
     }
 
     public void previousPage(View prevButton){
-        Query previousPageQuery = null;
+        Query previousPageQuery;
         String firstItemId = firebaseAdsAdapter.getRef(0).getKey();
+        Log.d("ITEM ID", firstItemId);
         if (currentCategory.equals(getString(R.string.category_all))){
-            previousPageQuery.orderByKey();
+            previousPageQuery = new Firebase(getString(R.string.firebase_url))
+                    .child(getString(R.string.child_business)).orderByKey().endAt(firstItemId).limitToFirst(adsPerPage);
         }
         else{
-            previousPageQuery.orderByChild(getString(R.string.child_business_this_category))
-                    .equalTo(currentCategory);
+            previousPageQuery = new Firebase(getString(R.string.firebase_url))
+                    .child(getString(R.string.child_business)).orderByChild(getString(R.string.child_business_this_category))
+                    .equalTo(currentCategory).endAt(firstItemId).limitToFirst(adsPerPage);
         }
 
-        previousPageQuery = previousPageQuery.startAt(firstItemId).limitToLast(adsPerPage);
         updateFirebaseAdapter(previousPageQuery);
         currentPage -= 1;
     }
@@ -479,10 +463,12 @@ public class MainActivity extends AppCompatActivity
 
             switch (viewType){
                 case VIEW_TYPES.Footer:
-                    ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(mModelLayout, parent, false);
+                    ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext())
+                                    .inflate(R.layout.footer, parent, false);
                     return new FooterViewHolder(view);
                 default:
-                    ViewGroup mview = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(mModelLayout, parent, false);
+                    ViewGroup mview = (ViewGroup) LayoutInflater.from(parent.getContext())
+                                    .inflate(mModelLayout, parent, false);
                     return new BusinessViewHolder(mview);
             }
 
@@ -490,26 +476,49 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        protected void populateViewHolder(RecyclerView.ViewHolder viewHolder, final Business business, final int position) {
-            if (position >= getItemCount()-1){
-                FooterViewHolder footerViewHolder = (FooterViewHolder) viewHolder;
+        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+            Business model = null;
+            if (position < getItemCount()-1){
+                model = this.getItem(position);
+            }
+            this.populateViewHolder(viewHolder, model, position);
+        }
 
-            }else {
+        @Override
+        protected void populateViewHolder(RecyclerView.ViewHolder viewHolder, final Business business, final int position) {
+
+            if (business == null){ //footer
+                Log.d("FOOTER", Integer.toString(position));
+                int footerPosition = getItemCount() -1;
+                Log.d("HAHAHA", Integer.toString(getItemCount()));
+                if (getItemCount() == 1){
+                    //TODO: check the best place for this code
+                    noAdsMessage.setVisibility(View.VISIBLE);
+                    noAdsImage.setVisibility(View.VISIBLE);
+                }
+
+                FooterViewHolder footerViewHolder = (FooterViewHolder) viewHolder;
+                if (currentPage == 1){
+                    footerViewHolder.navigateBackLayout.setVisibility(View.GONE);
+                }else{
+                    footerViewHolder.navigateBackLayout.setVisibility(View.VISIBLE);
+                }
+
+
+                footerViewHolder.navigateNextLayout.setVisibility(View.VISIBLE);
+            }
+            else {
                 BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
                 businessViewHolder.businessName.setText(business.getName());
                 businessViewHolder.shortDescription.setText(business.getDescription());
 
                 Log.d("MAIN", Integer.toString(position));
                 Log.d("MAIN", Integer.toString(getItemCount()));
-                if (position > minViewableAds || position >= (getItemCount()-1) ){
+                if (position > minViewableAds || position >= (getItemCount()-2) ){
                     Log.d("MAIN", "ENTROU HAHAH");
                     loadingArea.setVisibility(View.GONE);
-
                     noAdsMessage.setVisibility(View.GONE);
                     noAdsImage.setVisibility(View.GONE);
-
-                    navigateBackLayout.setVisibility(View.VISIBLE);
-                    navigateNextLayout.setVisibility(View.VISIBLE);
                 }
 
 
@@ -537,16 +546,13 @@ public class MainActivity extends AppCompatActivity
 
     public static class FooterViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cv;
-        TextView businessName;
-        TextView shortDescription;
+        private LinearLayoutCompat navigateBackLayout;
+        private LinearLayoutCompat navigateNextLayout;
 
         public FooterViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            businessName = (TextView)itemView.findViewById(R.id.business_name);
-            shortDescription = (TextView)itemView.findViewById(R.id.business_description);
-
+            navigateBackLayout = (LinearLayoutCompat) itemView.findViewById(R.id.navigate_back_layout);
+            navigateNextLayout = (LinearLayoutCompat) itemView.findViewById(R.id.navigate_next_layout);
         }
     }
 

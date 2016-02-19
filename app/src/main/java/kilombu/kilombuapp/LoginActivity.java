@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,16 +23,17 @@ public class LoginActivity extends AppCompatActivity {
     private Firebase appRef;
     private static final String TAG = "LoginActivity";
     private ProgressDialog dialog;
-    private CoordinatorLayout coordinatorLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_login));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id
-                .coordinatorLayout);
         dialog = new ProgressDialog(this);
 
         appRef = new Firebase(getString(R.string.firebase_url));

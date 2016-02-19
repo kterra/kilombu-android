@@ -22,7 +22,7 @@ public class CategoriesListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_categories);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Categorias");
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
