@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private android.content.Context context;
     private DrawerLayout drawer;
     private TextView noAdsMessage;
+    private ImageView noAdsImage;
 
 
     @Override
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("MAIN", "ON CREATE");
 
         noAdsMessage = (TextView) findViewById(R.id.no_ads_available);
+        noAdsImage = (ImageView)findViewById(R.id.no_ads_available_image);
     }
 
     private void setNavigationHeader(){
@@ -290,8 +293,12 @@ public class MainActivity extends AppCompatActivity
         adsView.swapAdapter(firebaseAdsAdapter, true);
         if (firebaseAdsAdapter.getItemCount() == 0){
             noAdsMessage.setVisibility(View.VISIBLE);
+            noAdsImage.setVisibility(View.VISIBLE);
+
+
         }else {
             noAdsMessage.setVisibility(View.GONE);
+            noAdsImage.setVisibility(View.GONE);
         }
 
     }
