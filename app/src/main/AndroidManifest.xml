@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".KilombuApplication"
@@ -50,13 +51,22 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.MainActivity" />
+        </activity>
         <activity android:name=".CategoriesListActivity" />
-
         <activity
             android:name=".BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
@@ -125,9 +135,9 @@
             android:label="@string/title_activity_change_password"
             android:parentActivityName=".UserProfileActivity"
             android:theme="@style/AppTheme">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="kilombu.kilombuapp.UserProfileActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.UserProfileActivity" />
         </activity>
         <activity
             android:name=".ResetPasswordActivity"
@@ -138,6 +148,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.LoginActivity" />
         </activity>
+
     </application>
 
 </manifest>

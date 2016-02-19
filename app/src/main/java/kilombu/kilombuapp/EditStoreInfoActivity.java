@@ -31,12 +31,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_store_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
 
         setupStoreInfo();
 
@@ -54,6 +49,8 @@ public class EditStoreInfoActivity extends AppCompatActivity {
 
     private void setupStoreInfo(){
         Intent intent = getIntent();
+        String isEmpty =  intent.getStringExtra("empty");
+
         businessId = intent.getStringExtra("businessId");
 
         state = intent.getStringExtra(getString(R.string.child_details_store_address_state));

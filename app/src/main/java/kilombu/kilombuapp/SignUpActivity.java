@@ -38,12 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_signup));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
 
 
         nameEditText = (EditText) findViewById(R.id.username_edit_text);

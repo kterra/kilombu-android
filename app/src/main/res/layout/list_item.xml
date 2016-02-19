@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed-thin"
         android:textSize="16sp"
-        android:textColor="@color/textview_item_list"/>
+        android:textColor="@color/textview_item_list"
+        />
 
 </LinearLayout>
