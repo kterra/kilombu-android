@@ -34,11 +34,20 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_login));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
         dialog = new ProgressDialog(this);
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
     }
+
 
     public void login(View view){
         // Set up a progress dialog

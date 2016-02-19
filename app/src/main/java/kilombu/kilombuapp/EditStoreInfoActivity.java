@@ -31,6 +31,12 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_store_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         setupStoreInfo();
 
