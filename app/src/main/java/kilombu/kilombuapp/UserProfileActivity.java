@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -70,16 +73,20 @@ public class UserProfileActivity extends AppCompatActivity {
     public void removeUserAccount(View button){
 
         final EditText input = new EditText(UserProfileActivity.this);
+        input.setHint(R.string.prompt_password);
+        input.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+        input.setTransformationMethod(PasswordTransformationMethod.getInstance());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(20,10,20,10);
         input.setLayoutParams(lp);
 
         new AlertDialog.Builder(this)
                 .setView(input)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(getString(R.string.remove_business))
-                .setMessage(getString(R.string.remove_business_message))
+                .setIcon(R.drawable.ic_report_problem_black_24dp)
+                .setTitle(getString(R.string.remove_user_account))
+                .setMessage(getString(R.string.remove_user_account_message))
                 .setPositiveButton(getString(R.string.alert_dialog_positive), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -94,9 +101,9 @@ public class UserProfileActivity extends AppCompatActivity {
                         }else{
                             String userId = userPreferences.getString(getString(R.string.userid_key), "");
                             String userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
-                            
+
                             appRef.child(getString(R.string.child_users)).child(userId).setValue(null);
-                            appRef.unauth();
+//                            appRef.unauth();
                             appRef.removeUser(userEmail, password, new Firebase.ResultHandler() {
                                 @Override
                                 public void onSuccess() {

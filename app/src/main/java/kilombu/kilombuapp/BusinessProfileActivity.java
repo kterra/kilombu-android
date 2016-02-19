@@ -245,7 +245,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
         statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     currentStatistics = dataSnapshot.getChildren().iterator()
                             .next().getValue(BusinessStatistics.class);
                     TextView viewsCount = (TextView) findViewById(R.id.profile_number_view);
@@ -257,7 +257,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     Calendar cal = Calendar.getInstance(Locale.getDefault());
                     cal.setTimeInMillis(currentStatistics.getTimestamp());
                     String registrationDate = DateFormat.format("dd-MM-yyyy", cal).toString();
-                    ((TextView)findViewById(R.id.business_timestamp)).setText("Na família Kilombu desde: " + registrationDate);
+                    ((TextView) findViewById(R.id.business_timestamp)).setText("Na família Kilombu desde: " + registrationDate);
 
                 }
             }
@@ -299,7 +299,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     public void removeBusiness(View button){
         new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_report_problem_black_24dp)
                 .setTitle(getString(R.string.remove_business))
                 .setMessage(getString(R.string.remove_business_message))
                 .setPositiveButton(getString(R.string.alert_dialog_positive), new DialogInterface.OnClickListener() {
