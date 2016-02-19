@@ -101,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/details_contacts_loading"
                 android:indeterminate="true"
-                style="@android:style/Widget.ProgressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:progressDrawable="@drawable/custom_progressbar"
                 android:visibility="visible"
                 android:layout_gravity="center"
                 />
@@ -344,7 +345,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/details_store_loading"
                 android:indeterminate="true"
-                style="@android:style/Widget.ProgressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:progressDrawable="@drawable/custom_progressbar"
                 android:visibility="visible"
                 android:layout_gravity="center"
                 />
