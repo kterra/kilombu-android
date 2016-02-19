@@ -535,11 +535,11 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d("POSITION", Integer.toString(position));
                 Log.d("COUNTS", Integer.toString(getItemCount()));
-                if (position > 0 ){
+                if (position > 0 || position == getItemCount() - 2){
                     Log.d("MAIN", "TEM ANUNCIOS");
                     loadingArea.setVisibility(View.GONE);
-                    noAdsMessage.setVisibility(View.GONE);
-                    noAdsImage.setVisibility(View.GONE);
+                    //noAdsMessage.setVisibility(View.GONE);
+                    //noAdsImage.setVisibility(View.GONE);
                 }
 
             }
