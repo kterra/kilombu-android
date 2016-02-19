@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase appRef;
-    private final int adsPerPage = 30;
+    private final int adsPerPage = 1;
     private final int minViewableAds = 2;
     private int currentPage = 1;
     private String currentCategory;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private TextView noAdsMessage;
     private ImageView noAdsImage;
+    private LinearLayoutCompat navigateBackLayout, navigateNextLayout;
 
 
     @Override
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity
         adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
+        navigateBackLayout = (LinearLayoutCompat) findViewById(R.id.navigate_back_layout);
+        navigateNextLayout = (LinearLayoutCompat) findViewById(R.id.navigate_next_layout);
 
         currentCategory = getString(R.string.category_all);
         businessRef = new Firebase(getString(R.string.firebase_url))
@@ -215,24 +219,30 @@ public class MainActivity extends AppCompatActivity
     private void initializeAdapter(){
         final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-        loadingArea.setVisibility(View.VISIBLE);
+        //loadingArea.setVisibility(View.VISIBLE);
 
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
         adsView.setAdapter(firebaseAdsAdapter);
         //TODO: move so they can realy happen
+        Log.d("MAIN", Integer.toString(firebaseAdsAdapter.getItemCount()));
         if (firebaseAdsAdapter.getItemCount() == 0){
             loadingArea.setVisibility(View.GONE);
             noAdsMessage.setVisibility(View.VISIBLE);
             noAdsImage.setVisibility(View.VISIBLE);
+            navigateBackLayout.setVisibility(View.GONE);
+            navigateNextLayout.setVisibility(View.GONE);
 
 
-        }else {
+        }/*else {
             noAdsMessage.setVisibility(View.GONE);
             noAdsImage.setVisibility(View.GONE);
-        }
-        loadingArea.setVisibility(View.GONE);
+
+            navigateBackLayout.setVisibility(View.VISIBLE);
+            navigateNextLayout.setVisibility(View.VISIBLE);
+        }*/
+        //loadingArea.setVisibility(View.GONE);
 
     }
 
@@ -241,17 +251,24 @@ public class MainActivity extends AppCompatActivity
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
         adsView.swapAdapter(firebaseAdsAdapter, true);
+        Log.d("MAIN", Integer.toString(firebaseAdsAdapter.getItemCount()));
         if (firebaseAdsAdapter.getItemCount() == 0){
             final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
             loadingArea.setVisibility(View.GONE);
             noAdsMessage.setVisibility(View.VISIBLE);
             noAdsImage.setVisibility(View.VISIBLE);
 
+            navigateBackLayout.setVisibility(View.GONE);
+            navigateNextLayout.setVisibility(View.GONE);
 
-        }else {
+
+        }/*else {
             noAdsMessage.setVisibility(View.GONE);
             noAdsImage.setVisibility(View.GONE);
-        }
+
+            navigateBackLayout.setVisibility(View.VISIBLE);
+            navigateNextLayout.setVisibility(View.VISIBLE);
+        }*/
     }
 
     //TODO: consider rewriting own adapter
@@ -312,6 +329,7 @@ public class MainActivity extends AppCompatActivity
 
         nextPageQuery = nextPageQuery.endAt(lastItemId).limitToLast(adsPerPage);
         updateFirebaseAdapter(nextPageQuery);
+        currentPage += 1;
 
     }
 
@@ -328,6 +346,7 @@ public class MainActivity extends AppCompatActivity
 
         previousPageQuery = previousPageQuery.startAt(firstItemId).limitToLast(adsPerPage);
         updateFirebaseAdapter(previousPageQuery);
+        currentPage -= 1;
     }
 
     @Override
@@ -439,9 +458,15 @@ public class MainActivity extends AppCompatActivity
             businessViewHolder.shortDescription.setText(business.getDescription());
 
             Log.d("MAIN", Integer.toString(position));
-            if (position > minViewableAds || position >= getItemCount() ){
+            if (position > minViewableAds || position >= (getItemCount()-1) ){
                 Log.d("MAIN", "ENTROU HAHAH");
                 loadingArea.setVisibility(View.GONE);
+
+                noAdsMessage.setVisibility(View.GONE);
+                noAdsImage.setVisibility(View.GONE);
+
+                navigateBackLayout.setVisibility(View.VISIBLE);
+                navigateNextLayout.setVisibility(View.VISIBLE);
             }
 
             businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {

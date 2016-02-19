@@ -448,7 +448,7 @@
             android:text="@string/navigate_back"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:onClick="navigateBack"/>
+            android:onClick="previousPage"/>
 
 
     </android.support.v7.widget.LinearLayoutCompat>
@@ -475,7 +475,7 @@
             android:text="@string/navigate_next"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:onClick="navigateNext"/>
+            android:onClick="nextPage"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
