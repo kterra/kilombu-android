@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -19,7 +17,7 @@ import com.firebase.client.FirebaseError;
 
 public class ChangePassword extends AppCompatActivity {
 
-    private String userId, userEmail, currentPassword, newPassword, newPasswordAgain;
+    private String userEmail;
     private EditText passwordField, newPasswordField, newPasswordAgainField;
     private Firebase appRef;
     private TextInputLayout inputLayoutPassword,  inputLayoutNewPassword, inputLayoutNewPasswordAgain;
@@ -38,7 +36,6 @@ public class ChangePassword extends AppCompatActivity {
         appRef = new Firebase(getString(R.string.firebase_url));
         context = ChangePassword.this;
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        userId = userPreferences.getString(getString(R.string.userid_key), "");
         userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

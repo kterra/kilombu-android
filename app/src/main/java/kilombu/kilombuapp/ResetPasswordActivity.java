@@ -9,14 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 

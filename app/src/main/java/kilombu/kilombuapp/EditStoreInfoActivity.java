@@ -3,7 +3,6 @@ package kilombu.kilombuapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,9 +22,8 @@ import java.util.Map;
 public class EditStoreInfoActivity extends AppCompatActivity {
 
     private String businessId, state, city, district, street, phone, hours;
-    private TextInputLayout inputLayoutCorporateNumber,inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,
+    private TextInputLayout inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,
     inputLayoutBusinessHours, inputLayoutPhone;
-    private Map<String, Object> storeUpdates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +32,6 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        storeUpdates = new HashMap<String, Object>();
         setupStoreInfo();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

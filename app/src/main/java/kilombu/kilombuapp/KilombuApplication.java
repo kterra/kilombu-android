@@ -15,4 +15,5 @@ public class KilombuApplication extends Application {
         //Initializes firebase
         Firebase.setAndroidContext(this);
     }
+
 }

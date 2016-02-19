@@ -66,7 +66,7 @@ public class EditUserNameActivity extends AppCompatActivity {
         Map<String, Object> name = new HashMap<String, Object>();
         String newUserName =  usernameProfile.getText().toString();
 
-        name.put("name", newUserName);
+        name.put(getString(R.string.child_business_this_name), newUserName);
         Firebase userRef = new Firebase(getString(R.string.firebase_url)).child(getString(R.string.child_users));
         Log.d("id", id);
         Log.d("name", newUserName);

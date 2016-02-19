@@ -1,10 +1,5 @@
 package kilombu.kilombuapp;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
-
 /**
  * Created by hallpaz on 12/10/2015.
  */

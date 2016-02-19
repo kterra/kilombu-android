@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,14 +23,12 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
 
         CardView cv;
         TextView businessName;
-        TextView businessCategory;
         TextView shortDescription;
 
         BusinessViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             businessName = (TextView)itemView.findViewById(R.id.business_name);
-           // businessCategory = (TextView)itemView.findViewById(R.id.business_category);
             shortDescription = (TextView)itemView.findViewById(R.id.business_description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +37,6 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
                     Intent intent = new Intent(AdsAdapter.context, BusinessDetailsActivity.class);
 
                     intent.putExtra("business_name", businessName.getText());
-                   // intent.putExtra("business_category", businessCategory.getText());
                     intent.putExtra("business_description", shortDescription.getText());
                     AdsAdapter.context.startActivity(intent);
 
@@ -71,7 +67,6 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
     @Override
     public void onBindViewHolder(BusinessViewHolder businessViewHolder, int position) {
         businessViewHolder.businessName.setText(businesses.get(position).getName());
-//        businessViewHolder.businessCategory.setText(businesses.get(position).getCategory());
         businessViewHolder.shortDescription.setText(businesses.get(position).getDescription());
     }
 

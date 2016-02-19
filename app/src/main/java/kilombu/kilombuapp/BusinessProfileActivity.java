@@ -28,11 +28,8 @@ import java.util.Map;
 public class BusinessProfileActivity extends AppCompatActivity {
     private Firebase appRef;
     private String businessId;
-    private Business currentBusiness;
     private BusinessDetails currentDetails;
     private BusinessStatistics currentStatistics;
-    private Map<String, Object> updatesOnBusiness;
-    private Map<String, Object> updatesOnDetails;
     private SharedPreferences busPreferences;
     private android.content.Context context;
 
@@ -52,9 +49,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
         context = BusinessProfileActivity.this;
         busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
         setupBusinessCard();
-
-        updatesOnBusiness = new HashMap<String, Object>();
-        updatesOnDetails = new HashMap<String, Object>();
 
     }
 

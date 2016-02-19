@@ -1,8 +1,5 @@
 package kilombu.kilombuapp;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by hallpaz on 12/02/2016.
  */

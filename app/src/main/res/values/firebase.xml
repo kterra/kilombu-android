@@ -3,8 +3,8 @@
     <string name="firebase_url">https://brilliant-torch-2357.firebaseio.com</string>
     <string name="child_business">business</string>
     <string name="child_users">users</string>
-    <string name="child_business_details">BusinessDetails</string>
-    <string name="child_business_statistics">BusinessStatistics</string>
+    <string name="child_business_details">businessDetails</string>
+    <string name="child_business_statistics">businessStatistics</string>
 
 
     <string name="child_business_this_admin">admin</string>
@@ -32,6 +32,7 @@
     <string name="child_details_store_business_hours">businessHours</string>
 
 
-
     <string name="child_statistics_visualizations">visualizations</string>
+    <string name="child_statistics_recommendations">recommendations</string>
+    <string name="child_statistics_timestamp">timestamp</string>
 </resources>

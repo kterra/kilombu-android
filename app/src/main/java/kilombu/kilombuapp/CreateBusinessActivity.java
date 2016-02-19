@@ -15,12 +15,9 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ServerValue;
-import com.firebase.client.core.ServerValues;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CreateBusinessActivity extends AppCompatActivity {
 
@@ -33,7 +30,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private EditText nameField, descriptionField, corporateNumberField, cityField, streetField,
             districtField, businessHoursField,phoneField, sacPhoneField, emailField, websiteField,
             whatsappField, facebookField, instagramField;
-    private TextInputLayout inputLayoutName, inputLayoutDescrption, inputLayoutCorporateNumber,
+    private TextInputLayout inputLayoutName, inputLayoutDescription, inputLayoutCorporateNumber,
             inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,  inputLayoutBusinessHours, inputLayoutPhone,
             inputLayoutSacPhone, inputLayoutEmail, inputLayoutWebsite, inputLayoutWhatsapp,
             inputLayoutFacebook, inputLayoutInstagram;
@@ -64,7 +61,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         instagramField = (EditText) findViewById(R.id.form_instagram);
 
         inputLayoutName = (TextInputLayout) findViewById(R.id.form_name_layout);
-        inputLayoutDescrption = (TextInputLayout) findViewById(R.id.form_description_layout);
+        inputLayoutDescription = (TextInputLayout) findViewById(R.id.form_description_layout);
         inputLayoutCorporateNumber = (TextInputLayout) findViewById(R.id.form_corporate_number_layout);
 
 
@@ -218,30 +215,8 @@ public class CreateBusinessActivity extends AppCompatActivity {
         Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics))
                                 .child(businessId);
         statisticsRef.setValue(new BusinessStatistics());
-        statisticsRef.child("timestamp").setValue(ServerValue.TIMESTAMP);
-    }
-
-    //TODO: separate validation methods
-    private boolean dataIsValid(String name, String description, String corporateNumber,
-                                String category, String state, String city, String phoneNumber,
-                                String email, String sacPhone, String businessHours,
-                                String whatsapp, String facebook, String instagram){
-
-        boolean isValid = true;
-
-        isValid = isValid && validateName(name)
-                && validateDescription(description)
-                && validateCorporateNumber(corporateNumber)
-                && validateCategory(category)
-                && validateState(state, city)
-                && validatePhone(phoneNumber)
-                && ValidationTools.isValidEmail(email)
-                && validatePhone(sacPhone)
-                && validatePhone(whatsapp)
-                && validateFacebookPage(facebook)
-                && validateInstagramPage(instagram);
-
-        return isValid;
+        statisticsRef.child(getString(R.string.child_statistics_timestamp))
+                            .setValue(ServerValue.TIMESTAMP);
     }
 
     //Mandatory
@@ -261,12 +236,12 @@ public class CreateBusinessActivity extends AppCompatActivity {
     //Mandatory
     private boolean validateDescription(String description){
         if (!ValidationTools.isValidDescription(description)){
-            inputLayoutDescrption.setError(getString(R.string.err_msg_descripiton));
+            inputLayoutDescription.setError(getString(R.string.err_msg_descripiton));
             requestFocus(descriptionField);
             Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
             return false;
         }else {
-            inputLayoutDescrption.setErrorEnabled(false);
+            inputLayoutDescription.setErrorEnabled(false);
         }
         return  true;
     }

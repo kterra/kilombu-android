@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,7 +42,7 @@ public class SignUpActivity extends Activity {
         inputLayoutPasswordAgain = (TextInputLayout) findViewById(R.id.password_again_edit_layout);
 
         appRef = new Firebase(getString(R.string.firebase_url));
-        usersRef = appRef.child("users");
+        usersRef = appRef.child(getString(R.string.child_users));
     }
 
     public void signup(View view) {
