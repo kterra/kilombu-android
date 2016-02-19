@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     private Firebase appRef;
     private final int adsPerPage = 30;
+    private final int minViewableAds = 2;
     private String currentCategory;
     private RecyclerView adsView;
     private User currentUser;
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         context = MainActivity.this;
         busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-
 
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -203,19 +203,11 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-            if (currentBusiness != null){
-                Log.d("MAIN", "BUSINESS NAO NULO");
-                //navigationView.getMenu().clear(); //clear old inflated items.
-                //navigationView.inflateMenu(R.menu.activity_main_drawer_entrepreneur);
-            }else{
-                Log.d("MAIN", "BUSINESS NULO");
-            }
-
         }
     }
 
     private void initializeAdapter(){
-        ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
+        final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
         loadingArea.setVisibility(View.VISIBLE);
         //loadingArea.showContextMenu();
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
@@ -225,6 +217,12 @@ public class MainActivity extends AppCompatActivity
             protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
                 businessViewHolder.businessName.setText(business.getName());
                 businessViewHolder.shortDescription.setText(business.getDescription());
+
+                Log.d("MAIN", Integer.toString(position));
+                if (position > minViewableAds || position >= getItemCount() ){
+                    Log.d("MAIN", "ENTROU HAHAH");
+                    loadingArea.setVisibility(View.GONE);
+                }
 
                 businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -245,10 +243,11 @@ public class MainActivity extends AppCompatActivity
                 });
             }
         };
+
         adsView.setAdapter(firebaseAdsAdapter);
         //TODO: move so they can realy happen
-        adsView.setVisibility(View.VISIBLE);
-        loadingArea.setVisibility(View.GONE);
+        //loadingArea.setVisibility(View.GONE);
+
     }
 
     public void changeCategory(String category){
@@ -289,15 +288,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
     //TODO: consider rewriting own adapter
     public void changeCategoryOnClick(View button){
 
         changeCategory(button.getTag().toString());
 
     }
-
-
 
     public void showListWithAllCategories(View button){
         Intent intent = new Intent(MainActivity.this, CategoriesListActivity.class);
