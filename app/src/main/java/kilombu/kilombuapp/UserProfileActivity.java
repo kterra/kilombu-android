@@ -1,5 +1,8 @@
 package kilombu.kilombuapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +65,73 @@ public class UserProfileActivity extends AppCompatActivity {
     public void changeUserEmail(View confirmationButton){
         Intent intent = new Intent(UserProfileActivity.this, EditUserEmailActivity.class);
         startActivity(intent);
+    }
+
+    public void removeUserAccount(View button){
+
+        final EditText input = new EditText(UserProfileActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+
+        new AlertDialog.Builder(this)
+                .setView(input)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getString(R.string.remove_business))
+                .setMessage(getString(R.string.remove_business_message))
+                .setPositiveButton(getString(R.string.alert_dialog_positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final Firebase appRef = new Firebase(getString(R.string.firebase_url));
+
+                        String password = input.getText().toString();
+
+                        if (!ValidationTools.isValidPassword(password)) {
+
+                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_empty_password), Toast.LENGTH_LONG);
+
+                        }else{
+                            String userId = userPreferences.getString(getString(R.string.userid_key), "");
+                            String userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
+                            
+                            appRef.child(getString(R.string.child_users)).child(userId).setValue(null);
+                            appRef.unauth();
+                            appRef.removeUser(userEmail, password, new Firebase.ResultHandler() {
+                                @Override
+                                public void onSuccess() {
+                                    SharedPreferences busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), Context.MODE_PRIVATE);
+
+                                    String businessId = busPreferences.getString(getString(R.string.businessid_key), "");
+
+                                    if (businessId.isEmpty()) {
+                                        appRef.child(getString(R.string.child_business)).child(businessId).setValue(null);
+                                        appRef.child(getString(R.string.child_business_details)).child(businessId).setValue(null);
+                                        appRef.child(getString(R.string.child_business_statistics)).child(businessId).setValue(null);
+                                        busPreferences.edit().clear().commit();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(FirebaseError firebaseError) {
+                                    Toast.makeText(UserProfileActivity.this, getString(R.string.toast_failure_remove_user), Toast.LENGTH_LONG);
+
+                                }
+                            });
+
+                            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE);
+                            userPreferences.edit().clear().commit();
+
+                            Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+                            finish();
+                            startActivity(intent);
+                        }
+                    }
+
+                })
+                .setNegativeButton(getString(R.string.alert_dialog_negative), null)
+                .show();
+
     }
 
 }

@@ -1,5 +1,7 @@
 package kilombu.kilombuapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -158,7 +160,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     }
 
                     String website = currentDetails.getWebsite();
-                    if ( website != null &&
+                    if (website != null &&
                             !website.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group3);
@@ -173,7 +175,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     }
 
                     String whatsapp = currentDetails.getWhatsapp();
-                    if ( whatsapp!= null &&
+                    if (whatsapp != null &&
                             !whatsapp.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group4);
@@ -188,7 +190,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                     }
 
                     String facebookPage = currentDetails.getFacebookPage();
-                    if ( facebookPage != null &&
+                    if (facebookPage != null &&
                             !facebookPage.isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.profile_group5);
@@ -224,7 +226,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         currentText.setVisibility(View.VISIBLE);
                     }
                 } else {
-                  Toast.makeText(BusinessProfileActivity.this, "Nao encontrou o details", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BusinessProfileActivity.this, "Nao encontrou o details", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -294,5 +296,31 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    public void removeBusiness(View button){
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getString(R.string.remove_business))
+                .setMessage(getString(R.string.remove_business_message))
+                .setPositiveButton(getString(R.string.alert_dialog_positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        appRef.child(getString(R.string.child_business)).child(businessId).setValue(null);
+                        appRef.child(getString(R.string.child_business_details)).child(businessId).setValue(null);
+                        appRef.child(getString(R.string.child_business_statistics)).child(businessId).setValue(null);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        busPreferences.edit().clear().commit();
+
+                        Intent intent = new Intent(BusinessProfileActivity.this, MainActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+
+                })
+                .setNegativeButton(getString(R.string.alert_dialog_negative), null)
+                .show();
+    }
+
 
 }

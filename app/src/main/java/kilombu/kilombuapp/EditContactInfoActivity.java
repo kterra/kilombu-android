@@ -168,7 +168,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
 
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.edit_email_layout);
 
-        if (!ValidationTools.isValidEmail(email)) {
+        if (!email.isEmpty() && !ValidationTools.isValidEmail(email)) {
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             requestFocus((EditText) findViewById(R.id.new_useremail));
             return false;

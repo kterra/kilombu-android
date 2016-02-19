@@ -71,6 +71,9 @@
     <string name="businessdetails_facebook_key">businessFacebookPage</string>
     <string name="businessdetails_instagram_key">businessInstagramPage</string>
 
+    <string name="alert_dialog_positive">Sim</string>
+    <string name="alert_dialog_negative">Cancelar</string>
+
 
 
 </resources>
