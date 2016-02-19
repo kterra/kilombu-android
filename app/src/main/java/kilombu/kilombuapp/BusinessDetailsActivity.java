@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,8 +46,10 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         currentText.setText(intent.getStringExtra("business_description"));
 
         final ProgressBar contactsLoading = (ProgressBar) findViewById(R.id.details_contacts_loading);
+        contactsLoading.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
         contactsLoading.setVisibility(View.VISIBLE);
         final ProgressBar storeLoading = (ProgressBar) findViewById(R.id.details_store_loading);
+        storeLoading.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
         storeLoading.setVisibility(View.VISIBLE);
 
         businessId = intent.getStringExtra("businessId");
