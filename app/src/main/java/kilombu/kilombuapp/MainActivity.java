@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private DrawerLayout drawer;
-    private TextView noAdsMessage;
-    private ImageView noAdsImage;
 
 
     @Override
@@ -86,8 +84,7 @@ public class MainActivity extends AppCompatActivity
         businessRef = new Firebase(getString(R.string.firebase_url))
                             .child(getString(R.string.child_business));
 
-        noAdsMessage = (TextView) findViewById(R.id.no_ads_available);
-        noAdsImage = (ImageView)findViewById(R.id.no_ads_available_image);
+
         initializeAdapter();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -226,7 +223,7 @@ public class MainActivity extends AppCompatActivity
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 
         currentCategory = getString(R.string.category_all);
-        businessQuery = businessRef.orderByChild(getString(R.string.child_business_category_rankpoints))
+        businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
                 .limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
@@ -250,10 +247,10 @@ public class MainActivity extends AppCompatActivity
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
                     .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
-                    .limitToFirst(adsPerPage);
+                    .limitToLast(adsPerPage);
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .limitToFirst(adsPerPage);
+                    .limitToLast(adsPerPage);
         }
 
         updateFirebaseAdapter(businessQuery);
@@ -265,10 +262,10 @@ public class MainActivity extends AppCompatActivity
         if (currentCategory != getString(R.string.category_all)){
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_this_category))
-                    .equalTo(currentCategory).limitToFirst(adsPerPage);
+                    .equalTo(currentCategory).limitToLast(adsPerPage);
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .limitToFirst(adsPerPage);
+                    .limitToLast(adsPerPage);
         }
 
         updateFirebaseAdapter(businessQuery);
