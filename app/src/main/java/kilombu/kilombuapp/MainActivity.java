@@ -235,13 +235,13 @@ public class MainActivity extends AppCompatActivity
             //navigateNextLayout.setVisibility(View.GONE);
 
 
-        }/*else {
+        }else {
             noAdsMessage.setVisibility(View.GONE);
             noAdsImage.setVisibility(View.GONE);
 
-            navigateBackLayout.setVisibility(View.VISIBLE);
-            navigateNextLayout.setVisibility(View.VISIBLE);
-        }*/
+            //navigateBackLayout.setVisibility(View.VISIBLE);
+            //navigateNextLayout.setVisibility(View.VISIBLE);
+        }
         //loadingArea.setVisibility(View.GONE);
 
     }
@@ -493,8 +493,8 @@ public class MainActivity extends AppCompatActivity
                 Log.d("HAHAHA", Integer.toString(getItemCount()));
                 if (getItemCount() == 1){
                     //TODO: check the best place for this code
-                    noAdsMessage.setVisibility(View.VISIBLE);
-                    noAdsImage.setVisibility(View.VISIBLE);
+                    //noAdsMessage.setVisibility(View.VISIBLE);
+                    //noAdsImage.setVisibility(View.VISIBLE);
                 }
 
                 FooterViewHolder footerViewHolder = (FooterViewHolder) viewHolder;
