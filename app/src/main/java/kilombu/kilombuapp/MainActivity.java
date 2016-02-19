@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeAdapter(){
         final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
-        loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x00A5A9));
+        loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
         loadingArea.setVisibility(View.VISIBLE);
 
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
@@ -253,17 +253,17 @@ public class MainActivity extends AppCompatActivity
 
         adsView.setAdapter(firebaseAdsAdapter);
         //TODO: move so they can realy happen
-//        if (firebaseAdsAdapter.getItemCount() == 0){
-//            loadingArea.setVisibility(View.GONE);
-//            noAdsMessage.setVisibility(View.VISIBLE);
-//            noAdsImage.setVisibility(View.VISIBLE);
-//
-//
-//        }else {
-//            noAdsMessage.setVisibility(View.GONE);
-//            noAdsImage.setVisibility(View.GONE);
-//        }
-        //loadingArea.setVisibility(View.GONE);
+        if (firebaseAdsAdapter.getItemCount() == 0){
+            loadingArea.setVisibility(View.GONE);
+            noAdsMessage.setVisibility(View.VISIBLE);
+            noAdsImage.setVisibility(View.VISIBLE);
+
+
+        }else {
+            noAdsMessage.setVisibility(View.GONE);
+            noAdsImage.setVisibility(View.GONE);
+        }
+        loadingArea.setVisibility(View.GONE);
 
     }
 

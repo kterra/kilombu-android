@@ -36,7 +36,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_home_white_24dp"
-                app:backgroundTint="@color/category_button_alternative_color"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:textColor="@color/colorPrimary"
                 android:tag="@string/category_all"/>
@@ -63,7 +63,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:backgroundTint="@color/category_button_alternative_color"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_beleza_white_24dp"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
@@ -92,7 +92,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:backgroundTint="@color/category_button_alternative_color"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_arte_white_24dp"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
@@ -123,7 +123,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_edu_white_24dp"
-                app:backgroundTint="@color/category_button_alternative_color"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:tag="@string/category_education"/>
@@ -154,7 +154,7 @@
                     android:layout_height="60dp"
                     android:src="@drawable/ic_esportes_white_24dp"
                     android:fontFamily="sans-serif-condensed"
-                    app:backgroundTint="@color/category_button_alternative_color"
+                    app:backgroundTint="@color/secondary_text_material_light"
                     android:onClick="changeCategoryOnClick"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"
@@ -187,7 +187,7 @@
                 android:layout_height="60dp"
                 android:src="@drawable/ic_moda_white_24dp"
                 android:fontFamily="sans-serif-condensed"
-                app:backgroundTint="@color/category_button_alternative_color"
+                app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
