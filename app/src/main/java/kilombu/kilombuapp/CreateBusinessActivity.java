@@ -108,25 +108,25 @@ public class CreateBusinessActivity extends AppCompatActivity {
     public void sendForm(View sendButton){
 
 
-        String name = nameField.getText().toString();
-        String description = descriptionField.getText().toString();
-        String corporateNumber = corporateNumberField.getText().toString();
+        String name = nameField.getText().toString().trim();
+        String description = descriptionField.getText().toString().trim();
+        String corporateNumber = corporateNumberField.getText().toString().trim();
 
-        String city = cityField.getText().toString();
-        String street = streetField.getText().toString();
-        String district = districtField.getText().toString();
-        String businessHours = businessHoursField.getText().toString();
-        String phoneNumber = phoneField.getText().toString();
+        String city = cityField.getText().toString().trim();
+        String street = streetField.getText().toString().trim();
+        String district = districtField.getText().toString().trim();
+        String businessHours = businessHoursField.getText().toString().trim();
+        String phoneNumber = phoneField.getText().toString().trim();
 
-        String sacPhone = sacPhoneField.getText().toString();
-        String email = emailField.getText().toString();
-        String website = websiteField.getText().toString();
-        String whatsapp = whatsappField.getText().toString();
-        String facebook = facebookField.getText().toString();
-        String instagram = instagramField.getText().toString();
+        String sacPhone = sacPhoneField.getText().toString().trim();
+        String email = emailField.getText().toString().trim();
+        String website = websiteField.getText().toString().trim();
+        String whatsapp = whatsappField.getText().toString().trim();
+        String facebook = facebookField.getText().toString().trim();
+        String instagram = instagramField.getText().toString().trim();
 
-        String category = categorySelection.getSelectedItem().toString();
-        String state = stateSelection.getSelectedItem().toString();
+        String category = categorySelection.getSelectedItem().toString().trim();
+        String state = stateSelection.getSelectedItem().toString().trim();
 
         if(!validateName(name)){
             return;
