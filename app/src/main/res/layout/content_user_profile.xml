@@ -56,7 +56,7 @@
                         android:id="@+id/user_name_profile"
                         android:fontFamily="sans-serif-condensed"
                         android:layout_gravity="center"
-                        android:text="@string/noinfo_message"
+                        android:text="@string/no_info_msg"
                         android:textSize="18sp"
                         android:textColor="@color/colorDescription"
                         />
@@ -125,7 +125,7 @@
                     android:id="@+id/email_profile"
                     android:fontFamily="sans-serif-condensed"
                     android:layout_gravity="center"
-                    android:text="@string/noinfo_message"
+                    android:text="@string/no_info_msg"
                     android:textSize="18sp"
                     android:textColor="@color/colorDescription"
                     />

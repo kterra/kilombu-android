@@ -10,356 +10,8 @@
     tools:context="kilombu.kilombuapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <HorizontalScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:scrollbars="none"
-        >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_home_white_24dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:onClick="changeCategoryOnClick"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_all"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_all"
-                android:id="@+id/category_all"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:src="@drawable/ic_beleza_white_24dp"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_beauty"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_beauty"
-                android:id="@+id/category_beauty"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:src="@drawable/ic_arte_white_24dp"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_culture"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_culture"
-                android:id="@+id/category_culture"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_edu_white_24dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:tag="@string/category_education"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_education"
-                android:id="@+id/category_education"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_esportes_white_24dp"
-                    android:fontFamily="sans-serif-condensed"
-                    app:backgroundTint="@color/secondary_text_material_light"
-                    android:onClick="changeCategoryOnClick"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    android:tag="@string/category_sport"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_sport"
-                android:id="@+id/category_sport"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_moda_white_24dp"
-                android:fontFamily="sans-serif-condensed"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_fashion"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_fashion"
-                android:id="@+id/category_fashion"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_publi_white_24dp"
-                    android:fontFamily="sans-serif-condensed"
-                    app:backgroundTint="@color/secondary_text_material_light"
-                    android:onClick="changeCategoryOnClick"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    android:tag="@string/category_advertising"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_advertising"
-                android:id="@+id/category_advertising"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_rh_white_24dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_human_resources"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_human_resources"
-                android:id="@+id/category_human_resources"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_saude_white_24dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_health"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_health"
-                android:id="@+id/category_health"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:backgroundTint="@color/secondary_text_material_light"
-                android:src="@drawable/ic_info_white_24dp"
-                android:onClick="changeCategoryOnClick"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:tag="@string/category_software"/>
-
-            />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_software"
-                android:id="@+id/category_software"
-                android:textSize="12sp"
-                android:textColor="@color/text_under_category"
-                />
-
-        </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_more_horiz_red_24dp"
-                    app:backgroundTint="@color/colorPrimary"
-                    android:fontFamily="sans-serif-condensed"
-                    android:onClick="showListWithAllCategories"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-condensed-thin"
-                    android:text="@string/category_list_all"
-                    android:id="@+id/category_list_all"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_under_category"
-                    />
-
-            </LinearLayout>
-
-
-
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+    <include layout="@layout/categories_main" />
 
     <View
         android:id="@+id/line"
@@ -372,23 +24,6 @@
 
         />
 
-    <!--<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/loading_area"
-        android:layout_below="@id/scrollview">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:indeterminate="true"
-            style="@android:style/Widget.ProgressBar.Large"
-            android:layout_gravity="center"
-            android:visibility="visible"/>
-    </LinearLayout> -->
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -410,7 +45,6 @@
         android:layout_marginTop="10dp"
         android:id="@+id/no_ads_available_image"
         android:layout_below="@id/line"
-        android:text="@string/no_ads_available"
         android:layout_centerInParent="true"
         android:src="@drawable/ic_info_outline_light_grey"
         android:visibility="gone"/>
@@ -423,7 +57,36 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:text="@string/no_ads_available"
+        android:text="@string/no_ads_available_msg"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/no_conncection_available_image"
+        android:layout_below="@id/line"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_perm_scan_wifi_light_grey"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_conncection_available"
+        android:layout_below="@id/no_conncection_available_image"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="@string/no_connection_available_msg"
         android:textSize="25sp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
@@ -436,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_below="@id/line"
+        android:layout_marginTop="5dp"
         android:id="@+id/ads_recycler_view"
         >
     </android.support.v7.widget.RecyclerView>

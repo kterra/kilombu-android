@@ -35,7 +35,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     private void sendTemporaryToken(){
         EditText emailField = (EditText) findViewById(R.id.registered_email);
-        final String email = emailField.getText().toString();
+        final String email = emailField.getText().toString().trim();
 
         if (validateEmail(email)) {
             Firebase appRef = new Firebase(getString(R.string.firebase_url));
@@ -49,7 +49,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 @Override
                 public void onError(FirebaseError firebaseError) {
                     Toast.makeText(ResetPasswordActivity.this,
-                            "Não foi possível completar sua solicitação", Toast.LENGTH_LONG).show();
+                            getString(R.string.toast_action_not_completed), Toast.LENGTH_LONG).show();
                 }
             });
             finish();

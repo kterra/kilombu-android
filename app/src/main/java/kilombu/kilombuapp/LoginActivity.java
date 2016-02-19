@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onAuthenticationError(FirebaseError firebaseError) {
             dialog.hide();
             Toast.makeText(LoginActivity.this, firebaseError.toString(), Toast.LENGTH_LONG).show();
-            // Snackbar.make(coordinatorLayout, firebaseError.toString(), Snackbar.LENGTH_LONG).show();
+
         }
     }
 }

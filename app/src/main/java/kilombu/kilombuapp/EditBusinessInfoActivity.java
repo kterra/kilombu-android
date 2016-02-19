@@ -92,7 +92,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
 
     public void saveAndUpdateData(){
         EditText currentText = (EditText) findViewById(R.id.edit_name);
-        String name = currentText.getText().toString();
+        String name = currentText.getText().toString().trim();
         if(!validateName(name)){
             return;
         }
@@ -104,7 +104,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         currentText = (EditText) findViewById(R.id.edit_description);
-        String description = currentText.getText().toString();
+        String description = currentText.getText().toString().trim();
         if(!validateDescription(description)){
             return;
         }
@@ -117,7 +117,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
 
 
         currentText = (EditText) findViewById(R.id.edit_corporate_number);
-        String corporateNumber = currentText.getText().toString();
+        String corporateNumber = currentText.getText().toString().trim();
         if(!validateCorporateNumber(corporateNumber)){
             return;
         }
@@ -130,7 +130,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         Spinner categorySelection = (Spinner) findViewById(R.id.edit_category);
-        String category = categorySelection.getSelectedItem().toString();
+        String category = categorySelection.getSelectedItem().toString().trim();
         if(!validateCategory(category)){
             return;
         }

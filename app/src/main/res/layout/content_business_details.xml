@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/no_info_message"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@string/noinfo_message"
+                    android:text="@string/no_info_msg"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
                     android:visibility="gone"/>
@@ -365,7 +365,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/noinfo_message"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@string/noinfo_message"
+                    android:text="@string/no_info_msg"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
                     android:visibility="gone"/>

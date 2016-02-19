@@ -84,7 +84,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
 
 
         EditText currentText = (EditText) findViewById(R.id.edit_email);
-        email = currentText.getText().toString();
+        email = currentText.getText().toString().trim();
         if(!validateEmail(email)){
             return;
         }
@@ -96,7 +96,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         currentText = (EditText) findViewById(R.id.edit_website);
-        website = currentText.getText().toString();
+        website = currentText.getText().toString().trim();
         if(!validateWebsite(website)){
             return;
         }
@@ -108,7 +108,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         currentText = (EditText) findViewById(R.id.edit_sac_phone);
-        sacNumber =  currentText.getText().toString();
+        sacNumber =  currentText.getText().toString().trim();
         if(!validateSacPhone(sacNumber)){
             return;
         }
@@ -120,7 +120,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         currentText = (EditText) findViewById(R.id.edit_whatsapp);
-        whatsapp = currentText.getText().toString();
+        whatsapp = currentText.getText().toString().trim();
         if(!validateWhatsApp(whatsapp)){
             return;
         }
@@ -132,7 +132,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         currentText = (EditText) findViewById(R.id.edit_facebook);
-        facebookPage = currentText.getText().toString();
+        facebookPage = currentText.getText().toString().trim();
         if(!validateFacebookPage(facebookPage)){
             return;
         }
@@ -144,7 +144,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
         busEditor.commit();
 
         currentText = (EditText) findViewById(R.id.edit_instagram);
-        instagramPage = currentText.getText().toString();
+        instagramPage = currentText.getText().toString().trim();
         if(!validateInstagramPage(instagramPage)){
             return;
         }

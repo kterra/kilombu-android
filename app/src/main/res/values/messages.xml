@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_msg_name"> Por favor insira o seu nome</string>
+    <string name="err_msg_email"> Por favor insira um email válido</string>
+    <string name="err_msg_password"> Por favor insira uma senha</string>
+    <string name="err_msg_password_again"> Senha não confere com a anterior</string>
+
+    <string name="err_msg_bus_name"> Por favor insira o nome do seu negócio/serviço</string>
+    <string name="err_msg_descripiton"> Por favor insira uma descrição</string>
+    <string name="err_msg_category"> Por favor selecione uma categoria</string>
+
+    <string name="err_msg_state"> Por favor selecione um estado</string>
+
+    <string name="err_msg_toast">Existem campos preenchidos incorretamente!</string>
+
+    <string name="toast_success_change_password">Senha alterada com sucesso!</string>
+    <string name="toast_success_change_email">Email Alterado</string>
+    <string name="toast_empty_password">Por favor insira sua senha</string>
+    <string name="toast_failure_remove_user">Ocorreu um erro :( Por favor, tente novamente</string>
+    <string name="toast_failure_change_password">Ocorreu um erro :( Por favor, tente novamente</string>
+    <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
+    <string name="toast_no_datasnapshot">Ocorreu um problema</string>
+    <string name="toast_action_not_completed">Não foi possível completar sua solicitação</string>
+
+    <string name="no_info_msg">Não há informações disponíves.</string>
+    <string name="no_business_msg">Você não possui um negócio/serviço cadastrado.</string>
+    <string name="no_connection_available_msg">Verifique sua conexão</string>
+    <string name="no_ads_available_msg">Não há nenhum anúncio cadastrado nesta categoria</string>
+
+    <string name="remove_user_account_msg">Você tem certeza que deseja remover sua conta? \nAtenção! Se você possui um negócio cadastrado ele também será removido!</string>
+    <string name="remove_business_msg">Você tem certeza que deseja remover este negócio?</string>
+
+
+</resources>

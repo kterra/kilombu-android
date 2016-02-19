@@ -22,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -496,9 +498,17 @@ public class MainActivity extends AppCompatActivity
 
             }
             else {
+                String businessName = business.getName();
+
                 BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
-                businessViewHolder.businessName.setText(business.getName());
+                businessViewHolder.businessName.setText(businessName);
                 businessViewHolder.shortDescription.setText(business.getDescription());
+                if(businessName.compareTo(("Não há mais anúncios nesta categoria").trim())==0){
+                    CardView cv = businessViewHolder.cv;
+                    LinearLayout childView = ((LinearLayout) ((RelativeLayout) cv.getChildAt(0)).getChildAt(2));
+                    childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
+                }
+
 
                 Log.d("POSITION", Integer.toString(position));
                 Log.d("COUNTS", Integer.toString(getItemCount()));

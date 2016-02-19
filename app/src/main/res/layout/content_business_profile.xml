@@ -51,6 +51,17 @@
             android:focusable="true"
             >
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_statistics_loading"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
+
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -262,7 +273,16 @@
             android:clickable="true"
             android:focusable="true"
             >
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_contacts_loading"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -276,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_no_contactinfo_message"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@string/noinfo_message"
+                    android:text="@string/no_info_msg"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
                     android:layout_gravity="center_vertical"
@@ -502,7 +522,16 @@
             android:clickable="true"
             android:focusable="true"
             >
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_store_loading"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -518,7 +547,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_no_storesinfo_message"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@string/noinfo_message"
+                    android:text="@string/no_info_msg"
                     android:textSize="16sp"
                     android:textColor="@color/colorDescription"
                     android:visibility="gone"/>

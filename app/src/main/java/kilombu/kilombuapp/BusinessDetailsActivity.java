@@ -58,7 +58,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
         if (! KilombuApplication.hasActiveNetworkConnection(getApplicationContext())){
 
-            Toast.makeText(BusinessDetailsActivity.this, "Sem internet, Doido!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BusinessDetailsActivity.this, getString(R.string.no_connection_available_msg), Toast.LENGTH_SHORT).show();
         }
 
         businessId = intent.getStringExtra("businessId");
@@ -176,6 +176,9 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         currentText.setVisibility(View.VISIBLE);
                     }
                     contactsLoading.setVisibility(View.GONE);
+                }else {
+                    Toast.makeText(BusinessDetailsActivity.this, getString(R.string.toast_no_datasnapshot), Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
 
@@ -184,7 +187,8 @@ public class BusinessDetailsActivity extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Toast.makeText(BusinessDetailsActivity.this,
-                        "An error ocureed during details retrieval", Toast.LENGTH_LONG);
+                        firebaseError.toString(), Toast.LENGTH_LONG);
+                finish();
             }
         });
 
