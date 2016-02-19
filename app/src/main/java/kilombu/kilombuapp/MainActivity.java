@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.LightingColorFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -16,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +35,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -508,8 +512,18 @@ public class MainActivity extends AppCompatActivity
                 businessViewHolder.shortDescription.setText(business.getDescription());
                 if(businessName.compareTo(("Não há mais anúncios nesta categoria").trim())==0){
                     CardView cv = businessViewHolder.cv;
-                    LinearLayoutCompat childView = ((LinearLayoutCompat) ((RelativeLayout) cv.getChildAt(0)).getChildAt(2));
+                    RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+                    LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
                     childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
+                    ((TextView)childView.findViewById(R.id.business_description)).setTextSize(12);
+
+
+                    TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+                    businessNameView.setTextSize(16);
+
+                    View view =  (View) relativeLayoutView.getChildAt(1);
+                    view.setVisibility(View.GONE);
+
                     footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
                 }
 
