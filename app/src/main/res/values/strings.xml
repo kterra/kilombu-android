@@ -78,5 +78,7 @@
     <string name="navigate_next">Próxima</string>
     <string name="navigate_back">Anterior</string>
 
+    <string name="no_connection_available">Verifique sua conexão</string>
+
 
 </resources>

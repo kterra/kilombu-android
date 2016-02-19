@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +76,15 @@ public class BusinessProfileActivity extends AppCompatActivity {
     }
 
     private void setupBusinessDetailsCard(){
+
+        final ProgressBar contactsLoading = (ProgressBar) findViewById(R.id.profile_contacts_loading);
+        contactsLoading.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+        contactsLoading.setVisibility(View.VISIBLE);
+
+        final ProgressBar storeLoading = (ProgressBar) findViewById(R.id.profile_store_loading);
+        storeLoading.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+        storeLoading.setVisibility(View.VISIBLE);
+
         Firebase detailsRef = appRef.child(getString(R.string.child_business_details));
         Query detailsQuery = detailsRef.orderByKey().equalTo(businessId).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -122,6 +133,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         currentText.setVisibility(View.VISIBLE);
                     }
 
+                    storeLoading.setVisibility(View.GONE);
                    sacAllEmptyFlag = true;
                     String sacNumber = currentDetails.getSacNumber();
                     if (sacNumber != null &&
@@ -221,6 +233,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         currentText = (TextView) findViewById(R.id.profile_no_contactinfo_message);
                         currentText.setVisibility(View.VISIBLE);
                     }
+                    contactsLoading.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(BusinessProfileActivity.this, "Nao encontrou o details", Toast.LENGTH_LONG).show();
                 }
@@ -236,12 +249,19 @@ public class BusinessProfileActivity extends AppCompatActivity {
     }
 
     private void setupStatisticsCards(){
+
+        final ProgressBar statisticsLoading = (ProgressBar) findViewById(R.id.profile_statistics_loading);
+        statisticsLoading.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+        statisticsLoading.setVisibility(View.VISIBLE);
+
         Firebase statisticsRef = appRef.child(getString(R.string.child_business_statistics));
         Query statisticsQuery = statisticsRef.orderByKey().equalTo(businessId);
         statisticsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+
+                    statisticsLoading.setVisibility(View.GONE);
                     currentStatistics = dataSnapshot.getChildren().iterator()
                             .next().getValue(BusinessStatistics.class);
                     TextView viewsCount = (TextView) findViewById(R.id.profile_number_view);

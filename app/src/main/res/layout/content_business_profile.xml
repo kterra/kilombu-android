@@ -51,6 +51,17 @@
             android:focusable="true"
             >
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_statistics_loading"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
+
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -262,7 +273,16 @@
             android:clickable="true"
             android:focusable="true"
             >
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_contacts_loading"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -502,7 +522,16 @@
             android:clickable="true"
             android:focusable="true"
             >
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_store_loading"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                />
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
