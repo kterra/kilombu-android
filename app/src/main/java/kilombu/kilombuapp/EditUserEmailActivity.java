@@ -35,6 +35,7 @@ public class EditUserEmailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.title_activity_edit_user_email));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         appRef = new Firebase(getString(R.string.firebase_url));
 
