@@ -42,6 +42,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.title_activity_create_business));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nameField = (EditText) findViewById(R.id.form_name);
         descriptionField = (EditText) findViewById(R.id.form_description);
