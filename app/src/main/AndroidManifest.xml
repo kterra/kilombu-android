@@ -108,7 +108,16 @@
         <activity
             android:name=".ChangePassword"
             android:label="@string/title_activity_change_password"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password"
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kilombu.kilombuapp.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>

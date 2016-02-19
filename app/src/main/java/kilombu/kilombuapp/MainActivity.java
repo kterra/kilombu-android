@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private DrawerLayout drawer;
+    private TextView noAdsMessage;
 
 
     @Override
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity
         appRef = new Firebase(getString(R.string.firebase_url));
         setUpCustomDrawer();
         Log.d("MAIN", "ON CREATE");
+
+        noAdsMessage = (TextView) findViewById(R.id.no_ads_available);
     }
 
     private void setNavigationHeader(){
@@ -285,6 +288,11 @@ public class MainActivity extends AppCompatActivity
             }
         };
         adsView.swapAdapter(firebaseAdsAdapter, true);
+        if (firebaseAdsAdapter.getItemCount() == 0){
+            noAdsMessage.setVisibility(View.VISIBLE);
+        }else {
+            noAdsMessage.setVisibility(View.GONE);
+        }
 
     }
 
@@ -292,7 +300,6 @@ public class MainActivity extends AppCompatActivity
     public void changeCategoryOnClick(View button){
 
         changeCategory(button.getTag().toString());
-
     }
 
     public void showListWithAllCategories(View button){

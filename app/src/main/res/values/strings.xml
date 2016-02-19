@@ -31,7 +31,6 @@
     <string name="title_activity_settings">UserSettings</string>
 
 
-
     <string name="progress_signup">Um momento, por favor</string>
 
     <string name="signin_menu">Fazer Login</string>
@@ -50,6 +49,7 @@
 
     <string name="noinfo_message">Não há informações disponíves.</string>
     <string name="nobusiness_message">Você não possui um negócio/serviço cadastrado.</string>
+    <string name="no_ads_available">Não há nenhum anúncio cadastrado nesta categoria</string>
 
     <string name="preference_business_key">business</string>
     <string name="preference_user_key">user</string>
@@ -70,7 +70,7 @@
     <string name="businessdetails_whatsapp_key">businessWhatsapp</string>
     <string name="businessdetails_facebook_key">businessFacebookPage</string>
     <string name="businessdetails_instagram_key">businessInstagramPage</string>
-
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
 
 
 </resources>

@@ -52,6 +52,20 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    public void loginWithPassword(String username, String password) {
+        dialog.show();
+        appRef.authWithPassword(username, password, new AuthResultHandler("password"));
+    }
+
+    public void gotosignup(View view){
+        startActivity(new Intent(this, SignUpActivity.class));
+    }
+
+    public void goToResetPassword(View button){
+        startActivity(new Intent(this, ResetPasswordActivity.class));
+    }
+
     /**
      * Utility class for authentication results
      */
@@ -77,17 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onAuthenticationError(FirebaseError firebaseError) {
             dialog.hide();
             Toast.makeText(LoginActivity.this, firebaseError.toString(), Toast.LENGTH_LONG).show();
-           // Snackbar.make(coordinatorLayout, firebaseError.toString(), Snackbar.LENGTH_LONG).show();
+            // Snackbar.make(coordinatorLayout, firebaseError.toString(), Snackbar.LENGTH_LONG).show();
         }
-    }
-
-
-    public void loginWithPassword(String username, String password) {
-        dialog.show();
-        appRef.authWithPassword(username, password, new AuthResultHandler("password"));
-    }
-
-    public void gotosignup(View view){
-        startActivity(new Intent(this, SignUpActivity.class));
     }
 }
