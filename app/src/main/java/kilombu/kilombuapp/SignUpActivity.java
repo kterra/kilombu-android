@@ -119,7 +119,7 @@ public class SignUpActivity extends Activity {
 
     private boolean validateEmail(String email) {
 
-        if (!ValidationTools.isValidEmail(email)) {
+        if (email.isEmpty() || !ValidationTools.isValidEmail(email)) {
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             requestFocus(emailEditText);
             return false;

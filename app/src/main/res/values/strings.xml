@@ -28,7 +28,8 @@
     <string name="title_activity_edit_business_info">Informações Principais</string>
     <string name="title_activity_edit_contact_info">Atendimento ao Cliente</string>
     <string name="title_activity_edit_store_info">Endereço Comercial</string>
-    <string name="title_activity_settings">UserSettings</string>
+    <string name="title_activity_settings">Configuraçnoes de Conta</string>
+    <string name="title_activity_reset_password">Recuperar Senha</string>
 
 
     <string name="progress_signup">Um momento, por favor</string>
@@ -70,7 +71,9 @@
     <string name="businessdetails_whatsapp_key">businessWhatsapp</string>
     <string name="businessdetails_facebook_key">businessFacebookPage</string>
     <string name="businessdetails_instagram_key">businessInstagramPage</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+
+    <string name="alert_dialog_positive">Sim</string>
+    <string name="alert_dialog_negative">Cancelar</string>
 
 
 </resources>

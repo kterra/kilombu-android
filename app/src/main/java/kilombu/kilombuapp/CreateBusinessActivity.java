@@ -324,7 +324,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     }
 
     private boolean validateEmail(String email){
-        if(!ValidationTools.isValidEmail(email)){
+        if(!email.isEmpty() && !ValidationTools.isValidEmail(email)){
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_LONG).show();
             requestFocus(emailField);
