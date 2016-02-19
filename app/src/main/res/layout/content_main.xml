@@ -396,7 +396,7 @@
         android:indeterminate="true"
         style="?android:attr/progressBarStyleLarge"
         android:progressDrawable="@drawable/custom_progressbar"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@id/line"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"

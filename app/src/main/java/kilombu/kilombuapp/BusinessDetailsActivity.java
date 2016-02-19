@@ -2,8 +2,6 @@ package kilombu.kilombuapp;
 
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,15 +20,10 @@ import com.firebase.client.Query;
 import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Map;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
 
-    private Firebase detailsRef;
     private final String TAG = "Business Details";
     String businessId;
     LinearLayout linearLayout;
@@ -44,9 +37,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        
-        detailsRef = new Firebase(getString(R.string.firebase_url))
-                .child(getString(R.string.child_business_details));
         setupBusinessDetails();
     }
 
@@ -71,9 +61,10 @@ public class BusinessDetailsActivity extends AppCompatActivity {
             Toast.makeText(BusinessDetailsActivity.this, "Sem internet, Doido!", Toast.LENGTH_SHORT).show();
         }
 
-
         businessId = intent.getStringExtra("businessId");
 
+        Firebase detailsRef = new Firebase(getString(R.string.firebase_url))
+                .child(getString(R.string.child_business_details));
         Query detailsQuery = detailsRef.orderByKey().equalTo(businessId).limitToFirst(1);
         detailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

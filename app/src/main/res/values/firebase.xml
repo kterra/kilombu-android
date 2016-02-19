@@ -12,6 +12,8 @@
     <string name="child_business_this_category">category</string>
     <string name="child_business_this_description">description</string>
     <string name="child_business_this_corporate_number">corporateNumber</string>
+    <string name="child_business_rankpoints">rankPoints</string>
+    <string name="child_business_category_rankpoints">categoryRankPoints</string>
 
     <string name="child_details_this_email">email</string>
     <string name="child_details_this_website">website</string>
