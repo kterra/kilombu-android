@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     private Firebase appRef;
     private final int adsPerPage = 30;
     private final int minViewableAds = 2;
+    private int currentPage = 1;
     private String currentCategory;
     private RecyclerView adsView;
     private User currentUser;
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity
             });
 
             Query businessQuery = businessRef.orderByChild(getString(R.string.child_business_this_admin))
-                    .equalTo(userId).limitToFirst(1);
+                    .equalTo(userId).limitToLast(1);
 
             businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -272,7 +273,9 @@ public class MainActivity extends AppCompatActivity
 
         Log.d("MAIN", currentCategory);
         if (currentCategory != getString(R.string.category_all)){
-            businessQuery = businessRef.orderByChild("category").equalTo(currentCategory).limitToFirst(adsPerPage);
+            businessQuery = businessRef.orderByChild(
+                        getString(R.string.child_business_this_category))
+                        .equalTo(currentCategory).limitToFirst(adsPerPage);
         }else{
             businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
         }
@@ -335,6 +338,35 @@ public class MainActivity extends AppCompatActivity
                 changeCategory(data.getStringExtra("result"));
             }
         }
+    }
+
+    private void nextPage(){
+        Query nextPageQuery = null;
+        String lastItemId = firebaseAdsAdapter.getRef(firebaseAdsAdapter.getItemCount()-1).getKey();
+        if (currentCategory.equals(getString(R.string.category_all))){
+            nextPageQuery.orderByKey();
+        }
+        else{
+            nextPageQuery.orderByChild(getString(R.string.child_business_this_category))
+                            .equalTo(currentCategory);
+        }
+
+        nextPageQuery = nextPageQuery.endAt(lastItemId).limitToLast(adsPerPage);
+
+    }
+
+    private void previousPage(){
+        Query nextPageQuery = null;
+        String firstItemId = firebaseAdsAdapter.getRef(0).getKey();
+        if (currentCategory.equals(getString(R.string.category_all))){
+            nextPageQuery.orderByKey();
+        }
+        else{
+            nextPageQuery.orderByChild(getString(R.string.child_business_this_category))
+                    .equalTo(currentCategory);
+        }
+
+        nextPageQuery = nextPageQuery.startAt(firstItemId).limitToLast(adsPerPage);
     }
 
     @Override

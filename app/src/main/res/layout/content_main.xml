@@ -428,6 +428,17 @@
         android:id="@+id/ads_recycler_view"
         >
     </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ads_recycler_view">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_google"/>
+    </LinearLayout>
+
 
 
 </RelativeLayout>
