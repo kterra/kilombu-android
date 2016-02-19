@@ -218,39 +218,7 @@ public class MainActivity extends AppCompatActivity
         loadingArea.setVisibility(View.VISIBLE);
 
         businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
-        firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
-                R.layout.item, BusinessViewHolder.class, businessQuery) {
-            @Override
-            protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
-                businessViewHolder.businessName.setText(business.getName());
-                businessViewHolder.shortDescription.setText(business.getDescription());
-
-                Log.d("MAIN", Integer.toString(position));
-                if (position > minViewableAds || position >= getItemCount() ){
-                    Log.d("MAIN", "ENTROU HAHAH");
-                    loadingArea.setVisibility(View.GONE);
-                }
-
-
-                businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
-
-                        intent.putExtra("business_name", business.getName());
-                        intent.putExtra("business_category", business.getCategory());
-                        intent.putExtra("business_description", business.getDescription());
-
-                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
-                        String itemKey = itemRef.getKey();
-                        intent.putExtra("businessId", itemKey);
-
-                        MainActivity.this.startActivity(intent);
-
-                    }
-                });
-            }
-        };
+        firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
         adsView.setAdapter(firebaseAdsAdapter);
         //TODO: move so they can realy happen
@@ -268,42 +236,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void changeCategory(String category){
-        currentCategory = category;
+    private void updateFirebaseAdapter(Query query){
+        firebaseAdsAdapter.cleanup();
+        firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
-        Log.d("MAIN", currentCategory);
-        if (currentCategory != getString(R.string.category_all)){
-            businessQuery = businessRef.orderByChild(
-                        getString(R.string.child_business_this_category))
-                        .equalTo(currentCategory).limitToFirst(adsPerPage);
-        }else{
-            businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
-        }
-        firebaseAdsAdapter = new FirebaseRecyclerAdapter<Business, BusinessViewHolder>(Business.class,
-                R.layout.item, BusinessViewHolder.class, businessQuery) {
-            @Override
-            protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
-                businessViewHolder.businessName.setText(business.getName());
-                businessViewHolder.shortDescription.setText(business.getDescription());
-
-                businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
-
-                        intent.putExtra("business_name", business.getName());
-                        intent.putExtra("business_category", business.getCategory());
-                        intent.putExtra("business_description", business.getDescription());
-
-                        Firebase itemRef = firebaseAdsAdapter.getRef(position);
-                        String itemKey = itemRef.getKey();
-                        intent.putExtra("businessId", itemKey);
-
-                        MainActivity.this.startActivity(intent);
-                    }
-                });
-            }
-        };
         adsView.swapAdapter(firebaseAdsAdapter, true);
         if (firebaseAdsAdapter.getItemCount() == 0){
             final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
@@ -316,13 +252,36 @@ public class MainActivity extends AppCompatActivity
             noAdsMessage.setVisibility(View.GONE);
             noAdsImage.setVisibility(View.GONE);
         }
-
     }
 
     //TODO: consider rewriting own adapter
     public void changeCategoryOnClick(View button){
 
-        changeCategory(button.getTag().toString());
+        currentCategory = button.getTag().toString();
+        Log.d("MAIN", currentCategory);
+        if (currentCategory != getString(R.string.category_all)){
+            businessQuery = businessRef.orderByChild(
+                    getString(R.string.child_business_this_category))
+                    .equalTo(currentCategory).limitToFirst(adsPerPage);
+        }else{
+            businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
+        }
+
+        updateFirebaseAdapter(businessQuery);
+    }
+
+    public void changeCategory(String category){
+        currentCategory = category;
+        Log.d("MAIN", currentCategory);
+        if (currentCategory != getString(R.string.category_all)){
+            businessQuery = businessRef.orderByChild(
+                    getString(R.string.child_business_this_category))
+                    .equalTo(currentCategory).limitToFirst(adsPerPage);
+        }else{
+            businessQuery = businessRef.orderByKey().limitToFirst(adsPerPage);
+        }
+
+        updateFirebaseAdapter(businessQuery);
     }
 
     public void showListWithAllCategories(View button){
@@ -340,7 +299,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void nextPage(){
+    public void nextPage(View nextButton){
         Query nextPageQuery = null;
         String lastItemId = firebaseAdsAdapter.getRef(firebaseAdsAdapter.getItemCount()-1).getKey();
         if (currentCategory.equals(getString(R.string.category_all))){
@@ -352,21 +311,23 @@ public class MainActivity extends AppCompatActivity
         }
 
         nextPageQuery = nextPageQuery.endAt(lastItemId).limitToLast(adsPerPage);
+        updateFirebaseAdapter(nextPageQuery);
 
     }
 
-    private void previousPage(){
-        Query nextPageQuery = null;
+    public void previousPage(View prevButton){
+        Query previousPageQuery = null;
         String firstItemId = firebaseAdsAdapter.getRef(0).getKey();
         if (currentCategory.equals(getString(R.string.category_all))){
-            nextPageQuery.orderByKey();
+            previousPageQuery.orderByKey();
         }
         else{
-            nextPageQuery.orderByChild(getString(R.string.child_business_this_category))
+            previousPageQuery.orderByChild(getString(R.string.child_business_this_category))
                     .equalTo(currentCategory);
         }
 
-        nextPageQuery = nextPageQuery.startAt(firstItemId).limitToLast(adsPerPage);
+        previousPageQuery = previousPageQuery.startAt(firstItemId).limitToLast(adsPerPage);
+        updateFirebaseAdapter(previousPageQuery);
     }
 
     @Override
@@ -453,6 +414,53 @@ public class MainActivity extends AppCompatActivity
             businessName = (TextView)itemView.findViewById(R.id.business_name);
             shortDescription = (TextView)itemView.findViewById(R.id.business_description);
 
+        }
+    }
+
+    class FirebaseAdsRecyclerAdapter extends FirebaseRecyclerAdapter<Business, BusinessViewHolder>{
+
+        ProgressBar loadingArea;
+
+        public FirebaseAdsRecyclerAdapter(Class<Business> modelClass, int modelLayout,
+                                         Class<BusinessViewHolder> viewHolderClass, Query ref) {
+            super(modelClass, modelLayout, viewHolderClass, ref);
+
+        }
+
+        public FirebaseAdsRecyclerAdapter(Query ref){
+            super(Business.class, R.layout.item, BusinessViewHolder.class, ref);
+            loadingArea = (ProgressBar) findViewById(R.id.progressBar);
+            loadingArea.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void populateViewHolder(BusinessViewHolder businessViewHolder, final Business business, final int position) {
+            businessViewHolder.businessName.setText(business.getName());
+            businessViewHolder.shortDescription.setText(business.getDescription());
+
+            Log.d("MAIN", Integer.toString(position));
+            if (position > minViewableAds || position >= getItemCount() ){
+                Log.d("MAIN", "ENTROU HAHAH");
+                loadingArea.setVisibility(View.GONE);
+            }
+
+            businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
+
+                    intent.putExtra("business_name", business.getName());
+                    intent.putExtra("business_category", business.getCategory());
+                    intent.putExtra("business_description", business.getDescription());
+
+                    Firebase itemRef = firebaseAdsAdapter.getRef(position);
+                    String itemKey = itemRef.getKey();
+                    intent.putExtra("businessId", itemKey);
+
+                    MainActivity.this.startActivity(intent);
+
+                }
+            });
         }
     }
 
