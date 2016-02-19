@@ -1,118 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".SignUpActivity">
+    tools:context="kilombu.kilombuapp.EditUserEmailActivity">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/coordinatorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="40dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"/>
-
-
-        <!-- Username Label -->
-        <android.support.design.widget.TextInputLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
-            android:id="@+id/username_edit_layout"
-            >
-            <EditText  android:id="@+id/username_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_name"
-                android:inputType="text"
-                android:textColorHint="@color/colorDescription"
-                android:textColor="@color/colorDescription"
-                android:fontFamily="sans-serif-condensed"/>
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppThemeToolbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <!-- Email Label -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/email_edit_layout"
-            >
-            <EditText  android:id="@+id/email_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:textColorHint="@color/colorDescription"
-                android:textColor="@color/colorDescription"
-                android:fontFamily="sans-serif-condensed"/>
-        </android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.AppBarLayout>
 
-        <!-- Password Label -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/password_edit_layout"
-           >
-            <EditText android:id="@+id/password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:fontFamily="sans-serif-condensed"
-                android:textColorHint="@color/colorDescription"
-                android:textColor="@color/colorDescription"
-                android:hint="@string/prompt_password"/>
-        </android.support.design.widget.TextInputLayout>
+    <include layout="@layout/content_edit_user_email" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_send_white_24dp" />
 
-        <!-- Password Again Label -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/password_again_edit_layout"
-            >
-            <EditText android:id="@+id/password_again_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:fontFamily="sans-serif-condensed"
-                android:textColorHint="@color/colorDescription"
-                android:textColor="@color/colorDescription"
-                android:hint="@string/prompt_password_again"/>
-        </android.support.design.widget.TextInputLayout>
-
-
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/signup_button_again"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/password_again_edit_text"
-            android:layout_gravity="end"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:textColor="@color/button_text_color"
-            android:background="@drawable/login_button"
-            android:text="@string/signup"
-            android:fontFamily="sans-serif-condensed"
-            android:onClick="signup"/>
-
-    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
-</ScrollView>

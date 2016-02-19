@@ -44,6 +44,7 @@ public class EditContactInfoActivity extends AppCompatActivity {
                 saveAndUpdateInfo();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

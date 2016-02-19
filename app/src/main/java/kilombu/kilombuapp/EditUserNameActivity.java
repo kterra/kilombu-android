@@ -32,6 +32,7 @@ public class EditUserNameActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.title_activity_edit_name));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = EditUserNameActivity.this;
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
