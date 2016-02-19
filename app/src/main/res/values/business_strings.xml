@@ -6,6 +6,7 @@
     <string name="business_statistics_card_title">Estatísticas</string>
     <string name="views">viram</string>
     <string name="likes">recomendam</string>
+    <string name="likes_soon">Em breve!</string>
 
     <string name="business_edit_card_title">Informações do Negócio/Serviço</string>
     <string name="business_sac_card_tilte">Atendimento ao Cliente</string>

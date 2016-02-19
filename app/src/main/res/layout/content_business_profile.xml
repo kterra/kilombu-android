@@ -75,6 +75,7 @@
                 android:orientation="vertical"
                 android:layout_weight="0.5"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:padding="16dp"
                 >
                 <TextView
@@ -121,6 +122,24 @@
                 android:padding="16dp"
                 >
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:id="@+id/profile_likes_soon"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:text="@string/likes_soon"
+                    android:background="@color/secondary_text_material_light"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -143,7 +162,6 @@
                     android:gravity="center"
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/likes"
-
                     android:textColor="@color/colorDescription"/>
             </android.support.v7.widget.LinearLayoutCompat>
 
