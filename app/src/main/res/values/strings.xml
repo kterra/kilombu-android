@@ -75,5 +75,8 @@
     <string name="alert_dialog_positive">Sim</string>
     <string name="alert_dialog_negative">Cancelar</string>
 
+    <string name="navigate_next"><u>Próxima</u></string>
+    <string name="navigate_back"><u>Anterior</u></string>
+
 
 </resources>
