@@ -247,7 +247,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Toast.makeText(BusinessProfileActivity.this,
-                        "An error ocureed during details retrieval", Toast.LENGTH_LONG).show();
+                        getString(R.string.toast_no_datasnapshot), Toast.LENGTH_LONG).show();
             }
         });
 
