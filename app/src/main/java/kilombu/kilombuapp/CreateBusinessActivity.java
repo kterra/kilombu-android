@@ -195,7 +195,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
             Map<String, Store> stores = null;
             if (store != null){
                 stores = new HashMap<String, Store>();
-                stores.put(Integer.toString(storeIndex++) + district, store);
+                stores.put(Integer.toString(storeIndex++) + " " + district, store);
             }
             //TODO: check if there exists already a unit in the district and add an index
             BusinessDetails details = new BusinessDetails(stores, sacPhone, email,

@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.settings_menu) {
             Intent intent = new Intent(this, UserProfileActivity.class);
-            finish();
+            //finish();
             startActivity(intent);
         }
 
