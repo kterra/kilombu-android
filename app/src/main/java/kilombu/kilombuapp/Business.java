@@ -18,14 +18,15 @@ public class Business {
     }
 
     public Business(String name, String admin, String category, String description, String corporateNumber){
-
+        long bstLaunchTimestamp = 1456009200;
         this.name = name;
         this.admin = admin;
         this.category = category;
         this.description = description;
 
         this.corporateNumber = corporateNumber;
-        this.rankPoints = 0.0;
+        long nowTimestamp = System.currentTimeMillis()/1000;
+        this.rankPoints = bstLaunchTimestamp*1000 - ((double)bstLaunchTimestamp/nowTimestamp)*100;
 
         this.categoryRankPoints = category + rankPoints;
     }
