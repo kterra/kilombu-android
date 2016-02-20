@@ -28,8 +28,8 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private Spinner stateSelection;
     private int storeIndex = 1;
     private EditText nameField, descriptionField, corporateNumberField, cityField, streetField,
-            districtField, businessHoursField,phoneField, sacPhoneField, emailField, websiteField,
-            whatsappField, facebookField, instagramField;
+            complementField, districtField, businessHoursField,phoneField, sacPhoneField, emailField,
+            websiteField, whatsappField, facebookField, instagramField;
     private TextInputLayout inputLayoutName, inputLayoutDescription, inputLayoutCorporateNumber,
             inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,  inputLayoutBusinessHours, inputLayoutPhone,
             inputLayoutSacPhone, inputLayoutEmail, inputLayoutWebsite, inputLayoutWhatsapp,
@@ -50,6 +50,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
         cityField = (EditText) findViewById(R.id.form_city);
         streetField = (EditText) findViewById(R.id.form_street);
+        complementField = (EditText) findViewById(R.id.form_complement);
         districtField = (EditText) findViewById(R.id.form_district);
         businessHoursField = (EditText) findViewById(R.id.form_business_hours);
         phoneField = (EditText) findViewById(R.id.form_phone);
@@ -114,6 +115,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
         String city = cityField.getText().toString().trim();
         String street = streetField.getText().toString().trim();
+        String complement = complementField.getText().toString().trim();
         String district = districtField.getText().toString().trim();
         String businessHours = businessHoursField.getText().toString().trim();
         String phoneNumber = phoneField.getText().toString().trim();
@@ -178,7 +180,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
             return;
         }
 
-            BusinessAddress address = ValidationTools.validateAddress(street, district, city, state);
+            BusinessAddress address = ValidationTools.validateAddress(street, complement, district, city, state);
             Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
 
             String admin = appRef.getAuth().getUid();

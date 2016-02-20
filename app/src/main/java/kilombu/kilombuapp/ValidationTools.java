@@ -40,9 +40,9 @@ public class ValidationTools {
         return true;
     }
 
-    public static BusinessAddress validateAddress(String street, String district, String city, String state){
+    public static BusinessAddress validateAddress(String street, String complement, String district, String city, String state){
         if (!city.isEmpty() || !street.isEmpty() || !district.isEmpty()){
-            return new BusinessAddress(street, district, city, state);
+            return new BusinessAddress(street, complement, district, city, state);
         }
         return null;
     }

@@ -15,9 +15,10 @@ public class BusinessAddress {
 
     }
 
-    public BusinessAddress(String street, String district, String city, String state) {
+    public BusinessAddress(String street, String complement, String district, String city, String state) {
 
         this.street = street;
+        this.complement = complement;
         this.district = district;
         this.city = city;
         this.state = state;
@@ -53,6 +54,8 @@ public class BusinessAddress {
         String representation = "";
         if (street != "" && street != null)
             representation += street;
+        if (complement != null && !complement.isEmpty())
+            representation += complement;
         if (district != null && !district.isEmpty())
             representation += ", " + district;
         if (city != null && !city.isEmpty())
