@@ -101,7 +101,6 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         state = stateSelection.getSelectedItem().toString().trim();
         EditText currentText = (EditText) findViewById(R.id.edit_city);
         city = currentText.getText().toString().trim();
-
         if(!validateState(state, city)){
             return;
         }
@@ -120,6 +119,9 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         if(!validateStreet(street)){
             return;
         }
+
+        currentText = (EditText) findViewById(R.id.edit_complement);
+        complement = currentText.getText().toString().trim();
 
         currentText = (EditText) findViewById(R.id.edit_phone);
         phone = currentText.getText().toString().trim();

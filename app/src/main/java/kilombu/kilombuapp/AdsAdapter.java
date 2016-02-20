@@ -18,7 +18,6 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.BusinessViewHold
     List<Business> businesses;
     static Context context;
 
-
     public static class BusinessViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;

@@ -24,16 +24,6 @@ public class ValidationTools {
         String[] categories = context.getResources().getStringArray(R.array.categories);
         return categories[i];
     }
-    /*public static int convertCategory(String category, Context context){
-        String [] categories = context.getResources().getStringArray(R.array.categories_list);
-        ArrayList<String> categoriesKeys = new ArrayList<String>();
-
-        for (int i=0; i<categories.length;i++){
-            categoriesKeys.add(i+1,categories[i]);
-        }
-
-        return categoriesKeys.indexOf(category);
-    }*/
 
     public static boolean isValidEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
@@ -81,7 +71,6 @@ public class ValidationTools {
             return  new Store(address, phone, hours);
         }
         return null;
-
     }
 
     public static void createBusinessPlaceholders(Context context){

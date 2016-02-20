@@ -26,7 +26,6 @@ public class EditUserEmailActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
     private SharedPreferences userPreferences;
     private android.content.Context context;
-    private Firebase appRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,6 @@ public class EditUserEmailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.title_activity_edit_user_email));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        appRef = new Firebase(getString(R.string.firebase_url));
 
         context = EditUserEmailActivity.this;
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
@@ -72,6 +69,7 @@ public class EditUserEmailActivity extends AppCompatActivity {
             return;
         }
 
+        final Firebase appRef = new Firebase(getString(R.string.firebase_url));
         appRef.changeEmail(currentUserEmail, userPassword, newUserEmail, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
@@ -80,7 +78,8 @@ public class EditUserEmailActivity extends AppCompatActivity {
                 appRef.child(getString(R.string.child_users))
                         .child(userId).updateChildren(email);
 
-                userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+                userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
+                        android.content.Context.MODE_PRIVATE);
                 SharedPreferences.Editor userEditor = userPreferences.edit();
                 userEditor.putString(getString(R.string.useremail_key), newUserEmail);
                 userEditor.commit();

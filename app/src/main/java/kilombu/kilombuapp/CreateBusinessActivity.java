@@ -1,6 +1,5 @@
 package kilombu.kilombuapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -179,9 +178,6 @@ public class CreateBusinessActivity extends AppCompatActivity {
             return;
         }
 
-        BusinessAddress address = ValidationTools.validateAddress(street, complement, district, city, state);
-        Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
-
         String admin = appRef.getAuth().getUid();
         int categoryIndex = ValidationTools.convertCategory(category, this);
         Business business = new Business(name, admin, categoryIndex, description, corporateNumber);
@@ -190,6 +186,8 @@ public class CreateBusinessActivity extends AppCompatActivity {
         final String businessId = newBusinessRef.getKey();
         newBusinessRef.setValue(business);
 
+        BusinessAddress address = ValidationTools.validateAddress(street, complement, district, city, state);
+        Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
         //TODO: check if we need to ask for a unit name
         Map<String, Store> stores = null;
         if (store != null){
@@ -202,9 +200,10 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
         detailsRef.child(businessId).setValue(details);
         createBusinessStatistics(businessId);
-        Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
+        //Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
+        finish();
         Toast.makeText(getApplicationContext(), "Cadastro efetuado com sucesso!", Toast.LENGTH_LONG).show();
-        startActivity(intent);
+        //startActivity(intent);
 
             /*detailsRef.child(businessId).setValue(details, new Firebase.CompletionListener() {
                 @Override

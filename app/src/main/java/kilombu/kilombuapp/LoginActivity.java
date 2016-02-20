@@ -3,11 +3,9 @@ package kilombu.kilombuapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,11 +15,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 
-import java.util.Map;
-
 public class LoginActivity extends AppCompatActivity {
 
-    private Firebase appRef;
     private static final String TAG = "LoginActivity";
     private ProgressDialog dialog;
 
@@ -36,12 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
-
         dialog = new ProgressDialog(this);
-
-        appRef = new Firebase(getString(R.string.firebase_url));
-
     }
 
 
@@ -62,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginWithPassword(String username, String password) {
         dialog.show();
+        Firebase appRef = new Firebase(getString(R.string.firebase_url));
         appRef.authWithPassword(username, password, new AuthResultHandler("password"));
     }
 

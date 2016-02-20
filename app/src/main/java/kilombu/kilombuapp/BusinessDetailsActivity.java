@@ -181,7 +181,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     finish();
                 }
 
-
             }
 
             @Override

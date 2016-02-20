@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private DrawerLayout drawer;
-    private boolean noAdsLeftFlag;
 
 
     @Override
@@ -115,9 +114,16 @@ public class MainActivity extends AppCompatActivity
     }
     @Override
     protected void onStart() {
-
         super.onStart();
+        Firebase.goOnline();
         Log.d("MAIN", "ON START");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Firebase.goOffline();
+        Log.d("MAIN", "ON STOP");
     }
 
     @Override
@@ -609,8 +615,6 @@ public class MainActivity extends AppCompatActivity
                 if (position > 0 || position == getItemCount() - 2) {
                     Log.d("MAIN", "TEM ANUNCIOS");
                     loadingArea.setVisibility(View.GONE);
-                    //noAdsMessage.setVisibility(View.GONE);
-                    //noAdsImage.setVisibility(View.GONE);
                 }
 
             }

@@ -56,6 +56,17 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Firebase.goOnline();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Firebase.goOffline();
+    }
 
     private void setupBusinessCard(){
 
@@ -112,8 +123,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
                                 currentText = (TextView) findViewById(R.id.profile_business_address);
                                 currentText.setText(address);
                                 currentText.setVisibility(View.VISIBLE);
-
-
                             }
 
                             String workingHours = store.getBusinessHours();

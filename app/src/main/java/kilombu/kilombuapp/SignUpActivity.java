@@ -20,8 +20,6 @@ import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private Firebase appRef;
-    private Firebase usersRef;
     private ProgressDialog dialog;
     private final String TAG = "SignUp";
     private User newuser;
@@ -50,9 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.email_edit_layout);
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.password_edit_layout);
         inputLayoutPasswordAgain = (TextInputLayout) findViewById(R.id.password_again_edit_layout);
-
-        appRef = new Firebase(getString(R.string.firebase_url));
-        usersRef = appRef.child(getString(R.string.child_users));
     }
 
     public void signup(View view) {
@@ -78,7 +73,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         newuser = new User(name, email, null);
-        Log.d(TAG, "Validou!!!");
 
         // Set up a progress dialog
         dialog = new ProgressDialog(SignUpActivity.this);
@@ -90,12 +84,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void createUser(String email, String password){
+        final Firebase appRef = new Firebase(getString(R.string.firebase_url));
         appRef.createUser(email, password,
                 new Firebase.ValueResultHandler<Map<String, Object>>() {
                     @Override
                     public void onSuccess(Map<String, Object> result){
                         Log.d(TAG, "Created user with uid: " + result.get("uid"));
-                        Firebase newuserRef = usersRef.child(result.get("uid").toString());
+                        Firebase newuserRef = appRef.child(getString(R.string.child_users))
+                                .child(result.get("uid").toString());
                         newuserRef.setValue(newuser);
                         Log.d(TAG, result.get("uid").toString());
                         dialog.hide();

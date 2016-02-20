@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -98,8 +97,6 @@ public class UserProfileActivity extends AppCompatActivity {
                             String userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
 
                             appRef.child(getString(R.string.child_users)).child(userId).setValue(null);
-                            Log.d("MAIN",userEmail);
-                            Log.d("MAIN", password);
 
                             appRef.removeUser(userEmail, password, new Firebase.ResultHandler() {
                                 @Override
