@@ -24,6 +24,7 @@ public class EditUserNameActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutName;
     private SharedPreferences userPreferences;
     private android.content.Context context;
+    private boolean isTransition = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,34 @@ public class EditUserNameActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("MAIN", "ON START");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
+        Log.d("MAIN", "ON STOP");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
+    }
+
 
     private void changeUserName(){
 
@@ -81,8 +110,8 @@ public class EditUserNameActivity extends AppCompatActivity {
 
         Intent intent = new Intent(EditUserNameActivity.this, UserProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        isTransition = true;
         startActivity(intent);
-
 
     }
 

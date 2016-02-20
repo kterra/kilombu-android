@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private ProgressDialog dialog;
+    private boolean isTransition = false;
 
 
     @Override
@@ -32,6 +33,35 @@ public class LoginActivity extends AppCompatActivity {
 
 
         dialog = new ProgressDialog(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("LOGIN", "ON START");
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("LOGIN", "GOING OFFLINE");
+        }else{
+            Log.d("LOGIN", "TRANSITION");
+        }
+        Log.d("LOGIN", "ON STOP");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
     }
 
 
@@ -57,10 +87,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void gotosignup(View view){
+        isTransition = true;
         startActivity(new Intent(this, SignUpActivity.class));
     }
 
     public void goToResetPassword(View button){
+        isTransition = true;
         startActivity(new Intent(this, ResetPasswordActivity.class));
     }
 
@@ -80,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.i(TAG, provider + " auth successful");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            isTransition = true;
             startActivity(intent);
             dialog.hide();
 

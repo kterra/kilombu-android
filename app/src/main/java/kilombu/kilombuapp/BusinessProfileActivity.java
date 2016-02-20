@@ -34,6 +34,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
     private SharedPreferences busPreferences;
     private android.content.Context context;
     private boolean sacAllEmptyFlag;
+    private boolean isTransition = false;
 
     private final String TAG = "Business Profile";
     LinearLayout linearLayout;
@@ -59,13 +60,29 @@ public class BusinessProfileActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //Firebase.goOnline();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("MAIN", "ON START");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //Firebase.goOffline();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
+        Log.d("MAIN", "ON STOP");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
     }
 
     private void setupBusinessCard(){
@@ -89,6 +106,8 @@ public class BusinessProfileActivity extends AppCompatActivity {
         setupStatisticsCards();
 
     }
+
+
 
     private void setupBusinessDetailsCard(){
 
@@ -301,12 +320,14 @@ public class BusinessProfileActivity extends AppCompatActivity {
 
     public void goToEditBusinessInfo(View editButton){
         Intent intent = new Intent(this, EditBusinessInfoActivity.class);
+        isTransition = true;
         startActivity(intent);
     }
 
     public void goToEditContactInfo(View editButton){
 
         Intent intent = new Intent(this, EditContactInfoActivity.class);
+        isTransition = true;
         startActivity(intent);
     }
 
@@ -331,6 +352,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
             intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
 
         }
+        isTransition = true;
         startActivity(intent);
 
     }
@@ -351,6 +373,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         busPreferences.edit().clear().commit();
 
                         Intent intent = new Intent(BusinessProfileActivity.this, MainActivity.class);
+                        isTransition = true;
                         finish();
                         startActivity(intent);
                     }

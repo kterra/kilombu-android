@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ public class UserProfileActivity extends AppCompatActivity {
     TextView usernameProfile, emailProfile;
     private SharedPreferences userPreferences;
     private android.content.Context context;
+    private boolean isTransition = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +50,50 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("MAIN", "ON START");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
+        Log.d("MAIN", "ON STOP");
+    }
+
     public void changeName(View button){
         Intent intent = new Intent(UserProfileActivity.this, EditUserNameActivity.class);
+        isTransition = true;
         startActivity(intent);
     }
 
     public void changeUserPassword(View confirmationButton){
 
         Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
+        isTransition = true;
         startActivity(intent);
     }
 
     public void changeUserEmail(View confirmationButton){
         Intent intent = new Intent(UserProfileActivity.this, EditUserEmailActivity.class);
+        isTransition = true;
         startActivity(intent);
     }
 
@@ -125,6 +158,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                             appRef.unauth();
                             Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+                            isTransition = true;
                             finish();
                             startActivity(intent);
                         }

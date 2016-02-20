@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     private Spinner categorySelection;
     private Spinner stateSelection;
     private int storeIndex = 1;
+    private boolean isTransition = false;
     private EditText nameField, descriptionField, corporateNumberField, cityField, streetField,
             complementField, districtField, businessHoursField,phoneField, sacPhoneField, emailField,
             websiteField, whatsappField, facebookField, instagramField;
@@ -101,6 +103,34 @@ public class CreateBusinessActivity extends AppCompatActivity {
         adapterState.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         stateSelection.setAdapter(adapterState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("MAIN", "ON START");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
+        Log.d("MAIN", "ON STOP");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
     }
 
     //Floating send button action
@@ -201,6 +231,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         detailsRef.child(businessId).setValue(details);
         createBusinessStatistics(businessId);
         //Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
+        isTransition = true;
         finish();
         Toast.makeText(getApplicationContext(), "Cadastro efetuado com sucesso!", Toast.LENGTH_LONG).show();
         //startActivity(intent);

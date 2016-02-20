@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.firebase.client.FirebaseError;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
+    private boolean isTransition = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,34 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("MAIN", "ON START");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
+        Log.d("MAIN", "ON STOP");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
     }
 
     private void sendTemporaryToken(){
@@ -56,6 +86,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ChangeTokenPasswordActivity.class);
             intent.putExtra("userEmail",email);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            isTransition = true;
             startActivity(intent);
 
         }

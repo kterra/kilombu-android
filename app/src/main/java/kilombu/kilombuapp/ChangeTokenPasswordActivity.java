@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ public class ChangeTokenPasswordActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutPassword,  inputLayoutNewPassword, inputLayoutNewPasswordAgain;
     private SharedPreferences userPreferences;
     private android.content.Context context;
+    private boolean isTransition = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,34 @@ public class ChangeTokenPasswordActivity extends AppCompatActivity {
                 changeUserPassword();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isTransition = false;
+        Firebase.goOnline();
+        Log.d("MAIN", "ON START");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
+        Log.d("MAIN", "ON STOP");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
     }
 
     private void changeUserPassword(){
@@ -77,6 +107,7 @@ public class ChangeTokenPasswordActivity extends AppCompatActivity {
                 Toast.makeText(ChangeTokenPasswordActivity.this, R.string.toast_success_change_password, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ChangeTokenPasswordActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                isTransition = true;
                 startActivity(intent);
 
             }
@@ -87,6 +118,7 @@ public class ChangeTokenPasswordActivity extends AppCompatActivity {
                 //Toast.makeText(ChangeTokenPasswordActivity.this, R.string.toast_failure_change_password, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ChangeTokenPasswordActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                isTransition = true;
                 startActivity(intent);
             }
         });

@@ -25,6 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
     private User newuser;
     private EditText nameEditText, emailEditText, passwordEditText, passwordAgainEditText;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword, inputLayoutPasswordAgain;
+    private boolean isTransition = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
                         dialog.hide();
                         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        isTransition = true;
                         startActivity(intent);
                     }
 
@@ -120,6 +122,14 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        isTransition = true;
     }
 
     private boolean validateEmail(String email) {

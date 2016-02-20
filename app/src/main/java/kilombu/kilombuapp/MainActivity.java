@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private DrawerLayout drawer;
+    private boolean isTransition = false;
 
 
     @Override
@@ -133,14 +134,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        isTransition = false;
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d("MAIN", "ON RESUME");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Firebase.goOffline();
+        if (! isTransition){
+            Firebase.goOffline();
+            Log.d("MAIN", "GOING OFFLINE");
+        }else{
+            Log.d("MAIN", "TRANSITION");
+        }
         Log.d("MAIN", "ON STOP");
     }
 
@@ -320,6 +334,7 @@ public class MainActivity extends AppCompatActivity
 
     public void showListWithAllCategories(View button){
         Intent intent = new Intent(MainActivity.this, CategoriesListActivity.class);
+        isTransition = true;
         MainActivity.this.startActivityForResult(intent, 1);
     }
 
@@ -337,7 +352,7 @@ public class MainActivity extends AppCompatActivity
         Query nextPageQuery;
         Business lastItem = firebaseAdsAdapter.getItem(firebaseAdsAdapter.getItemCount() - 2);
         //TODO: caso em que lastItem é null
-        Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
+        //Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
         if (currentCategory == 0){
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
@@ -345,7 +360,7 @@ public class MainActivity extends AppCompatActivity
                     .startAt(lastItem.getRankPoints()).limitToFirst(adsPerPage);
         }
         else{
-            Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
+            //Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_category_rankpoints))
@@ -418,9 +433,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.menu_signin) {
             Intent intent = new Intent(this, LoginActivity.class);
+            isTransition = true;
             startActivity(intent);
         } else if (id == R.id.menu_signup) {
             Intent intent = new Intent(this, SignUpActivity.class);
+            isTransition = true;
             startActivity(intent);
 
         } else if (id == R.id.signout_menu) {
@@ -432,20 +449,24 @@ public class MainActivity extends AppCompatActivity
             userPreferences.edit().clear().commit();
 
             Intent intent = new Intent(this, MainActivity.class);
+            isTransition = true;
             finish();
             startActivity(intent);
 
         } else if (id == R.id.business_create_menu) {
             Intent intent = new Intent(this, CreateBusinessActivity.class);
+            isTransition = true;
             startActivity(intent);
 
         } else if (id == R.id.business_menu) {
             Intent intent = new Intent(this, BusinessProfileActivity.class);
+            isTransition = true;
             startActivity(intent);
 
         } else if (id == R.id.settings_menu) {
             Intent intent = new Intent(this, UserProfileActivity.class);
             //finish();
+            isTransition = true;
             startActivity(intent);
         }
 
@@ -537,9 +558,9 @@ public class MainActivity extends AppCompatActivity
         protected void populateViewHolder(RecyclerView.ViewHolder viewHolder, final Business business, final int position) {
 
             if (business == null){ //footer
-                Log.d("FOOTER POS", Integer.toString(position));
+                //Log.d("FOOTER POS", Integer.toString(position));
                 int footerPosition = getItemCount() -1;
-                Log.d("FOOTER ITENS", Integer.toString(getItemCount()));
+                //Log.d("FOOTER ITENS", Integer.toString(getItemCount()));
 
                 footerViewHolder = (FooterViewHolder) viewHolder;
                 if (currentPage == 1){
@@ -563,7 +584,6 @@ public class MainActivity extends AppCompatActivity
 
                     CardView cv = businessViewHolder.cv;
 
-                   // if(!noAdsLeftFlag){
                     cv.setVisibility(View.VISIBLE);
                     RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
                     LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
@@ -577,13 +597,9 @@ public class MainActivity extends AppCompatActivity
                     View view =  (View) relativeLayoutView.getChildAt(1);
                     view.setVisibility(View.GONE);
 
-                    footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
-                    /*    noAdsLeftFlag = true;
-
-                    }else{
-                        cv.setVisibility(View.GONE);
-                    }*/
-
+                    if (footerViewHolder.navigateNextLayout != null){
+                        footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
+                    }
 
 
                 }else{
@@ -609,8 +625,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         Log.d("NOME", business.getName());
-                        if (business.getName().equals(getString(R.string.no_ads_left))){
-                            Log.d("IF", "RETORNA");
+                        if (business.getName().equals(getString(R.string.no_ads_left))) {
+                            //Log.d("IF", "RETORNA");
                             return;
                         }
                         Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
@@ -622,16 +638,15 @@ public class MainActivity extends AppCompatActivity
                         Firebase itemRef = firebaseAdsAdapter.getRef(position);
                         String itemKey = itemRef.getKey();
                         intent.putExtra("businessId", itemKey);
-
+                        isTransition = true;
                         MainActivity.this.startActivity(intent);
 
                     }
                 });
 
-                Log.d("POSITION", Integer.toString(position));
-                Log.d("COUNTS", Integer.toString(getItemCount()));
+                /*Log.d("POSITION", Integer.toString(position));
+                Log.d("COUNTS", Integer.toString(getItemCount()));*/
                 if (position > 0 || position == getItemCount() - 2) {
-                    Log.d("MAIN", "TEM ANUNCIOS");
                     loadingArea.setVisibility(View.GONE);
                 }
 
