@@ -8,6 +8,7 @@
     <string name="hint_email">E-mail Comercial</string>
     <string name="hint_city">Cidade</string>
     <string name="hint_street">Logradouro</string>
+    <string name="hint_complement">Complemento</string>
     <string name="hint_district">Bairro</string>
     <string name="hint_business_hours">Horário de Funcionamento</string>
     <string name="hint_sac_phone">Teleatendimento</string>
