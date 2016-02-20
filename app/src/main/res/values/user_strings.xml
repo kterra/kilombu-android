@@ -9,6 +9,7 @@
     <string name="change_password">***********</string>
 
     <string name="current_password_title">Senha Atual</string>
+    <string name="current_token_title">Senha Temporária</string>
     <string name="new_password_title">Nova Senha</string>
 
     <string name="current_email_title">Email Atual</string>

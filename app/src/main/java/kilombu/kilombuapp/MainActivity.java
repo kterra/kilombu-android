@@ -112,6 +112,24 @@ public class MainActivity extends AppCompatActivity
         String businessName = busPreferences.getString(getString(R.string.businessname_key),"");
         Log.d("MAIN", businessName);
         ((TextView) findViewById(R.id.user_mail_header)).setText(businessName);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+        navigationView.getMenu().clear(); //clear old inflated items.
+        String businessId = busPreferences.getString(getString(R.string.businessid_key),"");
+        if(businessId.isEmpty()){
+            if(userName.isEmpty()){
+                navigationView.inflateMenu(R.menu.activity_main_drawer);
+            }else{
+                navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
+            }
+
+        }else{
+            navigationView.inflateMenu(R.menu.activity_main_drawer_entrepreneur);
+        }
+
+
+
     }
     @Override
     protected void onStart() {

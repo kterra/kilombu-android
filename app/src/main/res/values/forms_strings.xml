@@ -22,6 +22,7 @@
     <string name="prompt_email">E-mail</string>
     <string name="prompt_new_email">Digite seu novo e-mail</string>
     <string name="prompt_phone">Celular</string>
+    <string name="prompt_token">Digite sua senha temporária</string>
     <string name="prompt_password">  Digite sua senha</string>
     <string name="prompt_password_again">Repita a senha</string>
     <string name="prompt_new_password">  Digite sua nova senha</string>
