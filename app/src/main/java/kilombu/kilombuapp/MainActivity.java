@@ -430,6 +430,7 @@ public class MainActivity extends AppCompatActivity
         ProgressBar loadingArea;
         FooterViewHolder footerViewHolder;
 
+
         public FirebaseAdsRecyclerAdapter(Class<Business> modelClass, int modelLayout,
                                          Class<RecyclerView.ViewHolder> viewHolderClass, Query ref) {
             super(modelClass, modelLayout, viewHolderClass, ref);
@@ -500,14 +501,14 @@ public class MainActivity extends AppCompatActivity
 
             }
             else {
-                noAdsLeftFlag = false;
+
                 String businessName = business.getName();
 
                 BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
                 businessViewHolder.businessName.setText(businessName);
                 businessViewHolder.shortDescription.setText(business.getDescription());
 
-                if(businessName.compareTo(getString(R.string.no_ads_left).trim())==0){
+                if(businessName.equals(getString(R.string.no_ads_left))){
 
                     CardView cv = businessViewHolder.cv;
 
