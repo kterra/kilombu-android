@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-public class ChangePassword extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
     private String userEmail;
     private EditText passwordField, newPasswordField, newPasswordAgainField;
@@ -36,7 +36,7 @@ public class ChangePassword extends AppCompatActivity {
 
 
         appRef = new Firebase(getString(R.string.firebase_url));
-        context = ChangePassword.this;
+        context = ChangePasswordActivity.this;
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
 
@@ -74,15 +74,15 @@ public class ChangePassword extends AppCompatActivity {
         appRef.changePassword(userEmail, password, newPassword, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
-                Intent intent = new Intent(ChangePassword.this, UserProfileActivity.class);
+                Intent intent = new Intent(ChangePasswordActivity.this, UserProfileActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                Toast.makeText(ChangePassword.this, R.string.toast_success_change_password, Toast.LENGTH_LONG).show();
+                Toast.makeText(ChangePasswordActivity.this, R.string.toast_success_change_password, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                Toast.makeText(ChangePassword.this, R.string.toast_failure_change_password, Toast.LENGTH_LONG).show();
+                Toast.makeText(ChangePasswordActivity.this, R.string.toast_failure_change_password, Toast.LENGTH_LONG).show();
             }
         });
     }

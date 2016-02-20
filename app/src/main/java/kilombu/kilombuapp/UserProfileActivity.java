@@ -55,7 +55,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void changeUserPassword(View confirmationButton){
 
-        Intent intent = new Intent(UserProfileActivity.this, ChangePassword.class);
+        Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
         startActivity(intent);
     }
 

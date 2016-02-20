@@ -1,5 +1,6 @@
 package kilombu.kilombuapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
@@ -52,7 +53,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             getString(R.string.toast_action_not_completed), Toast.LENGTH_LONG).show();
                 }
             });
-            finish();
+            Intent intent = new Intent(this, ChangeTokenPasswordActivity.class);
+            intent.putExtra("userEmail",email);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
         }
     }
 

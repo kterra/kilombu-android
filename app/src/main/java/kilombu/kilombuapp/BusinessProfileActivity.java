@@ -305,14 +305,15 @@ public class BusinessProfileActivity extends AppCompatActivity {
     }
 
     public void goToEditContactInfo(View editButton){
-        if(!sacAllEmptyFlag) {
-            Intent intent = new Intent(this, EditContactInfoActivity.class);
-            startActivity(intent);
-        }
+
+        Intent intent = new Intent(this, EditContactInfoActivity.class);
+        startActivity(intent);
     }
 
     public void goToEditStoreInfo(View editButton){
         Intent intent = new Intent(this, EditStoreInfoActivity.class);
+        intent.putExtra("businessId", businessId);
+
         //TODO: find a new way when we support multiple stores
 
         if(currentDetails.getStores() != null){
@@ -320,7 +321,6 @@ public class BusinessProfileActivity extends AppCompatActivity {
             BusinessAddress currentAddress = currentStore.getAddress();
 
             intent.putExtra("empty", "false");
-            intent.putExtra("businessId", businessId);
             intent.putExtra(getString(R.string.child_details_store_address_country), currentAddress.getCountry());
             intent.putExtra(getString(R.string.child_details_store_address_state), currentAddress.getState());
             intent.putExtra(getString(R.string.child_details_store_address_city), currentAddress.getCity());
@@ -329,9 +329,9 @@ public class BusinessProfileActivity extends AppCompatActivity {
             intent.putExtra(getString(R.string.child_details_store_address_complement), currentAddress.getComplement());
             intent.putExtra(getString(R.string.child_details_store_phone), currentStore.getPhoneNumber());
             intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
-            startActivity(intent);
-        }
 
+        }
+        startActivity(intent);
 
     }
 
