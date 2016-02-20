@@ -6,7 +6,7 @@
     <string name="err_msg_password_again"> Senha não confere com a anterior</string>
 
     <string name="err_msg_bus_name"> Por favor insira o nome do seu negócio/serviço</string>
-    <string name="err_msg_descripiton"> Por favor insira uma descrição</string>
+    <string name="err_msg_description"> Por favor insira uma descrição</string>
     <string name="err_msg_category"> Por favor selecione uma categoria</string>
 
     <string name="err_msg_state"> Por favor selecione um estado</string>

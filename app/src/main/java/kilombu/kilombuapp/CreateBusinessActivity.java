@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.firebase.client.ServerValue;
 
 import java.util.HashMap;
@@ -180,29 +179,34 @@ public class CreateBusinessActivity extends AppCompatActivity {
             return;
         }
 
-            BusinessAddress address = ValidationTools.validateAddress(street, complement, district, city, state);
-            Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
+        BusinessAddress address = ValidationTools.validateAddress(street, complement, district, city, state);
+        Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
 
-            String admin = appRef.getAuth().getUid();
-            int categoryIndex = ValidationTools.convertCategory(category, this);
-            Business business = new Business(name, admin, categoryIndex, description, corporateNumber);
+        String admin = appRef.getAuth().getUid();
+        int categoryIndex = ValidationTools.convertCategory(category, this);
+        Business business = new Business(name, admin, categoryIndex, description, corporateNumber);
 
-            Firebase newBusinessRef = businessRef.push();
-            final String businessId = newBusinessRef.getKey();
-            newBusinessRef.setValue(business);
+        Firebase newBusinessRef = businessRef.push();
+        final String businessId = newBusinessRef.getKey();
+        newBusinessRef.setValue(business);
 
-            //TODO: check if we need to ask for a unit name
-            Map<String, Store> stores = null;
-            if (store != null){
-                stores = new HashMap<String, Store>();
-                stores.put(Integer.toString(storeIndex++) + " " + district, store);
-            }
-            //TODO: check if there exists already a unit in the district and add an index
-            BusinessDetails details = new BusinessDetails(stores, sacPhone, email,
-                                    website, whatsapp, facebook, instagram);
+        //TODO: check if we need to ask for a unit name
+        Map<String, Store> stores = null;
+        if (store != null){
+            stores = new HashMap<String, Store>();
+            stores.put(Integer.toString(storeIndex++) + " " + district, store);
+        }
+        //TODO: check if there exists already a unit in the district and add an index
+        BusinessDetails details = new BusinessDetails(stores, sacPhone, email,
+                                website, whatsapp, facebook, instagram);
 
-            detailsRef.child(businessId).setValue(details);
-            detailsRef.child(businessId).setValue(details, new Firebase.CompletionListener() {
+        detailsRef.child(businessId).setValue(details);
+        createBusinessStatistics(businessId);
+        Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
+        Toast.makeText(getApplicationContext(), "Cadastro efetuado com sucesso!", Toast.LENGTH_LONG).show();
+        startActivity(intent);
+
+            /*detailsRef.child(businessId).setValue(details, new Firebase.CompletionListener() {
                 @Override
                 public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                     createBusinessStatistics(businessId);
@@ -210,8 +214,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
                     Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-            });
-
+            });*/
 
     }
 
@@ -240,7 +243,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
     //Mandatory
     private boolean validateDescription(String description){
         if (!ValidationTools.isValidDescription(description)){
-            inputLayoutDescription.setError(getString(R.string.err_msg_descripiton));
+            inputLayoutDescription.setError(getString(R.string.err_msg_description));
             requestFocus(descriptionField);
             Toast.makeText(CreateBusinessActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
             return false;

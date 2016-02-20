@@ -171,7 +171,7 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
     //Mandatory
     private boolean validateDescription(String description){
         if (!ValidationTools.isValidDescription(description)){
-            inputLayoutDescrption.setError(getString(R.string.err_msg_descripiton));
+            inputLayoutDescrption.setError(getString(R.string.err_msg_description));
             //requestFocus(descriptionField);
             Toast.makeText(EditBusinessInfoActivity.this, R.string.err_msg_toast, Toast.LENGTH_SHORT).show();
             return false;
