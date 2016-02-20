@@ -16,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +32,6 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     private final int adsPerPage = 15;
     private final long placeholderRank = 1456009199;
     private int currentPage = 1;
-    private String currentCategory;
+    private int currentCategory; // 0 represents "All categories"
     private RecyclerView adsView;
     private User currentUser;
     private Business currentBusiness;
@@ -99,6 +97,8 @@ public class MainActivity extends AppCompatActivity
         appRef = new Firebase(getString(R.string.firebase_url));
         setUpCustomDrawer();
         Log.d("MAIN", "ON CREATE");
+
+        ValidationTools.createBusinessPlaceholders(this);
 
     }
 
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity
                         String currentBusinessName = currentBusiness.getName();
                         String currentBusinessDescription = currentBusiness.getDescription();
                         String currentBusinessCorpNumber = currentBusiness.getCorporateNumber();
-                        String currentBusinessCategory = currentBusiness.getCategory();
+                        String currentBusinessCategory = ValidationTools.categoryForIndex(currentBusiness.getCategory());
 
 
                         SharedPreferences.Editor busEditor = busPreferences.edit();
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity
         final ProgressBar loadingArea = (ProgressBar) findViewById(R.id.progressBar);
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 
-        currentCategory = getString(R.string.category_all);
+        currentCategory = 0;
         businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
                 .endAt(placeholderRank).limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
@@ -237,10 +237,10 @@ public class MainActivity extends AppCompatActivity
     //TODO: consider rewriting own adapter
     public void changeCategoryOnClick(View button){
 
-        currentCategory = button.getTag().toString();
+        currentCategory = ValidationTools.convertCategory(button.getTag().toString());
         currentPage = 1;
-        Log.d("MAIN", currentCategory);
-        if (currentCategory != getString(R.string.category_all)){
+        Log.d("MAIN", ValidationTools.categoryForIndex(currentCategory));
+        if (currentCategory != 0){
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
                     .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
@@ -254,9 +254,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void changeCategory(String category){
-        currentCategory = category;
-        Log.d("MAIN", currentCategory);
-        if (currentCategory != getString(R.string.category_all)){
+        currentCategory = ValidationTools.convertCategory(category);
+        Log.d("MAIN", ValidationTools.categoryForIndex(currentCategory));
+        if (currentCategory != 0){
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
                     .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity
         Business lastItem = firebaseAdsAdapter.getItem(firebaseAdsAdapter.getItemCount() - 2);
         //TODO: caso em que lastItem é null
         Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
-        if (currentCategory.equals(getString(R.string.category_all))){
+        if (currentCategory == 0){
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_rankpoints))
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity
         Business firstItem = firebaseAdsAdapter.getItem(0);
         //TODO: caso em que firstItem é null
         Log.d("ITEM RANK", Double.toString(firstItem.getRankPoints()));
-        if (currentCategory.equals(getString(R.string.category_all))){
+        if (currentCategory == 0){
             previousPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_rankpoints))
