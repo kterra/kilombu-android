@@ -1,6 +1,12 @@
 package kilombu.kilombuapp;
 
+import android.content.Context;
 import android.telephony.PhoneNumberUtils;
+
+import com.firebase.client.Firebase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by kizzyterra on 17/02/16.
@@ -53,6 +59,18 @@ public class ValidationTools {
         }
         return null;
 
+    }
+
+    public static void createBusinessPlaceholders(Context context){
+        ArrayList<String> categories = new ArrayList<String>(
+                Arrays.asList(context.getResources().getStringArray(R.array.categories_list)));
+        Firebase businessRef = new Firebase(context.getString(R.string.firebase_url))
+                        .child(context.getString(R.string.child_business));
+        for (String category:categories) {
+            String name = context.getString(R.string.no_ads_left);
+            Business placeholder = new Business(name, null, category, null, null);
+            businessRef.child("Placeholder " + category).setValue(placeholder);
+        }
     }
 
 

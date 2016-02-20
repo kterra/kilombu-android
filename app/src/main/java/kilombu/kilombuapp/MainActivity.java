@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase appRef;
-    private final int adsPerPage = 2;
-    private final int minViewableAds = 2;
+    private final int adsPerPage = 15;
     private int currentPage = 1;
     private String currentCategory;
     private RecyclerView adsView;
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity
         setUpCustomDrawer();
         Log.d("MAIN", "ON CREATE");
 
-
     }
 
     private void setNavigationHeader(){
@@ -133,14 +131,14 @@ public class MainActivity extends AppCompatActivity
         if (appRef.getAuth() != null) {
             String userId = appRef.getAuth().getUid();
             SharedPreferences.Editor userEditor = userPreferences.edit();
-            userEditor.putString(getString(R.string.userid_key),userId);
+            userEditor.putString(getString(R.string.userid_key), userId);
             userEditor.commit();
             navigationView.getMenu().clear(); //clear old inflated items.
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
 
             //set nav header text
 
-            getUser = appRef.child("users").orderByKey().equalTo(userId);
+            getUser = appRef.child(getString(R.string.child_users)).orderByKey().equalTo(userId);
             getUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -244,10 +242,10 @@ public class MainActivity extends AppCompatActivity
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
                     .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
-                    .limitToLast(adsPerPage);
+                    .limitToFirst(adsPerPage);
         }else{
-            businessQuery = businessRef.orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .limitToLast(adsPerPage);
+            businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
+                    .limitToFirst(adsPerPage);
         }
 
         updateFirebaseAdapter(businessQuery);
@@ -258,11 +256,12 @@ public class MainActivity extends AppCompatActivity
         Log.d("MAIN", currentCategory);
         if (currentCategory != getString(R.string.category_all)){
             businessQuery = businessRef.orderByChild(
-                    getString(R.string.child_business_this_category))
-                    .equalTo(currentCategory).limitToLast(adsPerPage);
+                    getString(R.string.child_business_category_rankpoints))
+                    .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
+                    .limitToFirst(adsPerPage);
         }else{
-            businessQuery = businessRef.orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .limitToLast(adsPerPage);
+            businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
+                    .limitToFirst(adsPerPage);
         }
 
         updateFirebaseAdapter(businessQuery);

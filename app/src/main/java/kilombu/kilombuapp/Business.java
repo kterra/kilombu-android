@@ -25,10 +25,15 @@ public class Business {
         this.description = description;
 
         this.corporateNumber = corporateNumber;
-        long nowTimestamp = System.currentTimeMillis()/1000;
-        this.rankPoints = bstLaunchTimestamp*1000 - ((double)bstLaunchTimestamp/nowTimestamp)*100;
-
+        if (admin == null){
+            this.rankPoints = bstLaunchTimestamp*1000;
+        }
+        else{
+            long nowTimestamp = System.currentTimeMillis()/1000;
+            this.rankPoints = bstLaunchTimestamp*1000 - ((double)bstLaunchTimestamp/nowTimestamp)*100;
+        }
         this.categoryRankPoints = category + rankPoints;
+
     }
 
     public String getAdmin() {
