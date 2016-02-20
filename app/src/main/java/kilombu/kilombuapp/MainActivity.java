@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
         navigationView.getMenu().clear(); //clear old inflated items.
         String businessId = busPreferences.getString(getString(R.string.businessid_key),"");
+
         if(businessId.isEmpty()){
             if(userName.isEmpty()){
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity
                         currentBusinessId = currentSnapShot.getKey();
                         currentBusiness = currentSnapShot.getValue(Business.class);
 
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
                         String currentBusinessAdmin = currentBusiness.getAdmin();
                         String currentBusinessName = currentBusiness.getName();
                         String currentBusinessDescription = currentBusiness.getDescription();

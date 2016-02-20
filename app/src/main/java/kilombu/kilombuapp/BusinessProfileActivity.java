@@ -136,11 +136,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         for (Store store : stores.values()) {
                             //TODO: deal with many stores and phone number
 
-                            String address = store.getAddress().toString();
+                            BusinessAddress address = store.getAddress();
 
-                            if (address != null && !address.isEmpty()) {
+                            if (address != null) {
                                 currentText = (TextView) findViewById(R.id.profile_business_address);
-                                currentText.setText(address);
+                                currentText.setText(address.toString());
                                 currentText.setVisibility(View.VISIBLE);
                             }
 

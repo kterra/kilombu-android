@@ -1,5 +1,6 @@
 package kilombu.kilombuapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
             inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,  inputLayoutBusinessHours, inputLayoutPhone,
             inputLayoutSacPhone, inputLayoutEmail, inputLayoutWebsite, inputLayoutWhatsapp,
             inputLayoutFacebook, inputLayoutInstagram;
+    private SharedPreferences busPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,6 +247,19 @@ public class CreateBusinessActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });*/
+
+
+
+        busPreferences = CreateBusinessActivity.this.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor busEditor = busPreferences.edit();
+        busEditor.putString(getString(R.string.businessid_key), businessId);
+        busEditor.putString(getString(R.string.businessadmin_key), admin);
+        busEditor.putString(getString(R.string.businessname_key),name);
+        busEditor.putString(getString(R.string.businessdescription_key), description);
+        busEditor.putString(getString(R.string.businesscorpnumber_key), corporateNumber);
+        busEditor.putString(getString(R.string.businesscategory_key), category);
+        busEditor.commit();
 
     }
 
