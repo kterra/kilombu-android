@@ -15,8 +15,15 @@ public class ValidationTools {
     public static final long bstLaunchTimestamp = 1456009200;
     public static final int categoryOffset = 10000000;
 
-    public static int convertCategory(String category){
-        return 0;
+    public static int convertCategory(String category, Context context){
+        String [] categories = context.getResources().getStringArray(R.array.categories_list);
+        ArrayList<String> categoriesKeys = new ArrayList<String>();
+
+        for (int i=0; i<categories.length;i++){
+            categoriesKeys.add(i+1,categories[i]);
+        }
+
+        return categoriesKeys.indexOf(category);
     }
 
     public static boolean isValidEmail(String email) {
