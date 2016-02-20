@@ -55,7 +55,7 @@ public class BusinessAddress {
         if (street != "" && street != null)
             representation += street;
         if (complement != null && !complement.isEmpty())
-            representation += complement;
+            representation += ", " + complement;
         if (district != null && !district.isEmpty())
             representation += ", " + district;
         if (city != null && !city.isEmpty())

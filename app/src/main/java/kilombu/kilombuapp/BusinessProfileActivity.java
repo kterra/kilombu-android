@@ -317,6 +317,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
             intent.putExtra(getString(R.string.child_details_store_address_city), currentAddress.getCity());
             intent.putExtra(getString(R.string.child_details_store_address_district), currentAddress.getDistrict());
             intent.putExtra(getString(R.string.child_details_store_address_street), currentAddress.getStreet());
+            intent.putExtra(getString(R.string.child_details_store_address_complement), currentAddress.getComplement());
             intent.putExtra(getString(R.string.child_details_store_phone), currentStore.getPhoneNumber());
             intent.putExtra(getString(R.string.child_details_store_business_hours), currentStore.getBusinessHours());
             startActivity(intent);

@@ -31,7 +31,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_store_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         setupStoreInfo();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
