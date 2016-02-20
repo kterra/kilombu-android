@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private Firebase appRef;
     private final int adsPerPage = 15;
-    private final long placeholderRank = 999999-2;
+    private final long placeholderRank = 999997;
     private int currentPage = 1;
     private int currentCategory; // 0 represents "All categories"
     private RecyclerView adsView;
@@ -359,7 +359,8 @@ public class MainActivity extends AppCompatActivity
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_rankpoints))
-                    .startAt(lastItem.getRankPoints()).limitToFirst(adsPerPage);
+                    .startAt(lastItem.getRankPoints())
+                    .endAt(placeholderRank).limitToFirst(adsPerPage);
         }
         else{
             //Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
