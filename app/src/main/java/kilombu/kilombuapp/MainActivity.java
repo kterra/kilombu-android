@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private DrawerLayout drawer;
+    private boolean noAdsLeftFlag;
 
 
     @Override
@@ -498,6 +499,7 @@ public class MainActivity extends AppCompatActivity
 
             }
             else {
+                noAdsLeftFlag = false;
                 String businessName = business.getName();
 
                 BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
@@ -505,22 +507,35 @@ public class MainActivity extends AppCompatActivity
                 businessViewHolder.shortDescription.setText(business.getDescription());
 
                 if(businessName.compareTo(getString(R.string.no_ads_left).trim())==0){
+
                     CardView cv = businessViewHolder.cv;
-                    RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
-                    LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
-                    childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
-                    ((TextView)childView.findViewById(R.id.business_description)).setTextSize(12);
+
+                    if(!noAdsLeftFlag){
+                        cv.setVisibility(View.VISIBLE);
+                        RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+                        LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
+                        childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
+                        ((TextView)childView.findViewById(R.id.business_description)).setTextSize(12);
 
 
-                    TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
-                    businessNameView.setTextSize(16);
+                        TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+                        businessNameView.setTextSize(16);
 
-                    View view =  (View) relativeLayoutView.getChildAt(1);
-                    view.setVisibility(View.GONE);
+                        View view =  (View) relativeLayoutView.getChildAt(1);
+                        view.setVisibility(View.GONE);
 
-                    footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
+                        footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
+                        noAdsLeftFlag = true;
+
+                    }else{
+                        cv.setVisibility(View.GONE);
+                    }
+
+
+
                 }else{
                     CardView cv = businessViewHolder.cv;
+                    cv.setVisibility(View.VISIBLE);
                     RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
                     LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
                     childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);
