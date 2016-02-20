@@ -1,7 +1,6 @@
 package kilombu.kilombuapp;
 
 import android.content.Context;
-import android.telephony.PhoneNumberUtils;
 
 import com.firebase.client.Firebase;
 
@@ -12,6 +11,14 @@ import java.util.Arrays;
  * Created by kizzyterra on 17/02/16.
  */
 public class ValidationTools {
+
+    public static final long bstLaunchTimestamp = 1456009200;
+    public static final int categoryOffset = 10000000;
+
+    public static int convertCategory(String category){
+        return 0;
+    }
+
     public static boolean isValidEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
@@ -65,7 +72,7 @@ public class ValidationTools {
         ArrayList<String> categories = new ArrayList<String>(
                 Arrays.asList(context.getResources().getStringArray(R.array.categories_list)));
         Firebase businessRef = new Firebase(context.getString(R.string.firebase_url))
-                        .child(context.getString(R.string.child_business));
+                .child(context.getString(R.string.child_business));
         for (String category:categories) {
             String name = context.getString(R.string.no_ads_left);
             Business placeholder = new Business(name, null, category, null, null);

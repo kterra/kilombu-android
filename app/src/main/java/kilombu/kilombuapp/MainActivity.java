@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
 
     private Firebase appRef;
     private final int adsPerPage = 15;
+    private final long placeholderRank = 1456009199;
     private int currentPage = 1;
     private String currentCategory;
     private RecyclerView adsView;
@@ -220,7 +221,7 @@ public class MainActivity extends AppCompatActivity
 
         currentCategory = getString(R.string.category_all);
         businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                .limitToFirst(adsPerPage);
+                .endAt(placeholderRank).limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
         adsView.setAdapter(firebaseAdsAdapter);
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity
                     .limitToFirst(adsPerPage);
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                    .limitToFirst(adsPerPage);
+                    .endAt(placeholderRank).limitToFirst(adsPerPage);
         }
 
         updateFirebaseAdapter(businessQuery);
@@ -262,7 +263,7 @@ public class MainActivity extends AppCompatActivity
                     .limitToFirst(adsPerPage);
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                    .limitToFirst(adsPerPage);
+                    .endAt(placeholderRank).limitToFirst(adsPerPage);
         }
 
         updateFirebaseAdapter(businessQuery);

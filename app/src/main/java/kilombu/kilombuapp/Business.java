@@ -6,11 +6,11 @@ package kilombu.kilombuapp;
 public class Business {
 
     private String admin;
-    private String category;
+    private int category;
     private String description;
     private String name;
     private String corporateNumber;
-    private String categoryRankPoints;
+    private double categoryRankPoints;
     private double rankPoints;
 
 
@@ -18,21 +18,22 @@ public class Business {
     }
 
     public Business(String name, String admin, String category, String description, String corporateNumber){
-        long bstLaunchTimestamp = 1456009200;
+
         this.name = name;
         this.admin = admin;
-        this.category = category;
+        this.category = ValidationTools.convertCategory(category);
         this.description = description;
 
         this.corporateNumber = corporateNumber;
         if (admin == null){
-            this.rankPoints = bstLaunchTimestamp*1000;
+            this.rankPoints = ValidationTools.bstLaunchTimestamp*1000;
         }
         else{
             long nowTimestamp = System.currentTimeMillis()/1000;
-            this.rankPoints = bstLaunchTimestamp*1000 - ((double)bstLaunchTimestamp/nowTimestamp)*100;
+            this.rankPoints = ValidationTools.bstLaunchTimestamp*1000 -
+                    ((double)ValidationTools.bstLaunchTimestamp/nowTimestamp)*100;
         }
-        this.categoryRankPoints = category + rankPoints;
+        this.categoryRankPoints = this.category * ValidationTools.categoryOffset + this.rankPoints;
 
     }
 
@@ -40,7 +41,7 @@ public class Business {
         return admin;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
@@ -60,7 +61,7 @@ public class Business {
         return rankPoints;
     }
 
-    public String getCategoryRankPoints() {
+    public double getCategoryRankPoints() {
         return categoryRankPoints;
     }
 }
