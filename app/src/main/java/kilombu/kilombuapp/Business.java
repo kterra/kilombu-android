@@ -5,6 +5,7 @@ package kilombu.kilombuapp;
  */
 public class Business {
 
+    public static final int categoryOffset = 1000000;
     private String admin;
     private int category;
     private String description;
@@ -17,23 +18,22 @@ public class Business {
     public Business(){
     }
 
-    public Business(String name, String admin, String category, String description, String corporateNumber){
+    public Business(String name, String admin, int category, String description, String corporateNumber){
 
         this.name = name;
         this.admin = admin;
-        this.category = ValidationTools.convertCategory(category);
+        this.category = category;
         this.description = description;
 
         this.corporateNumber = corporateNumber;
         if (admin == null){
-            this.rankPoints = ValidationTools.bstLaunchTimestamp*1000;
+            this.rankPoints = categoryOffset-1;
         }
         else{
             long nowTimestamp = System.currentTimeMillis()/1000;
-            this.rankPoints = ValidationTools.bstLaunchTimestamp*1000 -
-                    ((double)ValidationTools.bstLaunchTimestamp/nowTimestamp)*100;
+            this.rankPoints =  categoryOffset - ((double)categoryOffset/nowTimestamp)*1000 -10;
         }
-        this.categoryRankPoints = this.category * ValidationTools.categoryOffset + this.rankPoints;
+        this.categoryRankPoints = this.category * categoryOffset + this.rankPoints- 10;
 
     }
 

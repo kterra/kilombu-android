@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private Firebase appRef;
     private final int adsPerPage = 15;
-    private final long placeholderRank = 1456009199;
+    private final long placeholderRank = 999999-2;
     private int currentPage = 1;
     private int currentCategory; // 0 represents "All categories"
     private RecyclerView adsView;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         setUpCustomDrawer();
         Log.d("MAIN", "ON CREATE");
 
-        ValidationTools.createBusinessPlaceholders(this);
+        //ValidationTools.createBusinessPlaceholders(this);
 
     }
 
@@ -185,7 +185,8 @@ public class MainActivity extends AppCompatActivity
                         String currentBusinessName = currentBusiness.getName();
                         String currentBusinessDescription = currentBusiness.getDescription();
                         String currentBusinessCorpNumber = currentBusiness.getCorporateNumber();
-                        String currentBusinessCategory = ValidationTools.categoryForIndex(currentBusiness.getCategory());
+                        String currentBusinessCategory = ValidationTools
+                                .categoryForIndex(currentBusiness.getCategory(), MainActivity.this);
 
 
                         SharedPreferences.Editor busEditor = busPreferences.edit();
@@ -221,7 +222,8 @@ public class MainActivity extends AppCompatActivity
 
         currentCategory = 0;
         businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                .endAt(placeholderRank).limitToFirst(adsPerPage);
+                .endAt(placeholderRank)
+                .limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
         adsView.setAdapter(firebaseAdsAdapter);
@@ -236,15 +238,27 @@ public class MainActivity extends AppCompatActivity
 
     //TODO: consider rewriting own adapter
     public void changeCategoryOnClick(View button){
+        String category = button.getTag().toString();
+        if (category.equals(getString(R.string.category_all))){
+            currentCategory = 0;
+        }
+        else{
+            currentCategory = ValidationTools.convertCategory(category, this);
+        }
 
-        currentCategory = ValidationTools.convertCategory(button.getTag().toString());
         currentPage = 1;
-        Log.d("MAIN", ValidationTools.categoryForIndex(currentCategory));
+        Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
         if (currentCategory != 0){
+            int begin = currentCategory * Business.categoryOffset;
+            int end = (currentCategory + 1) * Business.categoryOffset - 1;
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
-                    .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
+                    .startAt(currentCategory * Business.categoryOffset)
+                    .endAt((currentCategory +1) * Business.categoryOffset -1)
                     .limitToFirst(adsPerPage);
+            Log.e("BEGIN", Integer.toString(begin));
+            Log.e("END", Integer.toString(end));
+
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
                     .endAt(placeholderRank).limitToFirst(adsPerPage);
@@ -254,13 +268,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void changeCategory(String category){
-        currentCategory = ValidationTools.convertCategory(category);
-        Log.d("MAIN", ValidationTools.categoryForIndex(currentCategory));
+        if (category.equals(getString(R.string.category_all))){
+            currentCategory = 0;
+        }
+        else{
+            currentCategory = ValidationTools.convertCategory(category, this);
+        }
+        Log.d("changeCategory", Integer.toString(currentCategory));
         if (currentCategory != 0){
+            int begin = currentCategory * Business.categoryOffset;
+            int end = (currentCategory + 1) * Business.categoryOffset - 1;
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
-                    .startAt(currentCategory).endAt(currentCategory + "\uF8FF")
+                    .startAt(currentCategory * Business.categoryOffset)
+                    .endAt((currentCategory + 1) * Business.categoryOffset - 1)
                     .limitToFirst(adsPerPage);
+
+            Log.e("BEGIN", Integer.toString(begin));
+            Log.e("END", Integer.toString(end));
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
                     .endAt(placeholderRank).limitToFirst(adsPerPage);
@@ -296,11 +321,12 @@ public class MainActivity extends AppCompatActivity
                     .startAt(lastItem.getRankPoints()).limitToFirst(adsPerPage);
         }
         else{
-            Log.d("ITEM CATRANK", Double.toString(lastItem.getRankPoints()));
+            Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .startAt(lastItem.getCategoryRankPoints()).endAt(currentCategory + "\uF8FF")
+                    .startAt(currentCategory * Business.categoryOffset)
+                    .endAt((currentCategory + 1) * Business.categoryOffset - 1)
                     .limitToFirst(adsPerPage);
         }
 
@@ -324,7 +350,8 @@ public class MainActivity extends AppCompatActivity
             previousPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_this_category))
-                    .startAt(currentCategory + "\uF8FF").endAt(firstItem.getCategoryRankPoints())
+                    .startAt(currentCategory * Business.categoryOffset)
+                    .endAt((currentCategory + 1) * Business.categoryOffset - 1)
                     .limitToFirst(adsPerPage);
         }
 
@@ -512,26 +539,26 @@ public class MainActivity extends AppCompatActivity
 
                     CardView cv = businessViewHolder.cv;
 
-                    if(!noAdsLeftFlag){
-                        cv.setVisibility(View.VISIBLE);
-                        RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
-                        LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
-                        childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
-                        ((TextView)childView.findViewById(R.id.business_description)).setTextSize(12);
+                   // if(!noAdsLeftFlag){
+                    cv.setVisibility(View.VISIBLE);
+                    RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+                    LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
+                    childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
+                    ((TextView)childView.findViewById(R.id.business_description)).setTextSize(12);
 
 
-                        TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
-                        businessNameView.setTextSize(16);
+                    TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+                    businessNameView.setTextSize(16);
 
-                        View view =  (View) relativeLayoutView.getChildAt(1);
-                        view.setVisibility(View.GONE);
+                    View view =  (View) relativeLayoutView.getChildAt(1);
+                    view.setVisibility(View.GONE);
 
-                        footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
-                        noAdsLeftFlag = true;
+                    footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
+                    /*    noAdsLeftFlag = true;
 
                     }else{
                         cv.setVisibility(View.GONE);
-                    }
+                    }*/
 
 
 

@@ -184,7 +184,8 @@ public class CreateBusinessActivity extends AppCompatActivity {
             Store store = ValidationTools.validateStore(address, phoneNumber, businessHours);
 
             String admin = appRef.getAuth().getUid();
-            Business business = new Business(name, admin, category, description, corporateNumber);
+            int categoryIndex = ValidationTools.convertCategory(category, this);
+            Business business = new Business(name, admin, categoryIndex, description, corporateNumber);
 
             Firebase newBusinessRef = businessRef.push();
             final String businessId = newBusinessRef.getKey();

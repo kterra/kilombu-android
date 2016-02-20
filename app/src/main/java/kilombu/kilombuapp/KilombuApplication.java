@@ -17,7 +17,6 @@ public class KilombuApplication extends Application {
         super.onCreate();
         //Initializes firebase
         Firebase.setAndroidContext(this);
-        ValidationTools.context = getApplicationContext();
     }
 
     public static boolean hasActiveNetworkConnection(Context context){

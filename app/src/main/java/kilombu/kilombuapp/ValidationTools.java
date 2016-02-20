@@ -13,17 +13,15 @@ import java.util.Arrays;
 public class ValidationTools {
 
     public static final long bstLaunchTimestamp = 1456009200;
-    public static final int categoryOffset = 10000000;
-    public static Context context;
 
-    public static int convertCategory(String category){
+    public static int convertCategory(String category, Context context){
         ArrayList<String> categories = new ArrayList<String >(
-                Arrays.asList(context.getResources().getStringArray(R.array.categories_list)));
+                Arrays.asList(context.getResources().getStringArray(R.array.categories)));
         return categories.indexOf(category);
     }
 
-    public static String categoryForIndex(int i) {
-        String[] categories = context.getResources().getStringArray(R.array.categories_list);
+    public static String categoryForIndex(int i, Context context) {
+        String[] categories = context.getResources().getStringArray(R.array.categories);
         return categories[i];
     }
     /*public static int convertCategory(String category, Context context){
@@ -91,9 +89,10 @@ public class ValidationTools {
                 Arrays.asList(context.getResources().getStringArray(R.array.categories_list)));
         Firebase businessRef = new Firebase(context.getString(R.string.firebase_url))
                 .child(context.getString(R.string.child_business));
+        int index = 1;
         for (String category:categories) {
             String name = context.getString(R.string.no_ads_left);
-            Business placeholder = new Business(name, null, category, null, null);
+            Business placeholder = new Business(name, null, index++, null, null);
             businessRef.child("Placeholder " + category).setValue(placeholder);
         }
     }
