@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class EditStoreInfoActivity extends AppCompatActivity {
 
-    private String businessId, state, city, district, street, phone, hours;
+    private String businessId, state, city, district, street, complement, phone, hours;
     private TextInputLayout inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,
     inputLayoutBusinessHours, inputLayoutPhone;
 
@@ -31,8 +31,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_store_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        
         setupStoreInfo();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -57,6 +56,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         city = intent.getStringExtra(getString(R.string.child_details_store_address_city));
         district = intent.getStringExtra(getString(R.string.child_details_store_address_district));
         street = intent.getStringExtra(getString(R.string.child_details_store_address_street));
+        complement = intent.getStringExtra(getString(R.string.child_details_store_address_complement));
         phone = intent.getStringExtra(getString(R.string.child_details_store_phone));
         hours = intent.getStringExtra(getString(R.string.child_details_store_business_hours));
 
@@ -68,6 +68,9 @@ public class EditStoreInfoActivity extends AppCompatActivity {
 
         currentText = (EditText) findViewById(R.id.edit_street);
         currentText.setText(street);
+
+        currentText = (EditText) findViewById(R.id.edit_complement);
+        currentText.setText(complement);
 
         currentText = (EditText) findViewById(R.id.edit_phone);
         currentText.setText(phone);
@@ -131,7 +134,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         }
 
 
-        BusinessAddress address = ValidationTools.validateAddress(street, district, city, state);
+        BusinessAddress address = ValidationTools.validateAddress(street, complement, district, city, state);
         Store newStore = ValidationTools.validateStore(address, phone, hours);
 
         Map<String, Object> stores = new HashMap<String, Object>();
