@@ -131,11 +131,12 @@ public class EditBusinessInfoActivity extends AppCompatActivity {
 
         Spinner categorySelection = (Spinner) findViewById(R.id.edit_category);
         String category = categorySelection.getSelectedItem().toString().trim();
+        int categoryIndex = categorySelection.getSelectedItemPosition();
         if(!validateCategory(category)){
             return;
         }
         businessUpdates.put(getString(R.string.child_business_this_category),
-                category);
+                categoryIndex);
 
 
         busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);

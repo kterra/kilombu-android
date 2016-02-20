@@ -108,7 +108,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                                     String businessId = busPreferences.getString(getString(R.string.businessid_key), "");
 
-                                    if (businessId.isEmpty()) {
+                                    if (!businessId.isEmpty()) {
                                         appRef.child(getString(R.string.child_business)).child(businessId).setValue(null);
                                         appRef.child(getString(R.string.child_business_details)).child(businessId).setValue(null);
                                         appRef.child(getString(R.string.child_business_statistics)).child(businessId).setValue(null);
