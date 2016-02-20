@@ -53,7 +53,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             getString(R.string.toast_action_not_completed), Toast.LENGTH_LONG).show();
                 }
             });
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, ChangeTokenPasswordActivity.class);
+            intent.putExtra("userEmail",email);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 

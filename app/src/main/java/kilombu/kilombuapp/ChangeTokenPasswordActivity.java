@@ -36,9 +36,8 @@ public class ChangeTokenPasswordActivity extends AppCompatActivity {
 
 
         appRef = new Firebase(getString(R.string.firebase_url));
-        context = ChangeTokenPasswordActivity.this;
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
+
+        userEmail = getIntent().getStringExtra("userEmail");
 
 
 
@@ -84,7 +83,7 @@ public class ChangeTokenPasswordActivity extends AppCompatActivity {
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                Toast.makeText(ChangeTokenPasswordActivity.this, firebaseError.toString() , Toast.LENGTH_LONG).show();
+                Toast.makeText(ChangeTokenPasswordActivity.this, firebaseError.toString(), Toast.LENGTH_LONG).show();
                 //Toast.makeText(ChangeTokenPasswordActivity.this, R.string.toast_failure_change_password, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ChangeTokenPasswordActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
