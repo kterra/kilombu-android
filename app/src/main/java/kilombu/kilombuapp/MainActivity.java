@@ -581,7 +581,15 @@ public class MainActivity extends AppCompatActivity
 
                 BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
                 businessViewHolder.businessName.setText(businessName);
-                businessViewHolder.shortDescription.setText(business.getDescription());
+                String description = business.getDescription();
+                if(description!= null && description.length() > 300){
+
+                    description = description.substring(0,299);
+                    description = description + " ...";
+
+                }
+
+                businessViewHolder.shortDescription.setText(description);
 
                 if(businessName.equals(getString(R.string.no_ads_left))){
 
