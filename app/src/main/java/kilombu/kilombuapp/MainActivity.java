@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity
             nextPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
                     .orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .startAt(currentCategory * Business.categoryOffset)
+                    .startAt(lastItem.getCategoryRankPoints())
                     .endAt((currentCategory + 1) * Business.categoryOffset - 1)
                     .limitToFirst(adsPerPage);
         }
@@ -391,10 +391,10 @@ public class MainActivity extends AppCompatActivity
         else{
             previousPageQuery = new Firebase(getString(R.string.firebase_url))
                     .child(getString(R.string.child_business))
-                    .orderByChild(getString(R.string.child_business_this_category))
+                    .orderByChild(getString(R.string.child_business_category_rankpoints))
                     .startAt(currentCategory * Business.categoryOffset)
-                    .endAt((currentCategory + 1) * Business.categoryOffset - 1)
-                    .limitToFirst(adsPerPage);
+                    .endAt(firstItem.getCategoryRankPoints())
+                    .limitToLast(adsPerPage);
         }
 
         updateFirebaseAdapter(previousPageQuery);
@@ -651,6 +651,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d("COUNTS", Integer.toString(getItemCount()));*/
                 if (position > 0 || position == getItemCount() - 2) {
                     loadingArea.setVisibility(View.GONE);
+
                 }
 
             }

@@ -52,16 +52,33 @@ public class BusinessAddress {
     @Override
     public String toString(){
         String representation = "";
-        if (street != "" && street != null)
+        boolean shouldPutComma = false;
+        if (street != "" && street != null){
             representation += street;
-        if (complement != null && !complement.isEmpty())
-            representation += ", " + complement;
-        if (district != null && !district.isEmpty())
-            representation += ", " + district;
-        if (city != null && !city.isEmpty())
-            representation += ", " + city;
-        if (state != null && !state.isEmpty())
+            shouldPutComma = true;
+        }
+        if (complement != null && !complement.isEmpty()){
+            if(shouldPutComma)
+                representation += ", ";
+            representation += complement;
+            shouldPutComma = true;
+        }
+
+        if (district != null && !district.isEmpty()){
+            if(shouldPutComma)
+                representation += ", ";
+            representation += district;
+            shouldPutComma = true;
+        }
+        if (city != null && !city.isEmpty()) {
+            if (shouldPutComma)
+                representation += ", ";
+            representation += city;
+            shouldPutComma = true;
+        }
+        if (state != null && !state.isEmpty()) {
             representation += " (" + state + ")";
+        }
         return representation;
     }
 }
