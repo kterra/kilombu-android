@@ -352,53 +352,62 @@ public class MainActivity extends AppCompatActivity
 
     public void nextPage(View nextButton){
         Query nextPageQuery;
-        Business lastItem = firebaseAdsAdapter.getItem(firebaseAdsAdapter.getItemCount() - 2);
-        //TODO: caso em que lastItem é null
-        //Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
-        if (currentCategory == 0){
-            nextPageQuery = new Firebase(getString(R.string.firebase_url))
-                    .child(getString(R.string.child_business))
-                    .orderByChild(getString(R.string.child_business_rankpoints))
-                    .startAt(lastItem.getRankPoints())
-                    .endAt(placeholderRank).limitToFirst(adsPerPage);
-        }
-        else{
-            //Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
-            nextPageQuery = new Firebase(getString(R.string.firebase_url))
-                    .child(getString(R.string.child_business))
-                    .orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .startAt(lastItem.getCategoryRankPoints())
-                    .endAt((currentCategory + 1) * Business.categoryOffset - 1)
-                    .limitToFirst(adsPerPage);
-        }
+        try {
+            Business lastItem = firebaseAdsAdapter.getItem(firebaseAdsAdapter.getItemCount() - 2);
+            //TODO: caso em que lastItem é null
+            //Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
+            if (currentCategory == 0){
+                nextPageQuery = new Firebase(getString(R.string.firebase_url))
+                        .child(getString(R.string.child_business))
+                        .orderByChild(getString(R.string.child_business_rankpoints))
+                        .startAt(lastItem.getRankPoints())
+                        .endAt(placeholderRank).limitToFirst(adsPerPage);
+            }
+            else{
+                //Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
+                nextPageQuery = new Firebase(getString(R.string.firebase_url))
+                        .child(getString(R.string.child_business))
+                        .orderByChild(getString(R.string.child_business_category_rankpoints))
+                        .startAt(lastItem.getCategoryRankPoints())
+                        .endAt((currentCategory + 1) * Business.categoryOffset - 1)
+                        .limitToFirst(adsPerPage);
+            }
 
-        updateFirebaseAdapter(nextPageQuery);
-        currentPage += 1;
+            updateFirebaseAdapter(nextPageQuery);
+            currentPage += 1;
+        }catch (IndexOutOfBoundsException e){
+            //nothing to say to the user
+        }
 
     }
 
     public void previousPage(View prevButton){
         Query previousPageQuery;
-        Business firstItem = firebaseAdsAdapter.getItem(0);
-        //TODO: caso em que firstItem é null
-        Log.d("ITEM RANK", Double.toString(firstItem.getRankPoints()));
-        if (currentCategory == 0){
-            previousPageQuery = new Firebase(getString(R.string.firebase_url))
-                    .child(getString(R.string.child_business))
-                    .orderByChild(getString(R.string.child_business_rankpoints))
-                    .endAt(firstItem.getRankPoints()).limitToFirst(adsPerPage);
-        }
-        else{
-            previousPageQuery = new Firebase(getString(R.string.firebase_url))
-                    .child(getString(R.string.child_business))
-                    .orderByChild(getString(R.string.child_business_category_rankpoints))
-                    .startAt(currentCategory * Business.categoryOffset)
-                    .endAt(firstItem.getCategoryRankPoints())
-                    .limitToLast(adsPerPage);
+        try {
+            Business firstItem = firebaseAdsAdapter.getItem(0);
+            //TODO: caso em que firstItem é null
+            Log.d("ITEM RANK", Double.toString(firstItem.getRankPoints()));
+            if (currentCategory == 0){
+                previousPageQuery = new Firebase(getString(R.string.firebase_url))
+                        .child(getString(R.string.child_business))
+                        .orderByChild(getString(R.string.child_business_rankpoints))
+                        .endAt(firstItem.getRankPoints()).limitToFirst(adsPerPage);
+            }
+            else{
+                previousPageQuery = new Firebase(getString(R.string.firebase_url))
+                        .child(getString(R.string.child_business))
+                        .orderByChild(getString(R.string.child_business_category_rankpoints))
+                        .startAt(currentCategory * Business.categoryOffset)
+                        .endAt(firstItem.getCategoryRankPoints())
+                        .limitToLast(adsPerPage);
+            }
+
+            updateFirebaseAdapter(previousPageQuery);
+            currentPage -= 1;
+        }catch (IndexOutOfBoundsException e){
+            //nothing to say to the user
         }
 
-        updateFirebaseAdapter(previousPageQuery);
-        currentPage -= 1;
     }
 
     @Override
