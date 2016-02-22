@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private android.content.Context context;
     private DrawerLayout drawer;
     private boolean isTransition = false;
+    private LinearLayoutManager llm;
 
 
     @Override
@@ -71,10 +72,11 @@ public class MainActivity extends AppCompatActivity
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
 
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm = new LinearLayoutManager(this);
         adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
+        adsView.scrollToPosition(0);
 
 
         businessRef = new Firebase(getString(R.string.firebase_url))
@@ -669,7 +671,9 @@ public class MainActivity extends AppCompatActivity
                 if (position > 0 || position == getItemCount() - 2) {
                     loadingArea.setVisibility(View.GONE);
 
+
                 }
+
 
             }
 
