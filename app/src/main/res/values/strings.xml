@@ -17,6 +17,7 @@
     <string name="title_activity_signup">Cadastro</string>
     <string name="title_activity_dispatch">DispatchActivity</string>
     <string name="title_activity_opening">OpeningActivity</string>
+    <string name="title_activity_categorieslist">Categorias</string>
 
     <string name="title_activity_user_profile">Configurações Pessoais</string>
     <string name="title_activity_user_info">UserInfoActivity</string>

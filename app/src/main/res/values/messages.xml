@@ -22,7 +22,7 @@
     <string name="toast_no_datasnapshot">Ocorreu um problema</string>
     <string name="toast_action_not_completed">Não foi possível completar sua solicitação</string>
 
-    <string name="no_info_msg">Não há informações disponíves.</string>
+    <string name="no_info_msg">Não há informações disponíveis.</string>
     <string name="no_business_msg">Você não possui um negócio/serviço cadastrado.</string>
     <string name="no_connection_available_msg">Verifique sua conexão</string>
     <string name="no_ads_available_msg">Não há nenhum anúncio cadastrado nesta categoria</string>

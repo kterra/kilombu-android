@@ -11,6 +11,7 @@
         android:orientation="horizontal"
         android:layout_below="@id/line"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:id="@+id/navigate_back_layout">
 
         <ImageView
@@ -42,7 +43,8 @@
         android:orientation="horizontal"
         android:layout_below="@id/line"
         android:id="@+id/navigate_next_layout"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:layout_width="wrap_content"
