@@ -61,6 +61,7 @@
     <string name="businessdescription_key">businessDescription</string>
     <string name="businesscorpnumber_key">businessCorpNumber</string>
     <string name="businesscategory_key">businessCategory</string>
+    <string name="businessrank_key">businessRank</string>
 
     <string name="businessdetails_sacnumber_key">businessSacNumber</string>
     <string name="businessdetails_email_key">businessEmail</string>

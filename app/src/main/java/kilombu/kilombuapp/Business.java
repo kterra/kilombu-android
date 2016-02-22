@@ -6,6 +6,7 @@ package kilombu.kilombuapp;
 public class Business {
 
     public static final int categoryOffset = 1000000;
+    private static final int initialDecrement = 10;
     private String admin;
     private int category;
     private String description;
@@ -31,9 +32,9 @@ public class Business {
         }
         else{
             long nowTimestamp = System.currentTimeMillis()/1000;
-            this.rankPoints =  categoryOffset - ((double)categoryOffset/nowTimestamp)*1000 -10;
+            this.rankPoints =  categoryOffset - ((double)categoryOffset/nowTimestamp)*1000 - initialDecrement;
         }
-        this.categoryRankPoints = this.category * categoryOffset + this.rankPoints- 10;
+        this.categoryRankPoints = this.category * categoryOffset + this.rankPoints - initialDecrement;
 
     }
 
