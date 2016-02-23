@@ -163,6 +163,7 @@
                         android:id="@+id/business_sac_phone"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
+                        android:autoLink="phone"
                         android:textColor="@color/secondary_text_material_light"
                         android:fontFamily="sans-serif-condensed"/>
 
@@ -191,6 +192,7 @@
                     android:id="@+id/business_email"
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
+                    android:autoLink="email"
                     android:textColor="@color/secondary_text_material_light"
                     android:fontFamily="sans-serif-condensed"/>
 
@@ -220,6 +222,7 @@
                     android:id="@+id/business_website"
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
+                    android:autoLink="web"
                     android:textColor="@color/secondary_text_material_light"
                     android:fontFamily="sans-serif-condensed"/>
 
@@ -278,6 +281,7 @@
                     android:id="@+id/business_facebook"
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
+                    android:autoLink="web"
                     android:textColor="@color/colorDescription"
                     android:fontFamily="sans-serif-condensed"/>
 
@@ -307,6 +311,7 @@
                     android:id="@+id/business_instagram"
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
+                    android:autoLink="web"
                     android:textColor="@color/colorDescription"
                     android:fontFamily="sans-serif-condensed"/>
 
@@ -383,6 +388,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/business_phone_number"
+                    android:autoLink="phone"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/colorDescription"
