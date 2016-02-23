@@ -1,11 +1,18 @@
 package kilombu.kilombuapp;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
+import android.graphics.MaskFilter;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.util.Linkify;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -40,13 +47,19 @@ public class BusinessDetailsActivity extends AppCompatActivity {
 
         setupBusinessDetails();
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+           onBackPressed();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
     @Override
     protected void onStart() {
         super.onStart();
         isTransition = false;
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d("DETAILS", "ON START");
     }
 
     @Override
@@ -54,11 +67,11 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d("DETAILS", "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d("DETAILS", "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d("DETAILS", "ON STOP");
     }
 
     @Override
@@ -67,6 +80,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
         isTransition = true;
+        Log.d("DETAILS", "ON BACK");
     }
 
 
@@ -186,6 +200,19 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         linearLayout = (LinearLayout) findViewById(R.id.gruop5);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_facebook);
+                        String facebook = businessDetails.getFacebookPage().replaceAll("\\s","");
+                        try{
+                            if(!facebook.matches("(?i).*facebook.com/.*" )){
+                                currentText.setAutoLinkMask(0);
+                            }
+                        }catch (NullPointerException e){
+
+
+                        }catch (IndexOutOfBoundsException e){
+
+                        }
+
+
                         currentText.setText(businessDetails.getFacebookPage());
                     }
 
@@ -195,6 +222,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         linearLayout = (LinearLayout) findViewById(R.id.gruop6);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_instagram);
+                        currentText.setPaintFlags(currentText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                         currentText.setText(businessDetails.getInstagramPage());
                     }
                     Log.d("flag_sac_before", Boolean.toString(sacAllEmptyFlag));
@@ -248,6 +276,40 @@ public class BusinessDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void openInstagramProfile(View buttton){
+
+        String instagram = ((TextView)buttton).getText().toString().trim().replaceAll("\\s","");
+        try{
+            if(!instagram.matches("(?i).*instagram.com/.*" )){
+                if(instagram.matches("(?i)@.*")){
+                    instagram = instagram.substring(1);
+                }
+            }
+        }catch (NullPointerException e){
+
+
+        }catch (IndexOutOfBoundsException e){
+
+        }
+
+        Uri uri = Uri.parse("http://instagram.com/_u/" + instagram);
+        Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+        likeIng.setPackage("com.instagram.android");
+
+        try {
+            startActivity(likeIng);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/" + instagram)));
+        }
+    }
+
+
+
+
+
 
 }
 

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -64,6 +65,14 @@ public class UserProfileActivity extends AppCompatActivity {
         // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
         isTransition = true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override

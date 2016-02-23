@@ -311,8 +311,9 @@
                     android:id="@+id/business_instagram"
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
-                    android:autoLink="web"
-                    android:textColor="@color/colorDescription"
+                    android:clickable="true"
+                    android:onClick="openInstagramProfile"
+                    android:textColor="@color/link"
                     android:fontFamily="sans-serif-condensed"/>
 
                 </LinearLayout>

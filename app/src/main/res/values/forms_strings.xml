@@ -4,18 +4,18 @@
     <string name="hint_name">Nome do negócio/serviço</string>
     <string name="hint_description">Breve descrição</string>
     <string name="hint_corporate_number">CNPJ (opcional)</string>
-    <string name="hint_phone_number">Telefone Comercial</string>
+    <string name="hint_phone_number">Telefone Comercial Ex: 021 33338888</string>
     <string name="hint_email">E-mail Comercial</string>
     <string name="hint_city">Cidade</string>
     <string name="hint_street">Logradouro</string>
     <string name="hint_complement">Complemento</string>
     <string name="hint_district">Bairro</string>
     <string name="hint_business_hours">Horário de Funcionamento</string>
-    <string name="hint_sac_phone">Teleatendimento</string>
+    <string name="hint_sac_phone">Teleatendimento Ex: 021 33338888</string>
     <string name="hint_website">Website</string>
-    <string name="hint_whatsapp">Número do WhatsApp</string>
-    <string name="hint_facebook">Página no Facebook</string>
-    <string name="hint_instagram">Página no Instagram</string>
+    <string name="hint_whatsapp">Número do WhatsApp Ex: 021 999998888</string>
+    <string name="hint_facebook">Facebook Ex: facebook.com/suapagina</string>
+    <string name="hint_instagram">Instagram Ex: instagram.com/suapagina</string>
 
     <string name="prompt_header">Bem Vindo! Vamos começar!</string>
     <string name="prompt_name">Nome</string>
