@@ -27,6 +27,7 @@
     <string name="no_connection_available_msg">Verifique sua conexão</string>
     <string name="no_ads_available_msg">Não há nenhum anúncio cadastrado nesta categoria</string>
     <string name="no_ads_left">"Não há mais anúncios nesta categoria"</string>
+    <string name="no_such_activity">Você não possui nenhuma aplicação para realizar esta ação</string>
 
     <string name="remove_user_account_msg">Você tem certeza que deseja remover sua conta? \nAtenção! Se você possui um negócio cadastrado ele também será removido!</string>
     <string name="remove_business_msg">Você tem certeza que deseja remover este negócio?</string>

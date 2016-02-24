@@ -173,6 +173,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                         linearLayout = (LinearLayout) findViewById(R.id.gruop2);
                         linearLayout.setVisibility(View.VISIBLE);
                         currentText = (TextView) findViewById(R.id.business_email);
+                        currentText.setPaintFlags(currentText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                         currentText.setText(businessDetails.getEmail());
                     }
 
@@ -305,7 +306,6 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     Uri.parse("http://instagram.com/" + instagram)));
         }
     }
-
 
 
 

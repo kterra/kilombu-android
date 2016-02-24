@@ -7,7 +7,10 @@
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="2dp"
     android:scrollbars="none"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="kilombu.kilombuapp.MainActivity"
     tools:showIn="@layout/content_main"
     >
@@ -18,14 +21,14 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_home_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -48,13 +51,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_beleza_white_24dp"
                 android:onClick="changeCategoryOnClick"
@@ -76,14 +79,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_arte_white_24dp"
                 android:onClick="changeCategoryOnClick"
@@ -106,14 +109,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_edu_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -136,14 +139,14 @@
 
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_esportes_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -169,14 +172,14 @@
 
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_moda_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -200,14 +203,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_publi_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -230,14 +233,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_rh_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -259,14 +262,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_saude_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -288,13 +291,13 @@
 
         </LinearLayout>
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_info_white_24dp"
                 android:onClick="changeCategoryOnClick"
@@ -318,14 +321,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_more_horiz_red_24dp"
                 app:backgroundTint="@color/colorPrimary"
