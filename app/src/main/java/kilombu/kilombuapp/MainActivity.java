@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
         adsView.setLayoutManager(llm);
         adsView.setHasFixedSize(true);
-        adsView.scrollToPosition(0);
+        //adsView.scrollToPosition(0);
 
 
         businessRef = new Firebase(getString(R.string.firebase_url))
