@@ -187,7 +187,7 @@ public class BusinessDetailsActivity extends AppCompatActivity {
                     }
 
                     if (businessDetails.getWhatsapp() != null &&
-                            !businessDetails.getWebsite().isEmpty()) {
+                            !businessDetails.getWhatsapp().isEmpty()) {
                         sacAllEmptyFlag = false;
                         linearLayout = (LinearLayout) findViewById(R.id.gruop4);
                         linearLayout.setVisibility(View.VISIBLE);

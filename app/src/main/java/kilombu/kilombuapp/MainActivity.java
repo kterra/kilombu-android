@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         llm = new LinearLayoutManager(this);
         adsView =(RecyclerView)findViewById(R.id.ads_recycler_view);
         adsView.setLayoutManager(llm);
+        adsView.requestFocus();
         adsView.setHasFixedSize(true);
         //adsView.scrollToPosition(0);
 
@@ -628,6 +629,7 @@ public class MainActivity extends AppCompatActivity
                 }else{
                     CardView cv = businessViewHolder.cv;
                     cv.setVisibility(View.VISIBLE);
+                    cv.requestFocus();
                     RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
                     LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
                     childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);

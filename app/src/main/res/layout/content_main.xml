@@ -9,12 +9,11 @@
     tools:context="kilombu.kilombuapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <!--<include layout="@layout/categories_main" />-->
-    <!--<include layout="@layout/categories_main"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="top"-->
-        <!--/>-->
+    <include layout="@layout/categories_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        />
 
 
     <ProgressBar
@@ -94,6 +93,7 @@
         android:layout_below="@id/progressBar"
         android:layout_marginTop="5dp"
         android:id="@+id/ads_recycler_view"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
     </android.support.v7.widget.RecyclerView>
 
