@@ -32,6 +32,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:id="@+id/select_all"
                 android:src="@drawable/ic_home_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -60,6 +61,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/beauty_button"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_beleza_white_24dp"
                 android:onClick="changeCategoryOnClick"
@@ -89,6 +91,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/culture_button"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_arte_white_24dp"
                 android:onClick="changeCategoryOnClick"
@@ -119,6 +122,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/education_button"
                 android:src="@drawable/ic_edu_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -149,6 +153,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/sports_button"
                 android:src="@drawable/ic_esportes_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -182,6 +187,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/fashion_button"
                 android:src="@drawable/ic_moda_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -213,6 +219,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/publi_button"
                 android:src="@drawable/ic_publi_white_24dp"
                 android:fontFamily="sans-serif-condensed"
                 app:backgroundTint="@color/secondary_text_material_light"
@@ -243,6 +250,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/rh_button"
                 android:src="@drawable/ic_rh_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -272,6 +280,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/health_button"
                 android:src="@drawable/ic_saude_white_24dp"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
@@ -300,6 +309,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/software_button"
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:src="@drawable/ic_info_white_24dp"
                 android:onClick="changeCategoryOnClick"
@@ -331,6 +341,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/more_button"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_more_horiz_red_24dp"
                 app:backgroundTint="@color/colorPrimary"

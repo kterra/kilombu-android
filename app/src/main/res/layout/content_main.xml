@@ -9,12 +9,6 @@
     tools:context="kilombu.kilombuapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <include layout="@layout/categories_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        />
-
 
     <ProgressBar
         android:layout_width="wrap_content"

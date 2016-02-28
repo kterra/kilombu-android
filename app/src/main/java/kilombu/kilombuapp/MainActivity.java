@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -80,6 +81,95 @@ public class MainActivity extends AppCompatActivity
         adsView.setHasFixedSize(true);
         //adsView.scrollToPosition(0);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.select_all);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+
+        FloatingActionButton fabBeauty = (FloatingActionButton) findViewById(R.id.beauty_button);
+        fabBeauty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabArt = (FloatingActionButton) findViewById(R.id.culture_button);
+        fabArt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabEdu = (FloatingActionButton) findViewById(R.id.education_button);
+        fabEdu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabSport = (FloatingActionButton) findViewById(R.id.sports_button);
+        fabSport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabFashion = (FloatingActionButton) findViewById(R.id.fashion_button);
+        fabFashion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabPubli = (FloatingActionButton) findViewById(R.id.publi_button);
+        fabPubli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabRH = (FloatingActionButton) findViewById(R.id.rh_button);
+        fabRH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabHealth = (FloatingActionButton) findViewById(R.id.health_button);
+        fabHealth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabSoftware = (FloatingActionButton) findViewById(R.id.software_button);
+        fabSoftware.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeCategoryOnClick(view);
+
+            }
+        });
+        FloatingActionButton fabMore = (FloatingActionButton) findViewById(R.id.more_button);
+        fabMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListWithAllCategories(view);
+
+            }
+        });
 
         businessRef = new Firebase(getString(R.string.firebase_url))
                             .child(getString(R.string.child_business));
