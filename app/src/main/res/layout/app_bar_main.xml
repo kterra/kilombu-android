@@ -23,14 +23,7 @@ tools:context="kilombu.kilombuapp.MainActivity">
         android:fitsSystemWindows="true"
         app:layout_scrollFlags="scroll|snap">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_main"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|snap"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        </android.support.v7.widget.Toolbar>
 
         <ImageView
             android:id="@+id/picture"
@@ -41,6 +34,15 @@ tools:context="kilombu.kilombuapp.MainActivity">
             android:src="@drawable/mosaicoappgrey"
             android:layout_gravity="top"
             app:layout_collapseMode="parallax" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|snap"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
 
 
         <include layout="@layout/categories_main"
