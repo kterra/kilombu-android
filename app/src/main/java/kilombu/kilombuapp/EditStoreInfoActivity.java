@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
@@ -15,6 +16,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -186,6 +190,21 @@ public class EditStoreInfoActivity extends AppCompatActivity {
                 .child(getString(R.string.child_business_details)).child(businessId);
 
         currentDetailsRef.child(getString(R.string.child_details_stores)).setValue(stores);
+
+        try {
+            LatLng latLng = Utils.getLocationFromAddress(this, address.toString());
+            SharedPreferences busPreferences = this.getSharedPreferences(getString(R.string.preference_business_key),
+                    android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor busEditor = busPreferences.edit();
+            String category = busPreferences.getString(getString(R.string.businesscategory_key), "");
+            busEditor.putString(getString(R.string.businesscategory_key), category);
+            busEditor.commit();
+            GeoFire geoFire = new GeoFire(new Firebase(getString(R.string.firebase_url))
+                    .child("BusinessGeoLocation/" + category));
+            geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
+        } catch (NullPointerException e){
+            Toast.makeText(this, "Nao foi possivel encontrar endereço", Toast.LENGTH_LONG);
+        }
 
         Intent intent = new Intent(this, BusinessProfileActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

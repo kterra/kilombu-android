@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    package="kilombu.kilombuapp"
     android:versionCode="2"
-    android:versionName="1.0.1"
-    package="kilombu.kilombuapp">
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -15,18 +15,21 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:name=".KilombuApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+
+        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyChCLgfTKZLpgjB8SFT0HWGpsO_sTE9rGw"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +40,7 @@
             android:name=".BusinessDetailsActivity"
             android:label="@string/title_activity_business_details"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
@@ -46,7 +49,7 @@
             android:name=".CreateBusinessActivity"
             android:label="@string/title_activity_create_business"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
@@ -55,7 +58,7 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
@@ -64,15 +67,16 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_signup"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
         </activity>
-        <activity android:name=".CategoriesListActivity"
+        <activity
+            android:name=".CategoriesListActivity"
             android:label="@string/title_activity_categorieslist"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
@@ -81,7 +85,7 @@
             android:name=".BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
@@ -90,7 +94,7 @@
             android:name=".EditBusinessInfoActivity"
             android:label="@string/title_activity_edit_business_info"
             android:parentActivityName=".BusinessProfileActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.BusinessProfileActivity" />
@@ -99,7 +103,7 @@
             android:name=".EditContactInfoActivity"
             android:label="@string/title_activity_edit_contact_info"
             android:parentActivityName=".BusinessProfileActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.BusinessProfileActivity" />
@@ -108,7 +112,7 @@
             android:name=".EditStoreInfoActivity"
             android:label="@string/title_activity_edit_store_info"
             android:parentActivityName=".BusinessProfileActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.BusinessProfileActivity" />
@@ -117,7 +121,7 @@
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.MainActivity" />
@@ -126,7 +130,7 @@
             android:name=".EditUserNameActivity"
             android:label="@string/title_activity_edit_name"
             android:parentActivityName=".UserProfileActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.UserProfileActivity" />
@@ -135,7 +139,7 @@
             android:name=".EditUserEmailActivity"
             android:label="@string/title_activity_edit_user_email"
             android:parentActivityName=".UserProfileActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.UserProfileActivity" />
@@ -144,7 +148,7 @@
             android:name=".ChangePasswordActivity"
             android:label="@string/title_activity_change_password"
             android:parentActivityName=".UserProfileActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.UserProfileActivity" />
@@ -153,7 +157,7 @@
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.LoginActivity" />
@@ -162,7 +166,7 @@
             android:name=".ChangeTokenPasswordActivity"
             android:label="@string/title_activity_change_token_password"
             android:parentActivityName=".ResetPasswordActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kilombu.kilombuapp.ResetPasswordActivity" />

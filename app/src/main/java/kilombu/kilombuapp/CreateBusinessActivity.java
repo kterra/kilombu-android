@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.ServerValue;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -242,6 +245,18 @@ public class CreateBusinessActivity extends AppCompatActivity {
         detailsRef.child(businessId).setValue(details);
         createBusinessStatistics(businessId);
         //Intent intent = new Intent(CreateBusinessActivity.this, MainActivity.class);
+
+
+        try {
+            LatLng latLng = Utils.getLocationFromAddress(this, address.toString());
+            GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation" + "/" + category));
+            geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
+        } catch (NullPointerException e){
+            Toast.makeText(this, "Nao foi possivel encontrar endereço", Toast.LENGTH_LONG);
+        }
+
+
+
         isTransition = true;
         finish();
         Toast.makeText(getApplicationContext(), "Cadastro efetuado com sucesso!", Toast.LENGTH_LONG).show();
@@ -278,6 +293,11 @@ public class CreateBusinessActivity extends AppCompatActivity {
         statisticsRef.setValue(new BusinessStatistics());
         statisticsRef.child(getString(R.string.child_statistics_timestamp))
                             .setValue(ServerValue.TIMESTAMP);
+    }
+
+    private void createBusinessGeoLocation(String businessId){
+        GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation"));
+
     }
 
     //Mandatory

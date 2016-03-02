@@ -1,11 +1,33 @@
 package kilombu.kilombuapp;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kizzyterra on 20/02/16.
  */
 public class Utils {
+
+    private static final String TAG = "Utils";
 
     public static String getFirebaseError(int error){
         switch(error){
@@ -59,5 +81,86 @@ public class Utils {
                 return "Ocorreu um problema!";
 
         }
+    }
+
+
+    public static LatLng getLocationFromAddress(Context context, String strAddress){
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress,5);
+            if (address==null) {
+                return null;
+            }
+            Address location=address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+
+        }catch (IOException e){
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG);
+        }catch (IndexOutOfBoundsException e){
+            Log.e(TAG, e.getMessage());
+        }
+        return  p1;
+    }
+
+    public static void createBusinessPlaceholders(Context context){
+        ArrayList<String> categories = new ArrayList<String>(
+                Arrays.asList(context.getResources().getStringArray(R.array.categories_list)));
+        Firebase businessRef = new Firebase(context.getString(R.string.firebase_url))
+                .child(context.getString(R.string.child_business));
+        int index = 1;
+        for (String category:categories) {
+            String name = context.getString(R.string.no_ads_left);
+            Business placeholder = new Business(name, null, index++, null, null);
+            businessRef.child("Placeholder " + category).setValue(placeholder);
+        }
+    }
+
+    public static void createBusinessLocation(final Context context) {
+        final Firebase appRef = new Firebase(context.getString(R.string.firebase_url));
+
+        Query businessQuery = appRef.child(context.getString(R.string.child_business));
+        businessQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Business business = snapshot.getValue(Business.class);
+                    final String id = snapshot.getKey();
+                    final String category = ValidationTools.categoryForIndex(business.getCategory(), context);
+
+                    appRef.child(context.getString(R.string.child_business_details))
+                            .child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            BusinessDetails details = dataSnapshot.getValue(BusinessDetails.class);
+
+                            try {
+                                BusinessAddress address = details.getStores().values().iterator().next().getAddress();
+                                LatLng latLng = Utils.getLocationFromAddress(context, address.toString());
+                                GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation" + "/" + category));
+                                geoFire.setLocation(id, new GeoLocation(latLng.latitude, latLng.longitude));
+                            } catch (NullPointerException e) {
+                                Log.e(TAG, "Nao foi possivel encontrar endereço");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }

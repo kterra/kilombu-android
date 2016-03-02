@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     private boolean isTransition = false;
     private LinearLayoutManager llm;
 
+    private boolean shouldUseGPS = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +195,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("MAIN", "ON CREATE");
 
         //ValidationTools.createBusinessPlaceholders(this);
+        //Utils.createBusinessLocation(this);
 
     }
 

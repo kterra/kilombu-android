@@ -73,18 +73,4 @@ public class ValidationTools {
         return null;
     }
 
-    public static void createBusinessPlaceholders(Context context){
-        ArrayList<String> categories = new ArrayList<String>(
-                Arrays.asList(context.getResources().getStringArray(R.array.categories_list)));
-        Firebase businessRef = new Firebase(context.getString(R.string.firebase_url))
-                .child(context.getString(R.string.child_business));
-        int index = 1;
-        for (String category:categories) {
-            String name = context.getString(R.string.no_ads_left);
-            Business placeholder = new Business(name, null, index++, null, null);
-            businessRef.child("Placeholder " + category).setValue(placeholder);
-        }
-    }
-
-
 }
