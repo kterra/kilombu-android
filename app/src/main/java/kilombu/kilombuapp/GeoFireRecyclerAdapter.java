@@ -58,6 +58,8 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
                     case Moved:
                         notifyItemMoved(oldIndex, index);
                         break;
+                    case Ready:
+                        break;
                     default:
                         throw new IllegalStateException("Incomplete case statement");
                 }

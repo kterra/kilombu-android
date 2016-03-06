@@ -9,13 +9,17 @@ import com.firebase.client.ValueEventListener;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
+import com.firebase.geofire.util.GeoUtils;
 
 import java.util.ArrayList;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Created by hallpaz on 05/03/2016.
  */
 public class GeoFireList implements GeoQueryEventListener {
+    private static int globalIndex = 0;
 
     public interface OnChangedListener {
         enum EventType { Added, Changed, Removed, Moved, Ready }
@@ -25,39 +29,42 @@ public class GeoFireList implements GeoQueryEventListener {
     private final String TAG = "GeoFireList";
     private GeoQuery mQuery;
     private ArrayList<DataSnapshot> mSnapshots;
+    private SortedMap<Double, String> distanceAndKeys;
     private OnChangedListener mListener;
     private Firebase modelRef;
 
     public GeoFireList(GeoQuery query, Firebase ref){
         mQuery = query;
         modelRef = ref;
+        distanceAndKeys = new TreeMap<Double, String>();
         mSnapshots = new ArrayList<DataSnapshot>();
         mQuery.addGeoQueryEventListener(this);
     }
 
     @Override
     public void onKeyEntered(String key, GeoLocation location) {
-        modelRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int index = mSnapshots.size();
-                mSnapshots.add(dataSnapshot);
-                notifyChangedListeners(OnChangedListener.EventType.Added, index);
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.e(TAG, "key entered cancelled");
-            }
-        });
-        /*  Another option could be to store all keys retrieved by geoquery first and
-         *   then loop through the keys to get the snapshots
-         */
-
+        double distance = GeoUtils.distance(location, mQuery.getCenter());
+        distanceAndKeys.put(distance, key);
     }
 
     @Override
     public void onGeoQueryReady() {
+        for (String key: distanceAndKeys.values()) {
+            modelRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int index = mSnapshots.size();
+                    mSnapshots.add(dataSnapshot);
+                    notifyChangedListeners(OnChangedListener.EventType.Added, index);
+                    Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Log.e(TAG, "key entered cancelled");
+                }
+            });
+        }
         notifyChangedListeners(OnChangedListener.EventType.Ready, -1);
     }
 
@@ -95,7 +102,6 @@ public class GeoFireList implements GeoQueryEventListener {
         mListener = listener;
     }
 
-
     private int getIndexForKey(String key) {
         int index = 0;
         for (DataSnapshot snapshot : mSnapshots) {
@@ -106,6 +112,14 @@ public class GeoFireList implements GeoQueryEventListener {
             }
         }
         throw new IllegalArgumentException("Key not found");
+    }
+
+    private int getIndexBasedOnDistance(double distance){
+        if (mSnapshots.isEmpty()){
+            return 0;
+        }
+
+        return 0;
     }
 
     protected void notifyChangedListeners(OnChangedListener.EventType type, int index) {

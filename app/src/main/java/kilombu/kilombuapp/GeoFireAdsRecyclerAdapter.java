@@ -18,7 +18,20 @@ import kilombu.kilombuapp.models.Business;
  */
 /*public class GeoFireAdsRecyclerAdapter extends GeoFireRecyclerAdapter<Business, RecyclerView.ViewHolder> {
 
+    public static class BusinessViewHolder extends RecyclerView.ViewHolder {
 
+        CardView cv;
+        TextView businessName;
+        TextView shortDescription;
+
+        public BusinessViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cv);
+            businessName = (TextView)itemView.findViewById(R.id.business_name);
+            shortDescription = (TextView)itemView.findViewById(R.id.business_description);
+
+        }
+    }
     @Override
     protected void populateViewHolder(RecyclerView.ViewHolder viewHolder, Business business, int position) {
        *//* if (business == null){ //footer
@@ -52,7 +65,7 @@ import kilombu.kilombuapp.models.Business;
 
             businessViewHolder.shortDescription.setText(description);
 
-            if(businessName.equals(getString(R.string.no_ads_left))){
+           *//* if(businessName.equals(getString(R.string.no_ads_left))){
 
                 CardView cv = businessViewHolder.cv;
 
@@ -69,12 +82,12 @@ import kilombu.kilombuapp.models.Business;
                 View view =  (View) relativeLayoutView.getChildAt(1);
                 view.setVisibility(View.GONE);
 
-                *//*if (footerViewHolder.navigateNextLayout != null){
+                *//**//*if (footerViewHolder.navigateNextLayout != null){
                     footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
-                }*//*
+                }*//**//*
 
 
-            }else{
+            }else{*//*
                 CardView cv = businessViewHolder.cv;
                 cv.setVisibility(View.VISIBLE);
                 cv.requestFocus();
@@ -90,7 +103,7 @@ import kilombu.kilombuapp.models.Business;
                 View view =  (View) relativeLayoutView.getChildAt(1);
                 view.setVisibility(View.VISIBLE);
 
-            }
+            //}
 
 
 
@@ -98,10 +111,10 @@ import kilombu.kilombuapp.models.Business;
                 @Override
                 public void onClick(View v) {
                     Log.d("NOME", business.getName());
-                    if (business.getName().equals(getString(R.string.no_ads_left))) {
+                   *//* if (business.getName().equals(getString(R.string.no_ads_left))) {
                         //Log.d("IF", "RETORNA");
                         return;
-                    }
+                    }*//*
                     Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
 
                     intent.putExtra("business_name", business.getName());

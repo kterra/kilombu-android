@@ -32,6 +32,11 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.firebase.geofire.util.GeoUtils;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 import kilombu.kilombuapp.models.Business;
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 
     private final String TAG = "MAIN";
     private Firebase appRef;
-    private final int adsPerPage = 15;
+    private final int adsPerPage = 50;
     private final long placeholderRank = 999997;
     private int currentPage = 1;
     private int currentCategory; // 0 represents "All categories"
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean shouldUseGPS = true;
     private LocationManager locationManager;
+    private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
 
 
     @Override
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         businessRef = new Firebase(getString(R.string.firebase_url))
                             .child(getString(R.string.child_business));
 
-
+        appRef = new Firebase(getString(R.string.firebase_url));
         initializeAdapter();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,13 +113,13 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
 
-        appRef = new Firebase(getString(R.string.firebase_url));
+
         setUpCustomDrawer();
-        Log.d("MAIN", "ON CREATE");
+        Log.d(TAG, "ON CREATE");
 
         //ValidationTools.createBusinessPlaceholders(this);
         //Utils.createBusinessLocation(this);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        //locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
     }
 
@@ -276,12 +282,19 @@ public class MainActivity extends AppCompatActivity
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 
         currentCategory = 0;
-        businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
+        /*businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
                 .endAt(placeholderRank)
                 .limitToFirst(adsPerPage);
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
-        adsView.setAdapter(firebaseAdsAdapter);
+        adsView.setAdapter(firebaseAdsAdapter);*/
+
+        GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation/todas"));
+        GeoQuery geoquery = geoFire.queryAtLocation(new GeoLocation(-22.924315, -43.238963), 100.0);
+
+        geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child("business"));
+        adsView.setAdapter(geofireAdsAdapter);
+
     }
 
     private void updateFirebaseAdapter(Query query){
@@ -472,7 +485,7 @@ public class MainActivity extends AppCompatActivity
                         .endAt(placeholderRank).limitToFirst(adsPerPage);
             }
             else{
-                //Log.d("ITEM CATRANK", Double.toString(lastItem.getCategoryRankPoints()));
+                 
                 nextPageQuery = new Firebase(getString(R.string.firebase_url))
                         .child(getString(R.string.child_business))
                         .orderByChild(getString(R.string.child_business_category_rankpoints))
@@ -733,7 +746,7 @@ public class MainActivity extends AppCompatActivity
                 }else{
                     CardView cv = businessViewHolder.cv;
                     cv.setVisibility(View.VISIBLE);
-                    cv.requestFocus();
+                    //cv.requestFocus();
                     RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
                     LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
                     childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);
@@ -799,5 +812,127 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
+
+    class GeoFireAdsRecyclerAdapter extends GeoFireRecyclerAdapter<Business, BusinessViewHolder> {
+
+        ProgressBar loadingArea;
+        FooterViewHolder footerViewHolder;
+
+
+        public GeoFireAdsRecyclerAdapter(Class<Business> modelClass, int modelLayout,
+                                          Class<BusinessViewHolder> viewHolderClass, GeoQuery georef, Firebase ref) {
+            super(modelClass, modelLayout, viewHolderClass, georef, ref);
+
+        }
+
+        public GeoFireAdsRecyclerAdapter(GeoQuery georef, Firebase ref){
+            super(Business.class, R.layout.item, BusinessViewHolder.class, georef, ref);
+            loadingArea = (ProgressBar) findViewById(R.id.progressBar);
+            loadingArea.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void populateViewHolder(BusinessViewHolder viewHolder, final Business business, final int position) {
+       /* if (business == null){ //footer
+            //Log.d("FOOTER POS", Integer.toString(position));
+            int footerPosition = getItemCount() -1;
+            //Log.d("FOOTER ITENS", Integer.toString(getItemCount()));
+
+            footerViewHolder = (FooterViewHolder) viewHolder;
+            if (currentPage == 1){
+                footerViewHolder.navigateBackLayout.setVisibility(View.GONE);
+            }else{
+                footerViewHolder.navigateBackLayout.setVisibility(View.VISIBLE);
+            }
+
+            footerViewHolder.navigateNextLayout.setVisibility(View.VISIBLE);
+
+        }
+        else {*/
+
+            String businessName = business.getName();
+
+            BusinessViewHolder businessViewHolder = (BusinessViewHolder) viewHolder;
+            businessViewHolder.businessName.setText(businessName);
+            String description = business.getDescription();
+            if(description!= null && description.length() > 300){
+
+                description = description.substring(0,299);
+                description = description + " ...";
+
+            }
+
+            businessViewHolder.shortDescription.setText(description);
+
+           if(businessName.equals(getString(R.string.no_ads_left))){
+
+                CardView cv = businessViewHolder.cv;
+
+                cv.setVisibility(View.VISIBLE);
+                RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+                LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
+                childView.findViewById(R.id.cardview_arrow).setVisibility(View.GONE);
+                ((TextView)childView.findViewById(R.id.business_description)).setTextSize(12);
+
+
+                TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+                businessNameView.setTextSize(16);
+
+                View view =  (View) relativeLayoutView.getChildAt(1);
+                view.setVisibility(View.GONE);
+
+                /*if (footerViewHolder.navigateNextLayout != null){
+                    footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
+                }*/
+
+
+            }else{
+            CardView cv = businessViewHolder.cv;
+            cv.setVisibility(View.VISIBLE);
+            cv.requestFocus();
+            RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+            LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
+            childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);
+            ((TextView)childView.findViewById(R.id.business_description)).setTextSize(16);
+
+
+            TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+            businessNameView.setTextSize(20);
+
+            View view =  (View) relativeLayoutView.getChildAt(1);
+            view.setVisibility(View.VISIBLE);
+
+            }
+
+
+
+            businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("NOME", business.getName());
+                   if (business.getName().equals(getString(R.string.no_ads_left))) {
+                        return;
+                    }
+                    Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
+
+                    intent.putExtra("business_name", business.getName());
+                    intent.putExtra("business_category", business.getCategory());
+                    intent.putExtra("business_description", business.getDescription());
+
+                    Firebase itemRef = geofireAdsAdapter.getRef(position);
+                    String itemKey = itemRef.getKey();
+                    intent.putExtra("businessId", itemKey);
+                    isTransition = true;
+                    MainActivity.this.startActivity(intent);
+                }
+            });
+
+            if (position > 0 || position == getItemCount() - 2) {
+                loadingArea.setVisibility(View.GONE);
+            }
+        }
+    }
 
 }

@@ -146,8 +146,11 @@ public class Utils {
                                 LatLng latLng = Utils.getLocationFromAddress(context, address.toString());
                                 GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation" + "/" + category));
                                 geoFire.setLocation(id, new GeoLocation(latLng.latitude, latLng.longitude));
+                                //duplication for "all categories" case
+                                geoFire = new GeoFire(appRef.child("BusinessGeoLocation/todas"));
+                                geoFire.setLocation(id, new GeoLocation(latLng.latitude, latLng.longitude));
                             } catch (NullPointerException e) {
-                                Log.e(TAG, "Nao foi possivel encontrar endereço");
+                                Log.e(TAG, "Endereço não cadastrado");
                             }
                         }
 
