@@ -3,14 +3,11 @@ package kilombu.kilombuapp;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
-import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +25,10 @@ import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
+
+import kilombu.kilombuapp.models.BusinessAddress;
+import kilombu.kilombuapp.models.BusinessDetails;
+import kilombu.kilombuapp.models.Store;
 
 public class BusinessDetailsActivity extends AppCompatActivity {
 

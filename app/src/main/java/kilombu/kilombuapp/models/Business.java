@@ -1,8 +1,11 @@
-package kilombu.kilombuapp;
+package kilombu.kilombuapp.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by hallpaz on 09/02/2016.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Business {
 
     public static final int categoryOffset = 1000000;

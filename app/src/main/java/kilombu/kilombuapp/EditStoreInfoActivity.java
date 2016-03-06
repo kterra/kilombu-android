@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import kilombu.kilombuapp.models.BusinessAddress;
+import kilombu.kilombuapp.models.Store;
+
 public class EditStoreInfoActivity extends AppCompatActivity {
 
     private String businessId, state, city, district, street, complement, phone, hours;

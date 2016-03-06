@@ -1,8 +1,11 @@
-package kilombu.kilombuapp;
+package kilombu.kilombuapp.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by hallpaz on 12/10/2015.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     private String name;

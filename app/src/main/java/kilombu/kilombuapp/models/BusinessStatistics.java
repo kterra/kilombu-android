@@ -1,8 +1,11 @@
-package kilombu.kilombuapp;
+package kilombu.kilombuapp.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by hallpaz on 15/02/2016.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BusinessStatistics {
     private long visualizations;
     private long recommendations;

@@ -23,6 +23,12 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.HashMap;
 import java.util.Map;
 
+import kilombu.kilombuapp.models.Business;
+import kilombu.kilombuapp.models.BusinessAddress;
+import kilombu.kilombuapp.models.BusinessDetails;
+import kilombu.kilombuapp.models.BusinessStatistics;
+import kilombu.kilombuapp.models.Store;
+
 public class CreateBusinessActivity extends AppCompatActivity {
 
     private Firebase appRef;

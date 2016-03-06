@@ -18,9 +18,11 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import kilombu.kilombuapp.models.Business;
+import kilombu.kilombuapp.models.BusinessAddress;
+import kilombu.kilombuapp.models.BusinessDetails;
 
 /**
  * Created by kizzyterra on 20/02/16.

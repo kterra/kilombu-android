@@ -2,10 +2,11 @@ package kilombu.kilombuapp;
 
 import android.content.Context;
 
-import com.firebase.client.Firebase;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import kilombu.kilombuapp.models.BusinessAddress;
+import kilombu.kilombuapp.models.Store;
 
 /**
  * Created by kizzyterra on 17/02/16.

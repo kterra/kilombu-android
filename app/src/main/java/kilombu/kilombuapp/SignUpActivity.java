@@ -1,6 +1,5 @@
 package kilombu.kilombuapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +17,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.Map;
+
+import kilombu.kilombuapp.models.User;
 
 public class SignUpActivity extends AppCompatActivity {
 

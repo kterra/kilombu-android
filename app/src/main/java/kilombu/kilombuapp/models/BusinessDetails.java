@@ -1,10 +1,13 @@
-package kilombu.kilombuapp;
+package kilombu.kilombuapp.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Map;
 
 /**
  * Created by hallpaz on 12/02/2016.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BusinessDetails {
 
     private Map<String, Store> stores;

@@ -27,6 +27,11 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
+import kilombu.kilombuapp.models.BusinessAddress;
+import kilombu.kilombuapp.models.BusinessDetails;
+import kilombu.kilombuapp.models.BusinessStatistics;
+import kilombu.kilombuapp.models.Store;
+
 public class BusinessProfileActivity extends AppCompatActivity {
     private Firebase appRef;
     private String businessId;

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import kilombu.kilombuapp.models.Business;
+
 /**
  * Created by hallpaz on 11/10/2015.
  */
