@@ -11,7 +11,7 @@ public class BusinessStatistics {
     private long recommendations;
     private long timestamp;
 
-    BusinessStatistics(){
+    public BusinessStatistics(){
         visualizations = 0;
         recommendations = 0;
     }
