@@ -218,6 +218,73 @@
 
         </android.support.v7.widget.CardView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/change_location_tilte"
+            android:textColor="@color/business_details_card_title_color"
+            android:text="@string/change_location_card_tilte"/>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_location_card"
+            card_view:cardUseCompatPadding="true"
+            android:clickable="true"
+            android:focusable="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                >
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/location_profile"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/change_location"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorDescription"
+                    />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/profile_edit_location"
+                    android:src="@drawable/ic_mode_edit_grey_24dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:onClick="changeUserLocation"/>
+
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/login_button"
             android:layout_width="fill_parent"

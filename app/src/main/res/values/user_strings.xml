@@ -6,7 +6,9 @@
     <string name="user_name_card_title">Editar Nome</string>
     <string name="email_card_title">Editar Email</string>
     <string name="change_password_card_tilte">Alterar Senha</string>
-    <string name="change_password">***********</string>
+    <string name="change_password">********</string>
+    <string name="change_location_card_tilte">Alterar Localidade</string>
+    <string name="change_location">Cidade, UF</string>
 
     <string name="current_password_title">Senha Atual</string>
     <string name="current_token_title">Senha Temporária</string>

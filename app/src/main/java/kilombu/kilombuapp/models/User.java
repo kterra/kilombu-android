@@ -10,12 +10,14 @@ public class User {
 
     private String name;
     private String email;
+    private String city;
+    private String state;
 
     public User(){
 
     }
 
-    public User(String name, String email, String city) {
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
 
@@ -27,6 +29,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
     }
 
 }
