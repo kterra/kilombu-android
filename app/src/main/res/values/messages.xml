@@ -21,6 +21,8 @@
     <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
     <string name="toast_no_datasnapshot">Ocorreu um problema</string>
     <string name="toast_action_not_completed">Não foi possível completar sua solicitação</string>
+    <string name="toast_location">Você precisa inserir uma cidade e um estado ou optar pelo uso do GPS</string>
+    <string name="toast_forbbiden_action"> Ação não permitida</string>
 
     <string name="no_info_msg">Não há informações disponíveis.</string>
     <string name="no_business_msg">Você não possui um negócio/serviço cadastrado.</string>
@@ -35,5 +37,7 @@
     <string name="remove_user_account_msg">Você tem certeza que deseja remover sua conta? \nAtenção! Se você possui um negócio cadastrado ele também será removido!</string>
     <string name="remove_business_msg">Você tem certeza que deseja remover este negócio?</string>
 
+    <string name="activate_gps_msg">Ação Requerida</string>
+    <string name="activage_gps_description_msg">Para utilizar sua posição atual você precisa ativar a sua localização. Deseja ligar o GPS agora?</string>
 
 </resources>

@@ -19,7 +19,7 @@
     <string name="title_activity_opening">OpeningActivity</string>
     <string name="title_activity_categorieslist">Categorias</string>
 
-    <string name="title_activity_user_profile">Configurações Pessoais</string>
+    <string name="title_activity_user_profile">Informações Pessoais</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="title_activity_edit_name">Editar Nome</string>
     <string name="title_activity_edit_user_email">Editar Email</string>
@@ -39,16 +39,22 @@
     <string name="signup_menu">Cadastrar</string>
     <string name="business_menu">Meu Negócio</string>
     <string name="business_create_menu">Cadastrar Negócio</string>
-    <string name="settings_menu">Editar Informações Pessoais</string>
+    <string name="settings_menu">Informações Pessoais</string>
     <string name="preferences_menu">Preferências</string>
     <string name="signout_menu">Sair</string>
 
     <string name="signup">Cadastrar</string>
+    <string name="filter">Filtrar</string>
     <string name="signup_login">Ainda não tem cadastro? <u>Clique aqui</u></string>
     <string name="signin">Logar</string>
     <string name="logout">Logout</string>
     <string name="forgot_password"><u>Esqueceu sua senha?</u></string>
 
+    <string name="filter_location_title">Filtrar anúncios por localidade</string>
+    <string name="gps_location_title">Utilizar GPS</string>
+    <string name="manual_location_title">Selecionar Cidade e Estado</string>
+    <string name="use_gps">Utilizar minha posição atual para encontrar os negócios e serviços mais próximos</string>
+    <string name="or">ou</string>
 
     <string name="preference_business_key">business</string>
     <string name="preference_user_key">user</string>
@@ -57,6 +63,10 @@
     <string name="useremail_key">userEmail</string>
     <string name="usercity_key">userCity</string>
     <string name="userstate_key">userState</string>
+    <string name="userprefcity_key">userPrefCity</string>
+    <string name="userprefstate_key">userPrefState</string>
+    <string name="userlat_key">userLatitude</string>
+    <string name="userlong_key">userLongitude</string>
 
     <string name="businessid_key">businessId</string>
     <string name="businessadmin_key">businessAdmin</string>
@@ -80,6 +90,7 @@
     <string name="navigate_back">Voltar</string>
     <string name="title_activity_change_token_password">Alterar Senha</string>
     <string name="title_activity_edit_user_location">Editar Localidade</string>
+    <string name="title_activity_filter_location">Filtrar Anúncios por Localidade</string>
 
 
 </resources>

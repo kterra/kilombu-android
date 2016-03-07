@@ -536,6 +536,13 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+    public void filterLocation(View button){
+        Intent intent = new Intent(this, FilterLocationActivity.class);
+        isTransition = true;
+        startActivity(intent);
+
+    }
+
 
     @Override
     public void onBackPressed() {
