@@ -7,6 +7,7 @@
     <string name="hint_phone_number">Telefone Comercial Ex: 021 33338888</string>
     <string name="hint_email">E-mail Comercial</string>
     <string name="hint_city">Cidade</string>
+    <string name="hint_city_type">Digite o nome da cidade</string>
     <string name="hint_street">Logradouro</string>
     <string name="hint_complement">Complemento</string>
     <string name="hint_district">Bairro</string>

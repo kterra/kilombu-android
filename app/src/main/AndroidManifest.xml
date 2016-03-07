@@ -175,6 +175,10 @@
         <activity
             android:name=".EditUserLocationActivity"
             android:label="@string/title_activity_edit_user_location"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FilterLocationActivity"
+            android:label="@string/title_activity_filter_location"
             android:theme="@style/AppTheme"></activity>
     </application>
 
