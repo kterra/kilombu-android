@@ -83,7 +83,7 @@ public class GeoFireList implements GeoQueryEventListener {
     @Override
     public void onGeoQueryReady() {
         if (getCount() == 0){
-            if (mQuery.getRadius() < 700.0){
+            if (mQuery.getRadius() < 300.0){
                 incrementQueryRadius();
             }else{
                 modelRef.child("Placeholder Location").addListenerForSingleValueEvent(new ValueEventListener() {

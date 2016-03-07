@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity
 
         appRef = new Firebase(getString(R.string.firebase_url));
         //TODO: deal with sample
-        //userQueryLocation = new GeoLocation(-22.924315, -43.238963);
-        userQueryLocation = new GeoLocation(2.8071985, -60.731581);
+        userQueryLocation = new GeoLocation(-22.924315, -43.238963);
+        //userQueryLocation = new GeoLocation(2.8071985, -60.731581);
         initializeAdapter();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity
         GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation/todas"));
         GeoQuery geoquery = geoFire.queryAtLocation(userQueryLocation, 10.0);
 
-        geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child("business"));
+        geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child(getString(R.string.child_business)));
         adsView.setAdapter(geofireAdsAdapter);
 
     }
@@ -303,6 +303,12 @@ public class MainActivity extends AppCompatActivity
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(query);
         adsView.swapAdapter(firebaseAdsAdapter, true);
 
+    }
+
+    private void updateGeofireAdapter(GeoQuery query, Firebase modelRef){
+        geofireAdsAdapter.cleanup();
+        geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(query, modelRef);
+        adsView.swapAdapter(geofireAdsAdapter, true);
     }
 
     //TODO: consider rewriting own adapter
@@ -322,7 +328,7 @@ public class MainActivity extends AppCompatActivity
             //get user's last known locat
             GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
             GeoQuery query = geoRef.queryAtLocation(userQueryLocation, startRadius);
-
+            updateGeofireAdapter(query, appRef.child(getString(R.string.child_business)));
             //TODO: update GEO FIRE ADS ADAPTER
 
         }else{
@@ -348,24 +354,38 @@ public class MainActivity extends AppCompatActivity
     public void changeCategory(String category){
         if (category.equals(getString(R.string.category_all))){
             currentCategory = 0;
+            category = "todas";
         }
         else{
             currentCategory = ValidationTools.convertCategory(category, this);
         }
-        Log.d("changeCategory", Integer.toString(currentCategory));
-        if (currentCategory != 0){
-            int begin = currentCategory * Business.categoryOffset;
-            int end = (currentCategory + 1) * Business.categoryOffset - 1;
-            businessQuery = businessRef.orderByChild(
-                    getString(R.string.child_business_category_rankpoints))
-                    .startAt(begin).endAt(end).limitToFirst(adsPerPage);
+        currentPage = 1;
+        Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
+
+        if (shouldUseGPS){
+            //get user's last known locat
+            GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
+            GeoQuery query = geoRef.queryAtLocation(userQueryLocation, startRadius);
+            updateGeofireAdapter(query, appRef.child(getString(R.string.child_business)));
+            //TODO: update GEO FIRE ADS ADAPTER
 
         }else{
-            businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                    .endAt(placeholderRank).limitToFirst(adsPerPage);
-        }
+            if (currentCategory != 0){
+                int begin = currentCategory * Business.categoryOffset;
+                int end = (currentCategory + 1) * Business.categoryOffset - 1;
+                businessQuery = businessRef.orderByChild(
+                        getString(R.string.child_business_category_rankpoints))
+                        .startAt(begin)
+                        .endAt(end)
+                        .limitToFirst(adsPerPage);
 
-        updateFirebaseAdapter(businessQuery);
+            }else{
+                businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
+                        .endAt(placeholderRank).limitToFirst(adsPerPage);
+            }
+
+            updateFirebaseAdapter(businessQuery);
+        }
     }
 
     public void showListWithAllCategories(View button){

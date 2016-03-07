@@ -27,6 +27,7 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
     protected int mModelLayout;
     Class<VH> mViewHolderClass;
     GeoFireList mSnapshots;
+    private boolean geolistIsReady;
 
     /**
      * @param modelClass Firebase will marshall the data at a location into an instance of a class that you provide
@@ -42,6 +43,7 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
         mModelLayout = modelLayout;
         mViewHolderClass = viewHolderClass;
         mSnapshots = new GeoFireList(georef, modelref);
+        geolistIsReady = false;
 
         mSnapshots.setOnChangedListener(new GeoFireList.OnChangedListener() {
             @Override
@@ -60,6 +62,7 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
                         notifyItemMoved(oldIndex, index);
                         break;
                     case Ready:
+                        geolistIsReady = true;
                         break;
                     default:
                         throw new IllegalStateException("Incomplete case statement");
@@ -120,9 +123,9 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
     }
     @Override
     public void onBindViewHolder(VH viewHolder, int position) {
-        if ((position >= getItemCount() - 1)){
+        if ((position >= getItemCount() - 1) && geolistIsReady){
             Log.e("View Holder", "last pos: " + position);
-            if (mSnapshots.getQueryRadius() < 700){
+            if (mSnapshots.getQueryRadius() < 300){
                 mSnapshots.incrementQueryRadius();
             }
         }
