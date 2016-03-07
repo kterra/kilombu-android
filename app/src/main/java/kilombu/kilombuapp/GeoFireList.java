@@ -12,6 +12,10 @@ import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.geofire.util.GeoUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -19,7 +23,6 @@ import java.util.TreeMap;
  * Created by hallpaz on 05/03/2016.
  */
 public class GeoFireList implements GeoQueryEventListener {
-    private static int globalIndex = 0;
 
     public interface OnChangedListener {
         enum EventType { Added, Changed, Removed, Moved, Ready }
@@ -29,41 +32,75 @@ public class GeoFireList implements GeoQueryEventListener {
     private final String TAG = "GeoFireList";
     private GeoQuery mQuery;
     private ArrayList<DataSnapshot> mSnapshots;
-    private SortedMap<Double, String> distanceAndKeys;
+    private ArrayList<Double> distances;
+    private Map<String, Double> keysAndDistances;
     private OnChangedListener mListener;
     private Firebase modelRef;
+    private final double radiusIncrement = 10.0;
 
     public GeoFireList(GeoQuery query, Firebase ref){
         mQuery = query;
         modelRef = ref;
-        distanceAndKeys = new TreeMap<Double, String>();
         mSnapshots = new ArrayList<DataSnapshot>();
+        distances = new ArrayList<Double>();
         mQuery.addGeoQueryEventListener(this);
     }
 
     @Override
     public void onKeyEntered(String key, GeoLocation location) {
         double distance = GeoUtils.distance(location, mQuery.getCenter());
-        distanceAndKeys.put(distance, key);
+        //keysAndDistances.put(key, distance);
+        final int index = indexBasedOnDistance(distance);
+        distances.add(index, distance);
+        modelRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //int index = mSnapshots.size();
+                mSnapshots.add(index, dataSnapshot);
+                notifyChangedListeners(OnChangedListener.EventType.Added, index);
+                Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.e(TAG, "key entered cancelled");
+            }
+        });
+    }
+
+    public int indexBasedOnDistance(double distance){
+        int index = 0;
+        for (Double value : distances) {
+            if (value > distance) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+        return index;
     }
 
     @Override
     public void onGeoQueryReady() {
-        for (String key: distanceAndKeys.values()) {
-            modelRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    int index = mSnapshots.size();
-                    mSnapshots.add(dataSnapshot);
-                    notifyChangedListeners(OnChangedListener.EventType.Added, index);
-                    Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
-                }
+        if (getCount() == 0){
+            if (mQuery.getRadius() < 700.0){
+                incrementQueryRadius();
+            }else{
+                modelRef.child("Placeholder Location").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int index = mSnapshots.size();
+                        mSnapshots.add(dataSnapshot);
+                        notifyChangedListeners(OnChangedListener.EventType.Added, index);
+                        Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
+                    }
 
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-                    Log.e(TAG, "key entered cancelled");
-                }
-            });
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Log.e(TAG, "key entered cancelled");
+                    }
+                });
+            }
         }
         notifyChangedListeners(OnChangedListener.EventType.Ready, -1);
     }
@@ -72,6 +109,8 @@ public class GeoFireList implements GeoQueryEventListener {
     public void onKeyExited(String key) {
         int index = getIndexForKey(key);
         mSnapshots.remove(index);
+        distances.remove(index);
+        //TODO: remove item from distance and key
         notifyChangedListeners(OnChangedListener.EventType.Removed, index);
     }
 
@@ -129,5 +168,19 @@ public class GeoFireList implements GeoQueryEventListener {
         if (mListener != null) {
             mListener.onChanged(type, index, oldIndex);
         }
+    }
+
+    public void incrementQueryRadius(){
+        double radius = mQuery.getRadius();
+        Log.d(TAG, "Query radius: " + radius);
+        mQuery.setRadius(radius*2);
+    }
+
+    public void updateQueryCenter(GeoLocation center){
+        mQuery.setCenter(center);
+    }
+
+    public double getQueryRadius(){
+        return mQuery.getRadius();
     }
 }

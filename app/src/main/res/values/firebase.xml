@@ -6,6 +6,7 @@
     <string name="child_users">users</string>
     <string name="child_business_details">businessDetails</string>
     <string name="child_business_statistics">businessStatistics</string>
+    <string name="child_business_geolocation">BusinessGeoLocation</string>
 
 
     <string name="child_business_this_admin">admin</string>

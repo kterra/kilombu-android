@@ -8,6 +8,7 @@
 package kilombu.kilombuapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,6 +120,12 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
     }
     @Override
     public void onBindViewHolder(VH viewHolder, int position) {
+        if ((position >= getItemCount() - 1)){
+            Log.e("View Holder", "last pos: " + position);
+            if (mSnapshots.getQueryRadius() < 700){
+                mSnapshots.incrementQueryRadius();
+            }
+        }
         T model = getItem(position);
         populateViewHolder(viewHolder, model, position);
     }
@@ -135,6 +142,5 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
      * @param position  The position in the list of the view being populated
      */
     abstract protected void populateViewHolder(VH viewHolder, T model, int position);
-
 
 }

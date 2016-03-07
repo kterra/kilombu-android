@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity
     private boolean shouldUseGPS = true;
     private LocationManager locationManager;
     private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
-
+    private float startRadius = 5.0f;
+    private GeoLocation userQueryLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,6 @@ public class MainActivity extends AppCompatActivity
         adsView.setLayoutManager(llm);
         adsView.requestFocus();
         adsView.setHasFixedSize(true);
-        //adsView.scrollToPosition(0);
 
         initializeCategoryFloatingButtons();
 
@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity
                             .child(getString(R.string.child_business));
 
         appRef = new Firebase(getString(R.string.firebase_url));
+        //TODO: deal with sample
+        //userQueryLocation = new GeoLocation(-22.924315, -43.238963);
+        userQueryLocation = new GeoLocation(2.8071985, -60.731581);
         initializeAdapter();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -126,12 +129,12 @@ public class MainActivity extends AppCompatActivity
     private void setNavigationHeader(){
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         String userName = userPreferences.getString(getString(R.string.username_key),"");
-        Log.d("MAIN", userName);
+        //Log.d(TAG, userName);
         ((TextView) findViewById(R.id.user_name_header)).setText(userName);
 
         busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
         String businessName = busPreferences.getString(getString(R.string.businessname_key),"");
-        Log.d("MAIN", businessName);
+        //Log.d(TAG, businessName);
         ((TextView) findViewById(R.id.user_mail_header)).setText(businessName);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -150,8 +153,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.inflateMenu(R.menu.activity_main_drawer_entrepreneur);
         }
 
-
-
     }
     @Override
     protected void onStart() {
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Firebase.goOnline();
-        Log.d("MAIN", "ON RESUME");
+        Log.d(TAG, "ON RESUME");
     }
 
     @Override
@@ -173,11 +174,11 @@ public class MainActivity extends AppCompatActivity
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d(TAG, "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d(TAG, "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d(TAG, "ON STOP");
     }
 
     @Override
@@ -290,7 +291,7 @@ public class MainActivity extends AppCompatActivity
         adsView.setAdapter(firebaseAdsAdapter);*/
 
         GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation/todas"));
-        GeoQuery geoquery = geoFire.queryAtLocation(new GeoLocation(-22.924315, -43.238963), 100.0);
+        GeoQuery geoquery = geoFire.queryAtLocation(userQueryLocation, 10.0);
 
         geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child("business"));
         adsView.setAdapter(geofireAdsAdapter);
@@ -309,30 +310,39 @@ public class MainActivity extends AppCompatActivity
         String category = button.getTag().toString();
         if (category.equals(getString(R.string.category_all))){
             currentCategory = 0;
+            category = "todas";
         }
         else{
             currentCategory = ValidationTools.convertCategory(category, this);
         }
-
         currentPage = 1;
         Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
-        if (currentCategory != 0){
-            int begin = currentCategory * Business.categoryOffset;
-            int end = (currentCategory + 1) * Business.categoryOffset - 1;
-            businessQuery = businessRef.orderByChild(
-                    getString(R.string.child_business_category_rankpoints))
-                    .startAt(currentCategory * Business.categoryOffset)
-                    .endAt((currentCategory +1) * Business.categoryOffset -1)
-                    .limitToFirst(adsPerPage);
-            Log.e("BEGIN", Integer.toString(begin));
-            Log.e("END", Integer.toString(end));
+
+        if (shouldUseGPS){
+            //get user's last known locat
+            GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
+            GeoQuery query = geoRef.queryAtLocation(userQueryLocation, startRadius);
+
+            //TODO: update GEO FIRE ADS ADAPTER
 
         }else{
-            businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                    .endAt(placeholderRank).limitToFirst(adsPerPage);
+            if (currentCategory != 0){
+                int begin = currentCategory * Business.categoryOffset;
+                int end = (currentCategory + 1) * Business.categoryOffset - 1;
+                businessQuery = businessRef.orderByChild(
+                        getString(R.string.child_business_category_rankpoints))
+                        .startAt(begin)
+                        .endAt(end)
+                        .limitToFirst(adsPerPage);
+
+            }else{
+                businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
+                        .endAt(placeholderRank).limitToFirst(adsPerPage);
+            }
+
+            updateFirebaseAdapter(businessQuery);
         }
 
-        updateFirebaseAdapter(businessQuery);
     }
 
     public void changeCategory(String category){
@@ -348,12 +358,8 @@ public class MainActivity extends AppCompatActivity
             int end = (currentCategory + 1) * Business.categoryOffset - 1;
             businessQuery = businessRef.orderByChild(
                     getString(R.string.child_business_category_rankpoints))
-                    .startAt(currentCategory * Business.categoryOffset)
-                    .endAt((currentCategory + 1) * Business.categoryOffset - 1)
-                    .limitToFirst(adsPerPage);
+                    .startAt(begin).endAt(end).limitToFirst(adsPerPage);
 
-            Log.e("BEGIN", Integer.toString(begin));
-            Log.e("END", Integer.toString(end));
         }else{
             businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
                     .endAt(placeholderRank).limitToFirst(adsPerPage);
@@ -485,7 +491,7 @@ public class MainActivity extends AppCompatActivity
                         .endAt(placeholderRank).limitToFirst(adsPerPage);
             }
             else{
-                 
+
                 nextPageQuery = new Firebase(getString(R.string.firebase_url))
                         .child(getString(R.string.child_business))
                         .orderByChild(getString(R.string.child_business_category_rankpoints))
@@ -786,11 +792,8 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-                /*Log.d("POSITION", Integer.toString(position));
-                Log.d("COUNTS", Integer.toString(getItemCount()));*/
                 if (position > 0 || position == getItemCount() - 2) {
                     loadingArea.setVisibility(View.GONE);
-
 
                 }
 
@@ -812,9 +815,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
-
     class GeoFireAdsRecyclerAdapter extends GeoFireRecyclerAdapter<Business, BusinessViewHolder> {
 
         ProgressBar loadingArea;
@@ -835,22 +835,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void populateViewHolder(BusinessViewHolder viewHolder, final Business business, final int position) {
-       /* if (business == null){ //footer
-            //Log.d("FOOTER POS", Integer.toString(position));
-            int footerPosition = getItemCount() -1;
-            //Log.d("FOOTER ITENS", Integer.toString(getItemCount()));
-
-            footerViewHolder = (FooterViewHolder) viewHolder;
-            if (currentPage == 1){
-                footerViewHolder.navigateBackLayout.setVisibility(View.GONE);
-            }else{
-                footerViewHolder.navigateBackLayout.setVisibility(View.VISIBLE);
-            }
-
-            footerViewHolder.navigateNextLayout.setVisibility(View.VISIBLE);
-
-        }
-        else {*/
 
             String businessName = business.getName();
 
@@ -866,7 +850,7 @@ public class MainActivity extends AppCompatActivity
 
             businessViewHolder.shortDescription.setText(description);
 
-           if(businessName.equals(getString(R.string.no_ads_left))){
+           if(businessName.equals(getString(R.string.no_ads_left)) || businessName.equals(getString(R.string.no_ads_here))){
 
                 CardView cv = businessViewHolder.cv;
 
@@ -883,36 +867,32 @@ public class MainActivity extends AppCompatActivity
                 View view =  (View) relativeLayoutView.getChildAt(1);
                 view.setVisibility(View.GONE);
 
-                /*if (footerViewHolder.navigateNextLayout != null){
-                    footerViewHolder.navigateNextLayout.setVisibility(View.GONE);
-                }*/
-
-
-            }else{
-            CardView cv = businessViewHolder.cv;
-            cv.setVisibility(View.VISIBLE);
-            cv.requestFocus();
-            RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
-            LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
-            childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);
-            ((TextView)childView.findViewById(R.id.business_description)).setTextSize(16);
-
-
-            TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
-            businessNameView.setTextSize(20);
-
-            View view =  (View) relativeLayoutView.getChildAt(1);
-            view.setVisibility(View.VISIBLE);
 
             }
+           else{
+                CardView cv = businessViewHolder.cv;
+                cv.setVisibility(View.VISIBLE);
+                cv.requestFocus();
+                RelativeLayout relativeLayoutView = (RelativeLayout) cv.getChildAt(0);
+                LinearLayoutCompat childView = (LinearLayoutCompat) relativeLayoutView.getChildAt(2);
+                childView.findViewById(R.id.cardview_arrow).setVisibility(View.VISIBLE);
+                ((TextView)childView.findViewById(R.id.business_description)).setTextSize(16);
 
+
+                TextView businessNameView =  (TextView) relativeLayoutView.getChildAt(0);
+                businessNameView.setTextSize(20);
+
+                View view =  (View) relativeLayoutView.getChildAt(1);
+                view.setVisibility(View.VISIBLE);
+           }
 
 
             businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("NOME", business.getName());
-                   if (business.getName().equals(getString(R.string.no_ads_left))) {
+                    if (business.getName().equals(getString(R.string.no_ads_left))
+                            || business.getName().equals(getString(R.string.no_ads_here))) {
                         return;
                     }
                     Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
@@ -929,7 +909,8 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-            if (position > 0 || position == getItemCount() - 2) {
+            //maybe I can do this with a listener and put this class in another file
+            if (position >= 0 || position == getItemCount() - 2) {
                 loadingArea.setVisibility(View.GONE);
             }
         }
