@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -25,8 +27,11 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private final String TAG = "SignUp";
     private User newuser;
-    private EditText nameEditText, emailEditText, passwordEditText, passwordAgainEditText;
-    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword, inputLayoutPasswordAgain;
+    private EditText nameEditText, emailEditText, passwordEditText, passwordAgainEditText,
+            cityField;
+    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword, inputLayoutPasswordAgain,
+            inputLayoutCity;
+    private Spinner stateSelection;
     private boolean isTransition = false;
 
     @Override
@@ -47,10 +52,12 @@ public class SignUpActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.password_edit_text);
         passwordAgainEditText = (EditText) findViewById(R.id.password_again_edit_text);
 
+
         inputLayoutName = (TextInputLayout) findViewById(R.id.username_edit_layout);
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.email_edit_layout);
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.password_edit_layout);
         inputLayoutPasswordAgain = (TextInputLayout) findViewById(R.id.password_again_edit_layout);
+
     }
 
     public void signup(View view) {
@@ -58,6 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String passwordAgain = passwordAgainEditText.getText().toString().trim();
+
 
         if (!validateName(name)) {
             return;
@@ -75,7 +83,8 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        newuser = new User(name, email, null);
+
+        newuser = new User(name, email);
 
         // Set up a progress dialog
         dialog = new ProgressDialog(SignUpActivity.this);

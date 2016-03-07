@@ -39,7 +39,8 @@
     <string name="signup_menu">Cadastrar</string>
     <string name="business_menu">Meu Negócio</string>
     <string name="business_create_menu">Cadastrar Negócio</string>
-    <string name="settings_menu">Configurações Pessoais</string>
+    <string name="settings_menu">Editar Informações Pessoais</string>
+    <string name="preferences_menu">Preferências</string>
     <string name="signout_menu">Sair</string>
 
     <string name="signup">Cadastrar</string>
@@ -54,6 +55,8 @@
     <string name="userid_key">userId</string>
     <string name="username_key">userName</string>
     <string name="useremail_key">userEmail</string>
+    <string name="usercity_key">userCity</string>
+    <string name="userstate_key">userState</string>
 
     <string name="businessid_key">businessId</string>
     <string name="businessadmin_key">businessAdmin</string>
@@ -73,9 +76,10 @@
     <string name="alert_dialog_positive">Sim</string>
     <string name="alert_dialog_negative">Cancelar</string>
 
-    <string name="navigate_next">Próxima</string>
-    <string name="navigate_back">Anterior</string>
-    <string name="title_activity_change_token_password">ChangeTokenPasswordActivity</string>
+    <string name="navigate_next">Avançar</string>
+    <string name="navigate_back">Voltar</string>
+    <string name="title_activity_change_token_password">Alterar Senha</string>
+    <string name="title_activity_edit_user_location">Editar Localidade</string>
 
 
 </resources>

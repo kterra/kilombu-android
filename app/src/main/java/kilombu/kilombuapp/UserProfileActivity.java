@@ -25,7 +25,7 @@ import com.firebase.client.FirebaseError;
 public class UserProfileActivity extends AppCompatActivity {
 
 
-    TextView usernameProfile, emailProfile;
+    TextView usernameProfile, emailProfile, locationProfile;
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private boolean isTransition = false;
@@ -43,11 +43,20 @@ public class UserProfileActivity extends AppCompatActivity {
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         String userName = userPreferences.getString(getString(R.string.username_key), "");
         String userEmail = userPreferences.getString(getString(R.string.useremail_key), "");
+        String userCity = userPreferences.getString(getString(R.string.usercity_key),"" );
+        String userState = userPreferences.getString(getString(R.string.userstate_key), "");
 
         usernameProfile = (TextView) findViewById(R.id.user_name_profile);
         usernameProfile.setText(userName);
         emailProfile = (TextView) findViewById(R.id.email_profile);
         emailProfile.setText(userEmail);
+        locationProfile = (TextView) findViewById(R.id.location_profile);
+        if (!userCity.trim().isEmpty()){
+            locationProfile.setText(userCity +", "+ userState);
+        }else{
+            locationProfile.setText(getString(R.string.no_location_message));
+        }
+
 
     }
 
@@ -102,6 +111,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void changeUserEmail(View confirmationButton){
         Intent intent = new Intent(UserProfileActivity.this, EditUserEmailActivity.class);
+        isTransition = true;
+        startActivity(intent);
+    }
+
+    public void changeUserLocation(View confirmationButton){
+        Intent intent = new Intent(UserProfileActivity.this, EditUserLocationActivity.class);
         isTransition = true;
         startActivity(intent);
     }

@@ -96,16 +96,14 @@ public class EditUserNameActivity extends AppCompatActivity {
 
     private void changeUserName(){
 
-        name = ((EditText)findViewById(R.id.edit_username)).getText().toString().trim();
+        String newUserName =  usernameProfile.getText().toString().trim();
 
-        if (!validateName(name)) {
+        if (!validateName(newUserName)) {
             return;
         }
 
 
         Map<String, Object> name = new HashMap<String, Object>();
-        String newUserName =  usernameProfile.getText().toString();
-
         name.put(getString(R.string.child_business_this_name), newUserName);
         Firebase userRef = new Firebase(getString(R.string.firebase_url)).child(getString(R.string.child_users));
         Log.d("id", id);

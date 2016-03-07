@@ -30,6 +30,8 @@
     <string name="no_ads_here">Não há anúncios nesta região</string>
     <string name="no_such_activity">Você não possui nenhuma aplicação para realizar esta ação</string>
 
+    <string name="no_location_message">Localidade não informada.</string>
+
     <string name="remove_user_account_msg">Você tem certeza que deseja remover sua conta? \nAtenção! Se você possui um negócio cadastrado ele também será removido!</string>
     <string name="remove_business_msg">Você tem certeza que deseja remover este negócio?</string>
 
