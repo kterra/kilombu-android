@@ -17,7 +17,10 @@
     <string name="category_health">Saúde</string>
     <string name="category_software">Informática e Software</string>
     <string name="category_list_all"> Mais Categorias</string>
-    <string name="category_all"> Selecionar Todas </string>
+    <string name="category_select_all"> Selecionar Todas </string>
+
+    <!-- used for category celection on geoquery -->
+    <string name="category_all">todas</string>
 
     <string-array name="categories">
         <item>Selecione uma categoria</item>

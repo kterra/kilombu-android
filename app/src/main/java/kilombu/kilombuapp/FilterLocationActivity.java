@@ -1,38 +1,28 @@
 package kilombu.kilombuapp;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FilterLocationActivity extends AppCompatActivity {

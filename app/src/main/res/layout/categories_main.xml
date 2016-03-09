@@ -39,7 +39,7 @@
                 app:backgroundTint="@color/secondary_text_material_light"
                 android:onClick="changeCategoryOnClick"
                 android:textColor="@color/colorPrimary"
-                android:tag="@string/category_all"/>
+                android:tag="@string/category_select_all"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:fontFamily="sans-serif-condensed-thin"
-                android:text="@string/category_all"
+                android:text="@string/category_select_all"
                 android:id="@+id/category_all"
                 android:textSize="12sp"
                 android:textColor="@color/text_under_category"

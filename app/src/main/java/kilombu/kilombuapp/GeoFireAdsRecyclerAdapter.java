@@ -1,18 +1,5 @@
 package kilombu.kilombuapp;
 
-import android.content.Intent;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.firebase.client.Firebase;
-
-import kilombu.kilombuapp.models.Business;
-
 /**
  * Created by hallpaz on 06/03/2016.
  */

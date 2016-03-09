@@ -7,15 +7,15 @@ import android.graphics.LightingColorFilter;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,8 +35,6 @@ import com.firebase.client.ValueEventListener;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
-import com.firebase.geofire.util.GeoUtils;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 import kilombu.kilombuapp.models.Business;
@@ -64,14 +62,16 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences userPreferences;
     private android.content.Context context;
     private DrawerLayout drawer;
-    private boolean isTransition = false;
     private LinearLayoutManager llm;
 
-    private boolean shouldUseGPS = true;
+    private boolean isTransition = false;
+    private boolean shouldUseLocation = true;
+
     private LocationManager locationManager;
     private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
     private float startRadius = 5.0f;
     private GeoLocation userQueryLocation;
+    private RecyclerView.Adapter adsRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,16 +114,11 @@ public class MainActivity extends AppCompatActivity
         };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-
-
         setUpCustomDrawer();
-        Log.d(TAG, "ON CREATE");
-
         //ValidationTools.createBusinessPlaceholders(this);
         //Utils.createBusinessLocation(this);
         //locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
+        Log.d(TAG, "ON CREATE");
     }
 
     private void setNavigationHeader(){
@@ -184,8 +179,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("MAIN", "ON DESTROY");
-        firebaseAdsAdapter.cleanup();
+        Log.d(TAG, "ON DESTROY");
+        if (firebaseAdsAdapter != null){
+            firebaseAdsAdapter.cleanup();
+        }
+
+        if (geofireAdsAdapter != null){
+            geofireAdsAdapter.cleanup();
+        }
     }
 
     private void setUpCustomDrawer() {
@@ -283,91 +284,69 @@ public class MainActivity extends AppCompatActivity
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 
         currentCategory = 0;
-        /*businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                .endAt(placeholderRank)
-                .limitToFirst(adsPerPage);
-        firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
+        if (shouldUseLocation){
+            GeoFire geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
+                                                        .child(getString(R.string.category_all)));
+            GeoQuery geoquery = geoFire.queryAtLocation(userQueryLocation, 10.0);
 
-        adsView.setAdapter(firebaseAdsAdapter);*/
+            geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child(getString(R.string.child_business)));
+            adsView.setAdapter(geofireAdsAdapter);
+        }
+        else{
+            businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
+                    .endAt(placeholderRank)
+                    .limitToFirst(adsPerPage);
+            firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(businessQuery);
 
-        GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation/todas"));
-        GeoQuery geoquery = geoFire.queryAtLocation(userQueryLocation, 10.0);
-
-        geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child(getString(R.string.child_business)));
-        adsView.setAdapter(geofireAdsAdapter);
-
+            adsView.setAdapter(firebaseAdsAdapter);
+        }
     }
 
     private void updateFirebaseAdapter(Query query){
-        firebaseAdsAdapter.cleanup();
+        if (geofireAdsAdapter != null){
+            geofireAdsAdapter.cleanup();
+            geofireAdsAdapter = null;
+        }
+        if (firebaseAdsAdapter != null){
+            firebaseAdsAdapter.cleanup();
+        }
         firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(query);
         adsView.swapAdapter(firebaseAdsAdapter, true);
-
     }
 
     private void updateGeofireAdapter(GeoQuery query, Firebase modelRef){
-        geofireAdsAdapter.cleanup();
+        if (firebaseAdsAdapter != null){
+            firebaseAdsAdapter.cleanup();
+            firebaseAdsAdapter = null;
+        }
+        if (geofireAdsAdapter != null){
+            geofireAdsAdapter.cleanup();
+        }
         geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(query, modelRef);
         adsView.swapAdapter(geofireAdsAdapter, true);
     }
 
-    //TODO: consider rewriting own adapter
     public void changeCategoryOnClick(View button){
         String category = button.getTag().toString();
-        if (category.equals(getString(R.string.category_all))){
-            currentCategory = 0;
-            category = "todas";
-        }
-        else{
-            currentCategory = ValidationTools.convertCategory(category, this);
-        }
-        currentPage = 1;
-        Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
-
-        if (shouldUseGPS){
-            //get user's last known locat
-            GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
-            GeoQuery query = geoRef.queryAtLocation(userQueryLocation, startRadius);
-            updateGeofireAdapter(query, appRef.child(getString(R.string.child_business)));
-            //TODO: update GEO FIRE ADS ADAPTER
-
-        }else{
-            if (currentCategory != 0){
-                int begin = currentCategory * Business.categoryOffset;
-                int end = (currentCategory + 1) * Business.categoryOffset - 1;
-                businessQuery = businessRef.orderByChild(
-                        getString(R.string.child_business_category_rankpoints))
-                        .startAt(begin)
-                        .endAt(end)
-                        .limitToFirst(adsPerPage);
-
-            }else{
-                businessQuery = businessRef.orderByChild(getString(R.string.child_business_rankpoints))
-                        .endAt(placeholderRank).limitToFirst(adsPerPage);
-            }
-
-            updateFirebaseAdapter(businessQuery);
-        }
-
+        changeCategory(category);
     }
 
     public void changeCategory(String category){
-        if (category.equals(getString(R.string.category_all))){
+        currentPage = 1;
+
+        if (category.equals(getString(R.string.category_select_all))){
             currentCategory = 0;
-            category = "todas";
+            category = getString(R.string.category_select_all);
         }
         else{
             currentCategory = ValidationTools.convertCategory(category, this);
         }
-        currentPage = 1;
-        Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
 
-        if (shouldUseGPS){
-            //get user's last known locat
+        //Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
+        if (shouldUseLocation){
             GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
             GeoQuery query = geoRef.queryAtLocation(userQueryLocation, startRadius);
             updateGeofireAdapter(query, appRef.child(getString(R.string.child_business)));
-            //TODO: update GEO FIRE ADS ADAPTER
 
         }else{
             if (currentCategory != 0){
@@ -400,7 +379,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 changeCategoryOnClick(view);
-
             }
         });
 
@@ -501,8 +479,6 @@ public class MainActivity extends AppCompatActivity
         Query nextPageQuery;
         try {
             Business lastItem = firebaseAdsAdapter.getItem(firebaseAdsAdapter.getItemCount() - 2);
-            //TODO: caso em que lastItem é null
-            //Log.d("ITEM RANK", Double.toString(lastItem.getRankPoints()));
             if (currentCategory == 0){
                 nextPageQuery = new Firebase(getString(R.string.firebase_url))
                         .child(getString(R.string.child_business))
@@ -532,8 +508,6 @@ public class MainActivity extends AppCompatActivity
         Query previousPageQuery;
         try {
             Business firstItem = firebaseAdsAdapter.getItem(0);
-            //TODO: caso em que firstItem é null
-            Log.d("ITEM RANK", Double.toString(firstItem.getRankPoints()));
             if (currentCategory == 0){
                 previousPageQuery = new Firebase(getString(R.string.firebase_url))
                         .child(getString(R.string.child_business))
@@ -560,9 +534,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, FilterLocationActivity.class);
         isTransition = true;
         startActivity(intent);
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -609,9 +581,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.signout_menu) {
             appRef.unauth();
             
-            busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+            busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key),
+                                                            android.content.Context.MODE_PRIVATE);
             busPreferences.edit().clear().commit();
-            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
+                                                            android.content.Context.MODE_PRIVATE);
             userPreferences.edit().clear().commit();
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -795,13 +769,11 @@ public class MainActivity extends AppCompatActivity
                 }
 
 
-
                 businessViewHolder.cv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.d("NOME", business.getName());
                         if (business.getName().equals(getString(R.string.no_ads_left))) {
-                            //Log.d("IF", "RETORNA");
                             return;
                         }
                         Intent intent = new Intent(MainActivity.this, BusinessDetailsActivity.class);
@@ -823,7 +795,6 @@ public class MainActivity extends AppCompatActivity
                     loadingArea.setVisibility(View.GONE);
 
                 }
-
 
             }
 
