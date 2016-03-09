@@ -36,6 +36,7 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.ui.FirebaseRecyclerAdapter;
+import com.google.android.gms.maps.model.LatLng;
 
 import kilombu.kilombuapp.models.Business;
 import kilombu.kilombuapp.models.User;
@@ -336,7 +337,8 @@ public class MainActivity extends AppCompatActivity
 
         if (category.equals(getString(R.string.category_select_all))){
             currentCategory = 0;
-            category = getString(R.string.category_select_all);
+            category = getString(R.string.category_all);
+            Log.d(TAG, "modified category: " + category);
         }
         else{
             currentCategory = ValidationTools.convertCategory(category, this);
@@ -468,10 +470,26 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                changeCategory(data.getStringExtra("result"));
-            }
+        switch (requestCode){
+            case 1:
+                if(resultCode == Activity.RESULT_OK){
+                    changeCategory(data.getStringExtra("result"));
+                }
+                break;
+            case Utils.LOCATION_REQUEST:
+                if (resultCode == Activity.RESULT_OK){
+                    shouldUseLocation = true;
+                    LatLng latLng = (LatLng) data.getParcelableExtra("LatLng");
+                    userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
+                    Log.d(TAG, "current category: " + currentCategory);
+
+                    String category = currentCategory == 0 ? getString(R.string.category_select_all) :
+                                            ValidationTools.categoryForIndex(currentCategory, this);
+                    Log.d(TAG, "computed category: " + category);
+                    changeCategory(category);
+                }
+            default:
+                break;
         }
     }
 
@@ -533,7 +551,7 @@ public class MainActivity extends AppCompatActivity
     public void filterLocation(View button){
         Intent intent = new Intent(this, FilterLocationActivity.class);
         isTransition = true;
-        startActivity(intent);
+        startActivityForResult(intent, Utils.LOCATION_REQUEST);
     }
 
     @Override

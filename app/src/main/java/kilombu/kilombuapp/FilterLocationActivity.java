@@ -1,5 +1,6 @@
 package kilombu.kilombuapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class FilterLocationActivity extends AppCompatActivity {
 
+    private final String TAG = "Filter Location";
     private CheckBox chkGps;
     private EditText cityProfile;
     private TextInputLayout inputLayoutCity;
@@ -100,8 +102,6 @@ public class FilterLocationActivity extends AppCompatActivity {
                                 })
                                 .setNegativeButton(getString(R.string.alert_dialog_negative), null)
                                 .show();
-
-
                     }
                 }
 
@@ -157,7 +157,7 @@ public class FilterLocationActivity extends AppCompatActivity {
         super.onStart();
         isTransition = false;
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d(TAG, "ON START");
     }
 
     @Override
@@ -165,11 +165,11 @@ public class FilterLocationActivity extends AppCompatActivity {
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d(TAG, "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d(TAG, "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d(TAG, "ON STOP");
     }
 
     @Override
@@ -205,10 +205,18 @@ public class FilterLocationActivity extends AppCompatActivity {
                     userEditor.putString(getString(R.string.userlat_key), Double.toString(latitude));
                     userEditor.putString(getString(R.string.userlong_key), Double.toString(longitude));
                     userEditor.commit();
-                    Intent intent = new Intent(FilterLocationActivity.this, MainActivity.class);
+
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("LatLng", latLng);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    isTransition = true;
+                    finish();
+
+                    /*Intent intent = new Intent(FilterLocationActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     isTransition = true;
-                    startActivity(intent);
+                    startActivity(intent);*/
                 }
                 catch (SecurityException e){
                     Toast.makeText(FilterLocationActivity.this,
@@ -243,16 +251,23 @@ public class FilterLocationActivity extends AppCompatActivity {
 
                 userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
                 SharedPreferences.Editor userEditor = userPreferences.edit();
-                String address = city+ ", "+state;
+                String address = city + ", " + state;
                 LatLng latLng = Utils.getLocationFromAddress(context, address);
-
+                //TODO: check for nullity
                 userEditor.putString(getString(R.string.userlat_key), Double.toString(latLng.latitude));
                 userEditor.putString(getString(R.string.userlong_key), Double.toString(latLng.longitude));
                 userEditor.commit();
-                Intent intent = new Intent(FilterLocationActivity.this, MainActivity.class);
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("LatLng", latLng);
+                setResult(Activity.RESULT_OK, returnIntent);
+                isTransition = true;
+                finish();
+
+                /*Intent intent = new Intent(FilterLocationActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 isTransition = true;
-                startActivity(intent);
+                startActivity(intent);*/
 
             }else{
                 Toast.makeText(FilterLocationActivity.this,
