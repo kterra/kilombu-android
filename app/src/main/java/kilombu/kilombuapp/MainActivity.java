@@ -9,6 +9,7 @@ import android.graphics.LightingColorFilter;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.wifi.WifiConfiguration;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -208,6 +210,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+        if(shouldUseLocation){
+            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+            waitingForLocation.setVisibility(View.VISIBLE);
+            if (mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.disconnect();
+            }
+            mGoogleApiClient.connect();
+        }
         super.onResume();
         Firebase.goOnline();
         Log.d(TAG, "ON RESUME");
@@ -217,6 +230,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_black_24dp));
+            }
         }
         super.onStop();
         if (! isTransition){
@@ -346,6 +362,9 @@ public class MainActivity extends AppCompatActivity
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 
         currentCategory = 0;
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+
         if (shouldUseLocation){
             GeoFire geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
                                                         .child(getString(R.string.category_all)));
@@ -405,6 +424,8 @@ public class MainActivity extends AppCompatActivity
             currentCategory = ValidationTools.convertCategory(category, this);
         }
 
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
         //Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
         if (shouldUseLocation){
             GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
@@ -539,7 +560,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case Utils.LOCATION_REQUEST:
                 if (resultCode == Activity.RESULT_OK){
-                    shouldUseLocation = true;
+                    userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+                    SharedPreferences.Editor userEditor = userPreferences.edit();
+                    userEditor.putBoolean(getString(R.string.shoulduselocation_key),true);
+                    userEditor.commit();
+
                     LatLng latLng = (LatLng) data.getParcelableExtra("LatLng");
                     userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
                     Log.d(TAG, "current category: " + currentCategory);
@@ -558,6 +583,9 @@ public class MainActivity extends AppCompatActivity
 
                     }else{
                         mGoogleApiClient.disconnect();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_black_24dp));
+                        }
                         mGoogleApiClient.connect();
                     }
                 break;
@@ -659,7 +687,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle connectionHint) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_green_24dp));
+        }
         try{
+            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
             waitingForLocation.setVisibility(View.GONE);
             mLocationRequest = LocationRequest.create();
            //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -682,7 +715,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        shouldUseLocation = false;
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPreferences.edit();
+        userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
+        userEditor.commit();
         String category = currentCategory == 0 ? getString(R.string.category_select_all) :
                 ValidationTools.categoryForIndex(currentCategory, this);
         changeCategory(category);
@@ -694,7 +730,11 @@ public class MainActivity extends AppCompatActivity
 
           //  Toast.makeText(this, "Location " + location.getLatitude()+ ", "+ location.getLongitude(), Toast.LENGTH_SHORT).show();
 
-            shouldUseLocation = true;
+
+            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.shoulduselocation_key),true);
+            userEditor.commit();
 
             userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
             String category = currentCategory == 0 ? getString(R.string.category_select_all) :
@@ -1059,8 +1099,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getLatLongFromAddress(View button){
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        SharedPreferences.Editor userEditor = userPreferences.edit();
 
         try{
             String address = addressEdit.getText().toString().trim();
@@ -1069,13 +1107,14 @@ public class MainActivity extends AppCompatActivity
             findViewById(R.id.clear).setVisibility(View.VISIBLE);
             findViewById(R.id.get).setVisibility(View.INVISIBLE);
 
-            shouldUseLocation = true;
+            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
+            userEditor.commit();
 
 
             //TODO: check for nullity
-            userEditor.putString(getString(R.string.userlat_key), Double.toString(latLng.latitude));
-            userEditor.putString(getString(R.string.userlong_key), Double.toString(latLng.longitude));
-            userEditor.commit();
+          ;
             userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
             String category = currentCategory == 0 ? getString(R.string.category_select_all) :
                     ValidationTools.categoryForIndex(currentCategory, this);
@@ -1091,7 +1130,12 @@ public class MainActivity extends AppCompatActivity
         findViewById(R.id.clear).setVisibility(View.INVISIBLE);
         findViewById(R.id.get).setVisibility(View.VISIBLE);
         ((EditText) findViewById(R.id.address_selected)).setText("");
-        shouldUseLocation = false;
+
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPreferences.edit();
+        userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
+        userEditor.commit();
+
         String category = currentCategory == 0 ? getString(R.string.category_select_all) :
                 ValidationTools.categoryForIndex(currentCategory, this);
         changeCategory(category);
@@ -1108,13 +1152,26 @@ public class MainActivity extends AppCompatActivity
 
         if(!mGoogleApiClient.isConnected()){
             mGoogleApiClient.connect();
+
+            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
+            userEditor.commit();
+
             waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
             waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
             waitingForLocation.setVisibility(View.VISIBLE);
 
         }else{
             mGoogleApiClient.disconnect();
-            shouldUseLocation = false;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_black_24dp));
+            }
+            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
+            userEditor.commit();
+
             String category = currentCategory == 0 ? getString(R.string.category_select_all) :
                     ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
