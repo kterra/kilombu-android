@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 
 import java.lang.reflect.Constructor;
@@ -134,6 +135,10 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
             Log.e("Geo Adapter", "Null em: " + position + " total: " + mSnapshots.getCount() + "key: " + mSnapshots.getItem(position).getKey());
         }
         populateViewHolder(viewHolder, model, position);
+    }
+
+    public void updateQueryCenter(GeoLocation center){
+        mSnapshots.updateQueryCenter(center);
     }
 
     /**

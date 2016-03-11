@@ -1,15 +1,11 @@
 package kilombu.kilombuapp;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.LightingColorFilter;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.wifi.WifiConfiguration;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -24,8 +20,6 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,24 +43,13 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 import kilombu.kilombuapp.models.Business;
 import kilombu.kilombuapp.models.User;
@@ -77,39 +60,43 @@ public class MainActivity extends AppCompatActivity
         ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private final String TAG = "MAIN";
-    private Firebase appRef;
+    private final int CATEGORIES_REQUEST = 1;
     private final int adsPerPage = 20;
     private final long placeholderRank = 999997;
-    private int currentPage = 1;
-    private int currentCategory; // 0 represents "All categories"
-    private RecyclerView adsView;
-    private User currentUser;
-    private Business currentBusiness;
-    private String currentBusinessId;
-    private FirebaseAdsRecyclerAdapter firebaseAdsAdapter;
-    private Firebase businessRef;
-    private Query businessQuery;
-    private Query getUser;
-    private SharedPreferences busPreferences;
-    private SharedPreferences userPreferences;
-    private android.content.Context context;
-    private DrawerLayout drawer;
-    private LinearLayoutManager llm;
-
-    private boolean isTransition = false;
-    private boolean shouldUseLocation;
-    private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
-    private float startRadius = 10.0f;
-    private GeoLocation userQueryLocation;
-    private RecyclerView.Adapter adsRecyclerAdapter;
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private EditText addressEdit;
-    //private ProgressBar waitingForLocation;
+    private final float startRadius = 10.0f;
 
     private static int UPDATE_INTERVAL = 10000; // 10 sec
     private static int FASTEST_INTERVAL = 5000; // 5 sec
     private static int DISPLACEMENT = 500; // 1000 meters
+
+    private int currentPage = 1;
+    private int currentCategory; // 0 represents "All categories"
+    private boolean isTransition = false;
+    private boolean shouldUseLocation;
+    private Business currentBusiness;
+    private String currentBusinessId;
+    private User currentUser;
+    private SharedPreferences busPreferences;
+    private SharedPreferences userPreferences;
+
+    private android.content.Context context;
+    private RecyclerView adsView;
+    private DrawerLayout drawer;
+    private LinearLayoutManager llm;
+
+    private Firebase appRef;
+    private Firebase businessRef;
+    private Query businessQuery;
+    private Query getUser;
+
+    private FirebaseAdsRecyclerAdapter firebaseAdsAdapter;
+    private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
+
+    private GeoLocation userQueryLocation;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private EditText addressEdit;
+    //private ProgressBar waitingForLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +119,9 @@ public class MainActivity extends AppCompatActivity
         adsView.requestFocus();
         adsView.setHasFixedSize(true);
 
+
+        retrieveStateVariables();
+
         initializeCategoryFloatingButtons();
 
         businessRef = new Firebase(getString(R.string.firebase_url))
@@ -139,8 +129,6 @@ public class MainActivity extends AppCompatActivity
 
         appRef = new Firebase(getString(R.string.firebase_url));
         //TODO: deal with sample
-        userQueryLocation = new GeoLocation(-22.924315, -43.238963);
-        //userQueryLocation = new GeoLocation(2.8071985, -60.731581);
         initializeAdapter();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -153,20 +141,14 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         setUpCustomDrawer();
-        //ValidationTools.createBusinessPlaceholders(this);
-        //Utils.createBusinessLocation(this);
-        //locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
 
         addressEdit = ((EditText) findViewById(R.id.address_selected));
 
         Log.d(TAG, "ON CREATE");
-
-
         buildGoogleApiClient();
 
+        //Utils.createBusinessLocation(this);
     }
-
 
 
     private void setNavigationHeader(){
@@ -201,24 +183,23 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         isTransition = false;
-
+        Log.d(TAG, "On Start");
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
         Firebase.goOnline();
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);*/
+        //TODO: confirm if this applies only to GPS
         if(shouldUseLocation){
 //            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
 //            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 //            waitingForLocation.setVisibility(View.VISIBLE);
-            if (mGoogleApiClient.isConnected()) {
-                mGoogleApiClient.disconnect();
+            if (!mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.connect();
             }
-            mGoogleApiClient.connect();
         }
 
         Log.d(TAG, "ON RESUME");
@@ -231,6 +212,7 @@ public class MainActivity extends AppCompatActivity
             ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
         }
         super.onStop();
+        saveStateVariables();
         if (! isTransition){
             Firebase.goOffline();
             Log.d(TAG, "GOING OFFLINE");
@@ -238,6 +220,29 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "TRANSITION");
         }
         Log.d(TAG, "ON STOP");
+    }
+
+    private void retrieveStateVariables(){
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
+                android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+        if (shouldUseLocation){
+            double latitude = Double.longBitsToDouble(userPreferences.getLong("latitude", 0));
+            double longitude = Double.longBitsToDouble(userPreferences.getLong("longitude", 0));
+            userQueryLocation = new GeoLocation(latitude, longitude);
+        }
+    }
+
+    private void saveStateVariables(){
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
+                android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPreferences.edit();
+        userEditor.putBoolean(getString(R.string.shoulduselocation_key), shouldUseLocation);
+        if (userQueryLocation != null){
+            userEditor.putLong("latitude", Double.doubleToRawLongBits(userQueryLocation.latitude));
+            userEditor.putLong("longitude", Double.doubleToRawLongBits(userQueryLocation.longitude));
+        }
+        userEditor.commit();
     }
 
     @Override
@@ -358,13 +363,13 @@ public class MainActivity extends AppCompatActivity
         loadingArea.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
 
         currentCategory = 0;
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+       /* userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);*/
 
         if (shouldUseLocation){
             GeoFire geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
                                                         .child(getString(R.string.category_all)));
-            GeoQuery geoquery = geoFire.queryAtLocation(userQueryLocation, 10.0);
+            GeoQuery geoquery = geoFire.queryAtLocation(userQueryLocation, startRadius);
 
             geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(geoquery, appRef.child(getString(R.string.child_business)));
             adsView.setAdapter(geofireAdsAdapter);
@@ -397,6 +402,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateGeofireAdapter(GeoQuery query, Firebase modelRef){
+        //if we are transitioning from firebaseAdsAdapter
         if (firebaseAdsAdapter != null){
             firebaseAdsAdapter.cleanup();
             firebaseAdsAdapter = null;
@@ -422,14 +428,13 @@ public class MainActivity extends AppCompatActivity
         if (category.equals(getString(R.string.category_select_all))){
             currentCategory = 0;
             category = getString(R.string.category_all);
-            Log.d(TAG, "modified category: " + category);
         }
         else{
             currentCategory = ValidationTools.convertCategory(category, this);
         }
 
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);*/
         //Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
         if (shouldUseLocation){
             GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
@@ -458,7 +463,7 @@ public class MainActivity extends AppCompatActivity
     public void showListWithAllCategories(View button){
         Intent intent = new Intent(MainActivity.this, CategoriesListActivity.class);
         isTransition = true;
-        MainActivity.this.startActivityForResult(intent, 1);
+        MainActivity.this.startActivityForResult(intent, CATEGORIES_REQUEST);
     }
 
     private void initializeCategoryFloatingButtons(){
@@ -557,25 +562,24 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode){
-            case 1:
+            case CATEGORIES_REQUEST:
                 if(resultCode == Activity.RESULT_OK){
                     changeCategory(data.getStringExtra("result"));
                 }
                 break;
             case Utils.LOCATION_REQUEST:
                 if (resultCode == Activity.RESULT_OK){
-                    userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+                    /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
+                            android.content.Context.MODE_PRIVATE);
                     SharedPreferences.Editor userEditor = userPreferences.edit();
                     userEditor.putBoolean(getString(R.string.shoulduselocation_key),true);
-                    userEditor.commit();
+                    userEditor.commit();*/
+                    shouldUseLocation = true;
 
                     LatLng latLng = (LatLng) data.getParcelableExtra("LatLng");
                     userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
-                    Log.d(TAG, "current category: " + currentCategory);
 
-                    String category = currentCategory == 0 ? getString(R.string.category_select_all) :
-                                            ValidationTools.categoryForIndex(currentCategory, this);
-                    Log.d(TAG, "computed category: " + category);
+                    String category = ValidationTools.categoryForIndex(currentCategory, this);
                     changeCategory(category);
                 }
             case 5:
@@ -686,28 +690,28 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public void onConnected(Bundle connectionHint) {
 
-        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_green_24dp));
+        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.ic_my_location_green_24dp));
 
         try{
-//            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-//            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-//            waitingForLocation.setVisibility(View.GONE);
+            // waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+            // waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+            // waitingForLocation.setVisibility(View.GONE);
             mLocationRequest = LocationRequest.create();
-           //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-           mLocationRequest.setInterval(UPDATE_INTERVAL);
-           mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+            mLocationRequest.setInterval(UPDATE_INTERVAL);
+            mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
             mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
-           LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }catch (SecurityException se){
             Toast.makeText(this, R.string.action_forbbiden, Toast.LENGTH_SHORT).show();
         }
 
-        }
+    }
 
 
     @Override
@@ -720,10 +724,10 @@ public class MainActivity extends AppCompatActivity
         shouldUseLocation = false;
         String category = ValidationTools.categoryForIndex(currentCategory, this);
 
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPreferences.edit();
         userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
-        userEditor.commit();
+        userEditor.commit();*/
 
         changeCategory(category);
     }
@@ -733,16 +737,17 @@ public class MainActivity extends AppCompatActivity
         try{
 
           //  Toast.makeText(this, "Location " + location.getLatitude()+ ", "+ location.getLongitude(), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "on location changed");
 
-
-            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
             userEditor.putBoolean(getString(R.string.shoulduselocation_key),true);
-            userEditor.commit();
-
+            userEditor.commit();*/
+            shouldUseLocation = true;
             userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
-            String category = ValidationTools.categoryForIndex(currentCategory, this);
-            changeCategory(category);
+            /*String category = ValidationTools.categoryForIndex(currentCategory, this);
+            changeCategory(category);*/
+            geofireAdsAdapter.updateQueryCenter(userQueryLocation);
         }catch (NullPointerException nulle){
 
         }
@@ -1115,13 +1120,13 @@ public class MainActivity extends AppCompatActivity
             findViewById(R.id.clear).setVisibility(View.VISIBLE);
             findViewById(R.id.get).setVisibility(View.INVISIBLE);
 
-            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
             userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
-            userEditor.commit();
+            userEditor.commit();*/
 
-
+            shouldUseLocation = true;
             userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
             String category = ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
@@ -1146,11 +1151,11 @@ public class MainActivity extends AppCompatActivity
         shouldUseLocation = false;
         String category = ValidationTools.categoryForIndex(currentCategory, this);
 
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPreferences.edit();
         userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
         userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
-        userEditor.commit();
+        userEditor.commit();*/
         changeCategory(category);
     }
 
@@ -1174,11 +1179,11 @@ public class MainActivity extends AppCompatActivity
             findViewById(R.id.get).setVisibility(View.VISIBLE);
             ((EditText) findViewById(R.id.address_selected)).setText("");
 
-            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
             userEditor.putBoolean(getString(R.string.gpscontrol_key), true);
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
-            userEditor.commit();
+            userEditor.commit();*/
 
 //            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
 //            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
@@ -1188,16 +1193,17 @@ public class MainActivity extends AppCompatActivity
             mGoogleApiClient.disconnect();
 
             shouldUseLocation = false;
+            userQueryLocation = null;
             String category = ValidationTools.categoryForIndex(currentCategory, this);
 
             ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
 
 
-            userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
             userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
-            userEditor.commit();
+            userEditor.commit();*/
 
 
             changeCategory(category);
