@@ -28,7 +28,6 @@ public class GeoFireList implements GeoQueryEventListener {
     private GeoQuery mQuery;
     private ArrayList<DataSnapshot> mSnapshots;
     private ArrayList<Double> distances;
-    private Map<String, Double> keysAndDistances;
     private OnChangedListener mListener;
     private Firebase modelRef;
     private final double radiusIncrement = 10.0;
@@ -43,14 +42,14 @@ public class GeoFireList implements GeoQueryEventListener {
 
     @Override
     public void onKeyEntered(String key, GeoLocation location) {
-        double distance = GeoUtils.distance(location, mQuery.getCenter());
+        final double distance = GeoUtils.distance(location, mQuery.getCenter());
         //keysAndDistances.put(key, distance);
         final int index = indexBasedOnDistance(distance);
-        distances.add(index, distance);
         modelRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //int index = mSnapshots.size();
+                distances.add(index, distance);
                 mSnapshots.add(index, dataSnapshot);
                 notifyChangedListeners(OnChangedListener.EventType.Added, index);
                 //Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
@@ -85,6 +84,7 @@ public class GeoFireList implements GeoQueryEventListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         int index = mSnapshots.size();
+                        distances.add(500.0);
                         mSnapshots.add(dataSnapshot);
                         notifyChangedListeners(OnChangedListener.EventType.Added, index);
                         Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
@@ -105,7 +105,6 @@ public class GeoFireList implements GeoQueryEventListener {
         int index = getIndexForKey(key);
         mSnapshots.remove(index);
         distances.remove(index);
-        //TODO: remove item from distance and key
         notifyChangedListeners(OnChangedListener.EventType.Removed, index);
     }
 

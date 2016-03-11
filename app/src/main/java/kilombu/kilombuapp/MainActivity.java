@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
     private boolean isTransition = false;
     private boolean shouldUseLocation;
     private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
-    private float startRadius = 5.0f;
+    private float startRadius = 10.0f;
     private GeoLocation userQueryLocation;
     private RecyclerView.Adapter adsRecyclerAdapter;
     private GoogleApiClient mGoogleApiClient;
@@ -207,6 +207,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
+        super.onResume();
+        Firebase.goOnline();
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
         if(shouldUseLocation){
@@ -218,8 +220,7 @@ public class MainActivity extends AppCompatActivity
             }
             mGoogleApiClient.connect();
         }
-        super.onResume();
-        Firebase.goOnline();
+
         Log.d(TAG, "ON RESUME");
     }
 
