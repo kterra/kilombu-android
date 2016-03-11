@@ -68,6 +68,7 @@
     <string name="userlat_key">userLatitude</string>
     <string name="userlong_key">userLongitude</string>
     <string name="shoulduselocation_key">shouldUseLocation</string>
+    <string name="gpscontrol_key">gpsActive</string>
 
     <string name="businessid_key">businessId</string>
     <string name="businessadmin_key">businessAdmin</string>

@@ -97,10 +97,6 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isTransition = false;
     private boolean shouldUseLocation;
-    private boolean mRequestingLocationUpdates;
-
-    private LocationManager locationManager;
-    private Location mLastLocation;
     private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
     private float startRadius = 5.0f;
     private GeoLocation userQueryLocation;
@@ -1142,18 +1138,23 @@ public class MainActivity extends AppCompatActivity
 
     public void GPSControl(View button)
     {
-        final LocationManager manager = (LocationManager) getSystemService( this.LOCATION_SERVICE );
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        Boolean gpsControl = userPreferences.getBoolean(getString(R.string.gpscontrol_key), false);
 
 
-        if(!(manager.isProviderEnabled(LocationManager.GPS_PROVIDER ))) {
-            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 5);
-        }
+        if(!gpsControl){
+            final LocationManager manager = (LocationManager) getSystemService( this.LOCATION_SERVICE );
 
-        if(!mGoogleApiClient.isConnected()){
+
+            if(!(manager.isProviderEnabled(LocationManager.GPS_PROVIDER ))) {
+                startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 5);
+            }
+
             mGoogleApiClient.connect();
 
             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.gpscontrol_key), true);
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
             userEditor.commit();
 
@@ -1172,6 +1173,7 @@ public class MainActivity extends AppCompatActivity
             }
             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
             userEditor.commit();
 
