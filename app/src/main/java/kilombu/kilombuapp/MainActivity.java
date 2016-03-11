@@ -578,17 +578,17 @@ public class MainActivity extends AppCompatActivity
                     changeCategory(category);
                 }
             case 5:
-                    if(!mGoogleApiClient.isConnected()){
-                        mGoogleApiClient.connect();
-                        waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-                        waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-                        waitingForLocation.setVisibility(View.VISIBLE);
-
-                    }else{
-                        mGoogleApiClient.disconnect();
-                        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
-                        mGoogleApiClient.connect();
-                    }
+//                    if(!mGoogleApiClient.isConnected()){
+//                        mGoogleApiClient.connect();
+//                        waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+//                        waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+//                        waitingForLocation.setVisibility(View.VISIBLE);
+//
+//                    }else{
+//                        mGoogleApiClient.disconnect();
+//                        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+//                        mGoogleApiClient.connect();
+//                    }
                 break;
             default:
                 break;
@@ -1102,6 +1102,12 @@ public class MainActivity extends AppCompatActivity
     public void getLatLongFromAddress(View button){
 
         try{
+            if(mGoogleApiClient.isConnected()){
+                mGoogleApiClient.disconnect();
+            }
+
+            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+
             String address = addressEdit.getText().toString().trim();
             LatLng latLng = Utils.getLocationFromAddress(context, address);
 
@@ -1125,6 +1131,13 @@ public class MainActivity extends AppCompatActivity
 
 
     public void getAllLocations(View button){
+
+        if(mGoogleApiClient.isConnected()){
+            mGoogleApiClient.disconnect();
+        }
+
+        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+
         findViewById(R.id.clear).setVisibility(View.INVISIBLE);
         findViewById(R.id.get).setVisibility(View.VISIBLE);
         ((EditText) findViewById(R.id.address_selected)).setText("");
@@ -1133,6 +1146,7 @@ public class MainActivity extends AppCompatActivity
 
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPreferences.edit();
+        userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
         userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
         userEditor.commit();
         changeCategory(category);
@@ -1153,6 +1167,10 @@ public class MainActivity extends AppCompatActivity
             }
 
             mGoogleApiClient.connect();
+
+            findViewById(R.id.clear).setVisibility(View.INVISIBLE);
+            findViewById(R.id.get).setVisibility(View.VISIBLE);
+            ((EditText) findViewById(R.id.address_selected)).setText("");
 
             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
