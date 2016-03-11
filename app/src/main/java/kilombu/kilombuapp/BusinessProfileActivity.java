@@ -23,6 +23,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.geofire.GeoFire;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -384,10 +385,14 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         appRef.child(getString(R.string.child_business_statistics)).child(businessId).setValue(null);
 
                         String businessCategory = busPreferences.getString(getString(R.string.businesscategory_key), "");
-                        appRef.child(getString(R.string.child_business_geolocation))
-                                .child(businessCategory).child(businessId).setValue(null);
-                        appRef.child(getString(R.string.child_business_geolocation))
-                                .child(getString(R.string.category_all)).child(businessId).setValue(null);
+
+                        GeoFire geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
+                                .child(businessCategory));
+                        geoFire.removeLocation(businessId);
+
+                        geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
+                                .child(getString(R.string.category_all)));
+                        geoFire.removeLocation(businessId);
 
                         busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), Context.MODE_PRIVATE);
                         busPreferences.edit().clear().commit();
