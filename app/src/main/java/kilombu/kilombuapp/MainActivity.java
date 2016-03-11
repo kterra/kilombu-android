@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private EditText addressEdit;
-    private ProgressBar waitingForLocation;
+    //private ProgressBar waitingForLocation;
 
     private static int UPDATE_INTERVAL = 10000; // 10 sec
     private static int FASTEST_INTERVAL = 5000; // 5 sec
@@ -212,9 +212,9 @@ public class MainActivity extends AppCompatActivity
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
         shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
         if(shouldUseLocation){
-            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-            waitingForLocation.setVisibility(View.VISIBLE);
+//            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+//            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+//            waitingForLocation.setVisibility(View.VISIBLE);
             if (mGoogleApiClient.isConnected()) {
                 mGoogleApiClient.disconnect();
             }
@@ -693,9 +693,9 @@ public class MainActivity extends AppCompatActivity
         ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_green_24dp));
 
         try{
-            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-            waitingForLocation.setVisibility(View.GONE);
+//            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+//            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+//            waitingForLocation.setVisibility(View.GONE);
             mLocationRequest = LocationRequest.create();
            //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -1117,6 +1117,7 @@ public class MainActivity extends AppCompatActivity
 
             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
+            userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
             userEditor.commit();
 
@@ -1179,9 +1180,9 @@ public class MainActivity extends AppCompatActivity
             userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
             userEditor.commit();
 
-            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-            waitingForLocation.setVisibility(View.VISIBLE);
+//            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+//            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+//            waitingForLocation.setVisibility(View.VISIBLE);
 
         }else{
             mGoogleApiClient.disconnect();
