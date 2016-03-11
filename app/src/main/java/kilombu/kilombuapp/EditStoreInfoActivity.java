@@ -30,10 +30,12 @@ import kilombu.kilombuapp.models.Store;
 
 public class EditStoreInfoActivity extends AppCompatActivity {
 
+    private final String TAG = "Edit Store";
     private String businessId, state, city, district, street, complement, phone, hours;
     private TextInputLayout inputLayoutCity, inputLayoutDistrict, inputLayoutStreet,
     inputLayoutBusinessHours, inputLayoutPhone;
     private boolean isTransition = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         super.onStart();
         isTransition = false;
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d(TAG, "ON START");
     }
 
     @Override
@@ -68,11 +70,11 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d(TAG, "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d(TAG, "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d(TAG, "ON STOP");
     }
 
     @Override
@@ -202,11 +204,16 @@ public class EditStoreInfoActivity extends AppCompatActivity {
             String category = busPreferences.getString(getString(R.string.businesscategory_key), "");
             busEditor.putString(getString(R.string.businesscategory_key), category);
             busEditor.commit();
+            //set on selected category
             GeoFire geoFire = new GeoFire(new Firebase(getString(R.string.firebase_url))
-                    .child("BusinessGeoLocation/" + category));
+                    .child(getString(R.string.child_business_geolocation)).child(category));
+            geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
+            //set on category "todas"
+            geoFire = new GeoFire(new Firebase(getString(R.string.firebase_url))
+                    .child(getString(R.string.child_business_geolocation)).child(getString(R.string.category_all)));
             geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
         } catch (NullPointerException e){
-            Toast.makeText(this, "Nao foi possivel encontrar endereço", Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.toast_address_not_found, Toast.LENGTH_LONG);
         }
 
         Intent intent = new Intent(this, BusinessProfileActivity.class);

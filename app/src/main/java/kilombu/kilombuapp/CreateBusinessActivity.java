@@ -31,6 +31,7 @@ import kilombu.kilombuapp.models.Store;
 
 public class CreateBusinessActivity extends AppCompatActivity {
 
+    private final String TAG = "Create Business";
     private Firebase appRef;
     private Firebase businessRef;
     private Firebase detailsRef;
@@ -122,7 +123,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
         super.onStart();
         isTransition = false;
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d(TAG, "ON START");
     }
 
     @Override
@@ -130,11 +131,11 @@ public class CreateBusinessActivity extends AppCompatActivity {
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d(TAG, "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d(TAG, "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d(TAG, "ON STOP");
     }
 
     @Override
@@ -255,10 +256,13 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
         try {
             LatLng latLng = Utils.getLocationFromAddress(this, address.toString());
-            GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation" + "/" + category));
+            GeoFire geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
+            geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
+            geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
+                    .child(getString(R.string.category_all)));
             geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
         } catch (NullPointerException e){
-            Toast.makeText(this, "Nao foi possivel encontrar endereço", Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.toast_address_not_found, Toast.LENGTH_LONG);
         }
 
 
@@ -299,11 +303,6 @@ public class CreateBusinessActivity extends AppCompatActivity {
         statisticsRef.setValue(new BusinessStatistics());
         statisticsRef.child(getString(R.string.child_statistics_timestamp))
                             .setValue(ServerValue.TIMESTAMP);
-    }
-
-    private void createBusinessGeoLocation(String businessId){
-        GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation"));
-
     }
 
     //Mandatory

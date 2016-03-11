@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 
     private final String TAG = "MAIN";
     private Firebase appRef;
-    private final int adsPerPage = 50;
+    private final int adsPerPage = 20;
     private final long placeholderRank = 999997;
     private int currentPage = 1;
     private int currentCategory; // 0 represents "All categories"
@@ -683,8 +683,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         shouldUseLocation = false;
-        String category = currentCategory == 0 ? getString(R.string.category_select_all) :
-                ValidationTools.categoryForIndex(currentCategory, this);
+        String category = ValidationTools.categoryForIndex(currentCategory, this);
         changeCategory(category);
     }
 
@@ -697,8 +696,7 @@ public class MainActivity extends AppCompatActivity
             shouldUseLocation = true;
 
             userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
-            String category = currentCategory == 0 ? getString(R.string.category_select_all) :
-                    ValidationTools.categoryForIndex(currentCategory, this);
+            String category = ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
         }catch (NullPointerException nulle){
 
@@ -1077,8 +1075,7 @@ public class MainActivity extends AppCompatActivity
             userEditor.putString(getString(R.string.userlong_key), Double.toString(latLng.longitude));
             userEditor.commit();
             userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
-            String category = currentCategory == 0 ? getString(R.string.category_select_all) :
-                    ValidationTools.categoryForIndex(currentCategory, this);
+            String category = ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
         }
         catch (NullPointerException nulle){
@@ -1092,8 +1089,7 @@ public class MainActivity extends AppCompatActivity
         findViewById(R.id.get).setVisibility(View.VISIBLE);
         ((EditText) findViewById(R.id.address_selected)).setText("");
         shouldUseLocation = false;
-        String category = currentCategory == 0 ? getString(R.string.category_select_all) :
-                ValidationTools.categoryForIndex(currentCategory, this);
+        String category = ValidationTools.categoryForIndex(currentCategory, this);
         changeCategory(category);
     }
 
@@ -1115,8 +1111,7 @@ public class MainActivity extends AppCompatActivity
         }else{
             mGoogleApiClient.disconnect();
             shouldUseLocation = false;
-            String category = currentCategory == 0 ? getString(R.string.category_select_all) :
-                    ValidationTools.categoryForIndex(currentCategory, this);
+            String category = ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
         }
 

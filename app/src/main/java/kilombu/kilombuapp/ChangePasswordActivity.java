@@ -19,6 +19,7 @@ import com.firebase.client.FirebaseError;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    private final String TAG = "Change Password";
     private String userEmail;
     private EditText passwordField, newPasswordField, newPasswordAgainField;
     private Firebase appRef;
@@ -57,7 +58,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onStart();
         isTransition = false;
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d(TAG, "ON START");
     }
 
     @Override
@@ -65,11 +66,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d(TAG, "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d(TAG, "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d(TAG, "ON STOP");
     }
 
     @Override

@@ -16,12 +16,18 @@ public class ValidationTools {
     public static final long bstLaunchTimestamp = 1456009200;
 
     public static int convertCategory(String category, Context context){
+        if (category.equals(context.getString(R.string.category_all))){
+            return 0;
+        }
         ArrayList<String> categories = new ArrayList<String >(
                 Arrays.asList(context.getResources().getStringArray(R.array.categories)));
         return categories.indexOf(category);
     }
 
     public static String categoryForIndex(int i, Context context) {
+        if (i == 0){
+            return context.getString(R.string.category_all);
+        }
         String[] categories = context.getResources().getStringArray(R.array.categories);
         return categories[i];
     }

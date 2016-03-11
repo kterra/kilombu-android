@@ -21,6 +21,7 @@
     <string name="toast_failure_change_email">Ocorreu um erro :( Por favor, tente novamente</string>
     <string name="toast_no_datasnapshot">Ocorreu um problema</string>
     <string name="toast_action_not_completed">Não foi possível completar sua solicitação</string>
+    <string name="toast_address_not_found">Nao foi possível encontrar coordenadas do endereço</string>
     <string name="toast_location">Você precisa inserir uma cidade e um estado ou optar pelo uso do GPS</string>
     <string name="toast_forbbiden_action"> Ação não permitida</string>
 
