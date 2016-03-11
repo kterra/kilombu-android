@@ -130,6 +130,9 @@ public abstract class GeoFireRecyclerAdapter <T, VH extends RecyclerView.ViewHol
             }
         }
         T model = getItem(position);
+        if (model == null){
+            Log.e("Geo Adapter", "Null em: " + position + " total: " + mSnapshots.getCount() + "key: " + mSnapshots.getItem(position).getKey());
+        }
         populateViewHolder(viewHolder, model, position);
     }
 

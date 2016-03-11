@@ -53,7 +53,7 @@ public class GeoFireList implements GeoQueryEventListener {
                 //int index = mSnapshots.size();
                 mSnapshots.add(index, dataSnapshot);
                 notifyChangedListeners(OnChangedListener.EventType.Added, index);
-                Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
+                //Log.d(TAG, index + " Retrieving: " + dataSnapshot.getKey());
             }
 
             @Override
@@ -69,7 +69,7 @@ public class GeoFireList implements GeoQueryEventListener {
             if (value > distance) {
                 return index;
             } else {
-                index++;
+                ++index;
             }
         }
         return index;

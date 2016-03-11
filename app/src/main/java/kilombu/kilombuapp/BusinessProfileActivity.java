@@ -1,6 +1,7 @@
 package kilombu.kilombuapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -382,7 +383,13 @@ public class BusinessProfileActivity extends AppCompatActivity {
                         appRef.child(getString(R.string.child_business_details)).child(businessId).setValue(null);
                         appRef.child(getString(R.string.child_business_statistics)).child(businessId).setValue(null);
 
-                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), android.content.Context.MODE_PRIVATE);
+                        String businessCategory = busPreferences.getString(getString(R.string.businesscategory_key), "");
+                        appRef.child(getString(R.string.child_business_geolocation))
+                                .child(businessCategory).child(businessId).setValue(null);
+                        appRef.child(getString(R.string.child_business_geolocation))
+                                .child(getString(R.string.category_all)).child(businessId).setValue(null);
+
+                        busPreferences = context.getSharedPreferences(getString(R.string.preference_business_key), Context.MODE_PRIVATE);
                         busPreferences.edit().clear().commit();
 
                         Intent intent = new Intent(BusinessProfileActivity.this, MainActivity.class);

@@ -1002,7 +1002,6 @@ public class MainActivity extends AppCompatActivity
     class GeoFireAdsRecyclerAdapter extends GeoFireRecyclerAdapter<Business, BusinessViewHolder> {
 
         ProgressBar loadingArea;
-        FooterViewHolder footerViewHolder;
 
 
         public GeoFireAdsRecyclerAdapter(Class<Business> modelClass, int modelLayout,
