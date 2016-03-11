@@ -380,27 +380,35 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateFirebaseAdapter(Query query){
+        //if we are transitioning from geofireAdsAdapter
         if (geofireAdsAdapter != null){
             geofireAdsAdapter.cleanup();
             geofireAdsAdapter = null;
+            firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(query);
+            adsView.setAdapter(firebaseAdsAdapter);
+        }else {
+            //if we had an active firebaseAdsAdapter
+            if (firebaseAdsAdapter != null) {
+                firebaseAdsAdapter.cleanup();
+                firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(query);
+                adsView.swapAdapter(firebaseAdsAdapter, true);
+            }
         }
-        if (firebaseAdsAdapter != null){
-            firebaseAdsAdapter.cleanup();
-        }
-        firebaseAdsAdapter = new FirebaseAdsRecyclerAdapter(query);
-        adsView.swapAdapter(firebaseAdsAdapter, true);
     }
 
     private void updateGeofireAdapter(GeoQuery query, Firebase modelRef){
         if (firebaseAdsAdapter != null){
             firebaseAdsAdapter.cleanup();
             firebaseAdsAdapter = null;
+            geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(query, modelRef);
+            adsView.setAdapter(geofireAdsAdapter);
+        }else {
+            if (geofireAdsAdapter != null) {
+                geofireAdsAdapter.cleanup();
+                geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(query, modelRef);
+                adsView.swapAdapter(geofireAdsAdapter, true);
+            }
         }
-        if (geofireAdsAdapter != null){
-            geofireAdsAdapter.cleanup();
-        }
-        geofireAdsAdapter = new GeoFireAdsRecyclerAdapter(query, modelRef);
-        adsView.swapAdapter(geofireAdsAdapter, true);
     }
 
     public void changeCategoryOnClick(View button){
@@ -1110,8 +1118,6 @@ public class MainActivity extends AppCompatActivity
             userEditor.commit();
 
 
-            //TODO: check for nullity
-          ;
             userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
             String category = ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
