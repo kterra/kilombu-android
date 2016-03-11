@@ -145,10 +145,13 @@ public class Utils {
                             try {
                                 BusinessAddress address = details.getStores().values().iterator().next().getAddress();
                                 LatLng latLng = Utils.getLocationFromAddress(context, address.toString());
-                                GeoFire geoFire = new GeoFire(appRef.child("BusinessGeoLocation" + "/" + category));
+                                GeoFire geoFire = new GeoFire(appRef
+                                        .child(context.getString(R.string.child_business_geolocation)).child(category));
                                 geoFire.setLocation(id, new GeoLocation(latLng.latitude, latLng.longitude));
                                 //duplication for "all categories" case
-                                geoFire = new GeoFire(appRef.child("BusinessGeoLocation/todas"));
+                                geoFire = new GeoFire(appRef
+                                        .child(context.getString(R.string.child_business_geolocation))
+                                        .child(context.getString(R.string.category_all)));
                                 geoFire.setLocation(id, new GeoLocation(latLng.latitude, latLng.longitude));
                             } catch (NullPointerException e) {
                                 Log.e(TAG, "Endereço não cadastrado");
