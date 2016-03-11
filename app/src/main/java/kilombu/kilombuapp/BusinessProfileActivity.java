@@ -70,7 +70,7 @@ public class BusinessProfileActivity extends AppCompatActivity {
         super.onStart();
         isTransition = false;
         Firebase.goOnline();
-        Log.d("MAIN", "ON START");
+        Log.d("BUSPROFILE", "ON START");
     }
 
     @Override
@@ -78,11 +78,11 @@ public class BusinessProfileActivity extends AppCompatActivity {
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
-            Log.d("MAIN", "GOING OFFLINE");
+            Log.d("BUSPROFILE", "GOING OFFLINE");
         }else{
-            Log.d("MAIN", "TRANSITION");
+            Log.d("BUSPROFILE", "TRANSITION");
         }
-        Log.d("MAIN", "ON STOP");
+        Log.d("BUSPROFILE", "ON STOP");
     }
 
     @Override
