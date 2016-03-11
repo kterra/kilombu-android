@@ -1,11 +1,16 @@
 package kilombu.kilombuapp;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.LightingColorFilter;
+import android.location.Location;
 import android.location.LocationManager;
+import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,15 +22,19 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -36,14 +45,33 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.ui.FirebaseRecyclerAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 import kilombu.kilombuapp.models.Business;
 import kilombu.kilombuapp.models.User;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private final String TAG = "MAIN";
     private Firebase appRef;
@@ -66,13 +94,23 @@ public class MainActivity extends AppCompatActivity
     private LinearLayoutManager llm;
 
     private boolean isTransition = false;
-    private boolean shouldUseLocation = true;
+    private boolean shouldUseLocation;
+    private boolean mRequestingLocationUpdates;
 
     private LocationManager locationManager;
+    private Location mLastLocation;
     private GeoFireAdsRecyclerAdapter geofireAdsAdapter;
     private float startRadius = 5.0f;
     private GeoLocation userQueryLocation;
     private RecyclerView.Adapter adsRecyclerAdapter;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private EditText addressEdit;
+    private ProgressBar waitingForLocation;
+
+    private static int UPDATE_INTERVAL = 10000; // 10 sec
+    private static int FASTEST_INTERVAL = 5000; // 5 sec
+    private static int DISPLACEMENT = 500; // 1000 meters
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +157,18 @@ public class MainActivity extends AppCompatActivity
         //ValidationTools.createBusinessPlaceholders(this);
         //Utils.createBusinessLocation(this);
         //locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+        addressEdit = ((EditText) findViewById(R.id.address_selected));
+
         Log.d(TAG, "ON CREATE");
+
+
+        buildGoogleApiClient();
+
     }
+
+
 
     private void setNavigationHeader(){
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
@@ -167,6 +215,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStop() {
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
         super.onStop();
         if (! isTransition){
             Firebase.goOffline();
@@ -187,6 +238,16 @@ public class MainActivity extends AppCompatActivity
 
         if (geofireAdsAdapter != null){
             geofireAdsAdapter.cleanup();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -488,6 +549,18 @@ public class MainActivity extends AppCompatActivity
                     Log.d(TAG, "computed category: " + category);
                     changeCategory(category);
                 }
+            case 5:
+                    if(!mGoogleApiClient.isConnected()){
+                        mGoogleApiClient.connect();
+                        waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+                        waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+                        waitingForLocation.setVisibility(View.VISIBLE);
+
+                    }else{
+                        mGoogleApiClient.disconnect();
+                        mGoogleApiClient.connect();
+                    }
+                break;
             default:
                 break;
         }
@@ -554,15 +627,6 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, Utils.LOCATION_REQUEST);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -580,6 +644,68 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Creating google api client object
+     * */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
+
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        try{
+            waitingForLocation.setVisibility(View.GONE);
+            mLocationRequest = LocationRequest.create();
+           //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+           mLocationRequest.setInterval(UPDATE_INTERVAL);
+           mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+            mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
+           LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }catch (SecurityException se){
+            Toast.makeText(this, R.string.action_forbbiden, Toast.LENGTH_SHORT).show();
+        }
+
+        }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        shouldUseLocation = false;
+        String category = currentCategory == 0 ? getString(R.string.category_select_all) :
+                ValidationTools.categoryForIndex(currentCategory, this);
+        changeCategory(category);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        try{
+
+          //  Toast.makeText(this, "Location " + location.getLatitude()+ ", "+ location.getLongitude(), Toast.LENGTH_SHORT).show();
+
+            shouldUseLocation = true;
+
+            userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
+            String category = currentCategory == 0 ? getString(R.string.category_select_all) :
+                    ValidationTools.categoryForIndex(currentCategory, this);
+            changeCategory(category);
+        }catch (NullPointerException nulle){
+
+        }
+
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -932,4 +1058,67 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void getLatLongFromAddress(View button){
+        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPreferences.edit();
+
+        try{
+            String address = addressEdit.getText().toString().trim();
+            LatLng latLng = Utils.getLocationFromAddress(context, address);
+
+            findViewById(R.id.clear).setVisibility(View.VISIBLE);
+            findViewById(R.id.get).setVisibility(View.INVISIBLE);
+
+            shouldUseLocation = true;
+
+
+            //TODO: check for nullity
+            userEditor.putString(getString(R.string.userlat_key), Double.toString(latLng.latitude));
+            userEditor.putString(getString(R.string.userlong_key), Double.toString(latLng.longitude));
+            userEditor.commit();
+            userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
+            String category = currentCategory == 0 ? getString(R.string.category_select_all) :
+                    ValidationTools.categoryForIndex(currentCategory, this);
+            changeCategory(category);
+        }
+        catch (NullPointerException nulle){
+            //nothing to do here :)
+        }
+    }
+
+
+    public void getAllLocations(View button){
+        findViewById(R.id.clear).setVisibility(View.INVISIBLE);
+        findViewById(R.id.get).setVisibility(View.VISIBLE);
+        ((EditText) findViewById(R.id.address_selected)).setText("");
+        shouldUseLocation = false;
+        String category = currentCategory == 0 ? getString(R.string.category_select_all) :
+                ValidationTools.categoryForIndex(currentCategory, this);
+        changeCategory(category);
+    }
+
+    public void GPSControl(View button)
+    {
+        final LocationManager manager = (LocationManager) getSystemService( this.LOCATION_SERVICE );
+
+
+        if(!(manager.isProviderEnabled(LocationManager.GPS_PROVIDER ))) {
+            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 5);
+        }
+
+        if(!mGoogleApiClient.isConnected()){
+            mGoogleApiClient.connect();
+            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
+            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
+            waitingForLocation.setVisibility(View.VISIBLE);
+
+        }else{
+            mGoogleApiClient.disconnect();
+            shouldUseLocation = false;
+            String category = currentCategory == 0 ? getString(R.string.category_select_all) :
+                    ValidationTools.categoryForIndex(currentCategory, this);
+            changeCategory(category);
+        }
+
+    }
 }

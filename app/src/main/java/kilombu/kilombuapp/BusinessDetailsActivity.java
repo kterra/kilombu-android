@@ -1,13 +1,18 @@
 package kilombu.kilombuapp;
 
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ArrowKeyMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +52,8 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupBusinessDetails();
+
+        //longClickOnText();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
@@ -255,10 +262,34 @@ public class BusinessDetailsActivity extends AppCompatActivity {
         return businessId;
     }
 
+    public void longClickOnText(){
+        final TextView busName = (TextView) findViewById(R.id.business_name_detail);
+        busName.setMovementMethod(ArrowKeyMovementMethod.getInstance());
+        busName.setOnLongClickListener(
+                new View.OnLongClickListener(){
+                    public boolean onLongClick(View v) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            busName.setTextIsSelectable(true);
+                            ClipboardManager cManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData cData = ClipData.newPlainText("text", "text to clip");
+                            cManager.setPrimaryClip(cData);
+                        }
+
+
+                            Toast.makeText(getApplicationContext(),
+                                "You have pressed it long :)", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                }
+
+        );
+    }
+
     private void updateVisualizationsCounter() {
         Firebase viewsCountRef = new Firebase(getString(R.string.firebase_url))
                 .child(getString(R.string.child_business_statistics)).child(businessId)
                 .child(getString(R.string.child_statistics_visualizations));
+
 
         viewsCountRef.runTransaction(new Transaction.Handler() {
             @Override

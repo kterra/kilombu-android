@@ -90,7 +90,10 @@
     <string name="navigate_back">Voltar</string>
     <string name="title_activity_change_token_password">Alterar Senha</string>
     <string name="title_activity_edit_user_location">Editar Localidade</string>
-    <string name="title_activity_filter_location">Filtrar Anúncios por Localidade</string>
+    <string name="title_activity_filter_location">Filtrar anúncios por localidade</string>
+
+    <string name="no_location"> Mostrar todos os anúncios sem considerar suas localidades </string>
+    <string name="no_location_title"> Ver todas as localidades</string>
 
 
 </resources>

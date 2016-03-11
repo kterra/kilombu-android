@@ -31,6 +31,7 @@
     <string name="no_ads_left">"Não há mais anúncios nesta categoria"</string>
     <string name="no_ads_here">Não há anúncios nesta região</string>
     <string name="no_such_activity">Você não possui nenhuma aplicação para realizar esta ação</string>
+    <string name="action_forbbiden"> Seu dispositivo não suporta esta função</string>
 
     <string name="no_location_message">Localidade não informada.</string>
 

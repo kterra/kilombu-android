@@ -2,10 +2,12 @@ package kilombu.kilombuapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -37,8 +39,10 @@ public class FilterLocationActivity extends AppCompatActivity {
     private boolean isTransition = false;
     private Spinner stateSelection;
     String city, state;
-    Float latitude, longitude;
     LocationManager mLocationManager;
+    Location currentLocation;
+    double currentLatitude,currentLongitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +72,9 @@ public class FilterLocationActivity extends AppCompatActivity {
                             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
                             SharedPreferences.Editor userEditor = userPreferences.edit();
                             userEditor.putString(getString(R.string.userlat_key), Double.toString(latitude));
-                            userEditor.putString(getString(R.string.userlong_key), Double.toString(latitude));
+                            userEditor.putString(getString(R.string.userlong_key), Double.toString(longitude));
                             Log.d("LAT", Double.toString(latitude));
-                            Log.d("LONG", Double.toString(latitude));
+                            Log.d("LONG", Double.toString(longitude));
                             userEditor.commit();
 
                             Intent intent = new Intent(FilterLocationActivity.this, MainActivity.class);
@@ -197,16 +201,16 @@ public class FilterLocationActivity extends AppCompatActivity {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                 //Do what you need if enabled...
                 try{
-                    Location location = getLastKnownLocation();
-                    double longitude = location.getLongitude();
-                    double latitude = location.getLatitude();
+                    findLocation();
+                    double longitude = currentLocation.getLongitude();
+                    double latitude = currentLocation.getLatitude();
                     userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
                     SharedPreferences.Editor userEditor = userPreferences.edit();
                     userEditor.putString(getString(R.string.userlat_key), Double.toString(latitude));
                     userEditor.putString(getString(R.string.userlong_key), Double.toString(longitude));
                     userEditor.commit();
 
-                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("LatLng", latLng);
                     setResult(Activity.RESULT_OK, returnIntent);
@@ -276,4 +280,39 @@ public class FilterLocationActivity extends AppCompatActivity {
         }
     }
 
+
+
+    public void findLocation() {
+        LocationManager locationManager = (LocationManager) this
+                .getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                currentLocation = location;
+
+            }
+
+            public void onStatusChanged(String provider, int status,
+                                        Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+        try {
+
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }catch (SecurityException e){
+            Toast.makeText(FilterLocationActivity.this,
+                    getString(R.string.toast_forbbiden_action), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
 }
+
