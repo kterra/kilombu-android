@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -226,9 +227,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_black_24dp));
-            }
+            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
         }
         super.onStop();
         if (! isTransition){
@@ -587,9 +586,7 @@ public class MainActivity extends AppCompatActivity
 
                     }else{
                         mGoogleApiClient.disconnect();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_black_24dp));
-                        }
+                        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
                         mGoogleApiClient.connect();
                     }
                 break;
@@ -691,9 +688,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_green_24dp));
-        }
+
+        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_green_24dp));
+
         try{
             waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
             waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
@@ -1174,9 +1171,9 @@ public class MainActivity extends AppCompatActivity
             shouldUseLocation = false;
             String category = ValidationTools.categoryForIndex(currentCategory, this);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(MainActivity.this.getDrawable(R.drawable.ic_my_location_black_24dp));
-            }
+            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+
+
             userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor userEditor = userPreferences.edit();
             userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
