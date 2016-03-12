@@ -30,7 +30,6 @@ import kilombu.kilombuapp.models.BusinessDetails;
 public class Utils {
 
     private static final String TAG = "Utils";
-    public static final int LOCATION_REQUEST = 72;
 
     public static String getFirebaseError(int error){
         switch(error){

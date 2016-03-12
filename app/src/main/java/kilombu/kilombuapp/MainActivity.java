@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
 
     private final String TAG = "MAIN";
     private final int CATEGORIES_REQUEST = 1;
+    private final int LOCATION_REQUEST = 5;
     private final int adsPerPage = 20;
     private final long placeholderRank = 999997;
     private final float startRadius = 10.0f;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     private int currentCategory; // 0 represents "All categories"
     private boolean isTransition = false;
     private boolean shouldUseLocation;
+    private boolean GPSisActive;
     private Business currentBusiness;
     private String currentBusinessId;
     private User currentUser;
@@ -96,7 +98,6 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private EditText addressEdit;
-    //private ProgressBar waitingForLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,6 @@ public class MainActivity extends AppCompatActivity
 
 
         retrieveStateVariables();
-
         initializeCategoryFloatingButtons();
 
         businessRef = new Firebase(getString(R.string.firebase_url))
@@ -190,13 +190,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Firebase.goOnline();
-        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);*/
-        //TODO: confirm if this applies only to GPS
-        if(shouldUseLocation){
-//            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-//            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-//            waitingForLocation.setVisibility(View.VISIBLE);
+        if(GPSisActive){
             if (!mGoogleApiClient.isConnected()) {
                 mGoogleApiClient.connect();
             }
@@ -208,8 +202,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
-            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+            ((ImageView) findViewById(R.id.gpsControlButton))
+                    .setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
         }
         super.onStop();
         saveStateVariables();
@@ -217,7 +213,7 @@ public class MainActivity extends AppCompatActivity
             Firebase.goOffline();
             Log.d(TAG, "GOING OFFLINE");
         }else{
-            Log.d(TAG, "TRANSITION");
+            Log.d(TAG, "Transition");
         }
         Log.d(TAG, "ON STOP");
     }
@@ -226,6 +222,15 @@ public class MainActivity extends AppCompatActivity
         userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
                 android.content.Context.MODE_PRIVATE);
         shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);
+        GPSisActive = userPreferences.getBoolean(getString(R.string.gpscontrol_key), false);
+        String locationOnSearch = userPreferences.getString("search_box", "");
+        if (!locationOnSearch.isEmpty()){
+            addressEdit = ((EditText) findViewById(R.id.address_selected));
+            addressEdit.setText(locationOnSearch);
+            findViewById(R.id.clear).setVisibility(View.VISIBLE);
+            findViewById(R.id.get).setVisibility(View.INVISIBLE);
+        }
+
         if (shouldUseLocation){
             double latitude = Double.longBitsToDouble(userPreferences.getLong("latitude", 0));
             double longitude = Double.longBitsToDouble(userPreferences.getLong("longitude", 0));
@@ -238,6 +243,8 @@ public class MainActivity extends AppCompatActivity
                 android.content.Context.MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPreferences.edit();
         userEditor.putBoolean(getString(R.string.shoulduselocation_key), shouldUseLocation);
+        userEditor.putBoolean(getString(R.string.gpscontrol_key), GPSisActive);
+        userEditor.putString("search_box", addressEdit.getText().toString());
         if (userQueryLocation != null){
             userEditor.putLong("latitude", Double.doubleToRawLongBits(userQueryLocation.latitude));
             userEditor.putLong("longitude", Double.doubleToRawLongBits(userQueryLocation.longitude));
@@ -433,9 +440,6 @@ public class MainActivity extends AppCompatActivity
             currentCategory = ValidationTools.convertCategory(category, this);
         }
 
-        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        shouldUseLocation =  userPreferences.getBoolean(getString(R.string.shoulduselocation_key), false);*/
-        //Log.d("changeCategoryOnClick", Integer.toString(currentCategory));
         if (shouldUseLocation){
             GeoFire geoRef = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
             GeoQuery query = geoRef.queryAtLocation(userQueryLocation, startRadius);
@@ -567,34 +571,6 @@ public class MainActivity extends AppCompatActivity
                     changeCategory(data.getStringExtra("result"));
                 }
                 break;
-            case Utils.LOCATION_REQUEST:
-                if (resultCode == Activity.RESULT_OK){
-                    /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key),
-                            android.content.Context.MODE_PRIVATE);
-                    SharedPreferences.Editor userEditor = userPreferences.edit();
-                    userEditor.putBoolean(getString(R.string.shoulduselocation_key),true);
-                    userEditor.commit();*/
-                    shouldUseLocation = true;
-
-                    LatLng latLng = (LatLng) data.getParcelableExtra("LatLng");
-                    userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
-
-                    String category = ValidationTools.categoryForIndex(currentCategory, this);
-                    changeCategory(category);
-                }
-            case 5:
-//                    if(!mGoogleApiClient.isConnected()){
-//                        mGoogleApiClient.connect();
-//                        waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-//                        waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-//                        waitingForLocation.setVisibility(View.VISIBLE);
-//
-//                    }else{
-//                        mGoogleApiClient.disconnect();
-//                        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
-//                        mGoogleApiClient.connect();
-//                    }
-                break;
             default:
                 break;
         }
@@ -655,12 +631,6 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-    public void filterLocation(View button){
-        Intent intent = new Intent(this, FilterLocationActivity.class);
-        isTransition = true;
-        startActivityForResult(intent, Utils.LOCATION_REQUEST);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -697,9 +667,6 @@ public class MainActivity extends AppCompatActivity
                 ContextCompat.getDrawable(this, R.drawable.ic_my_location_green_24dp));
 
         try{
-            // waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-            // waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-            // waitingForLocation.setVisibility(View.GONE);
             mLocationRequest = LocationRequest.create();
             //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -707,6 +674,11 @@ public class MainActivity extends AppCompatActivity
             mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
             mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (GPSisActive){
+                userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
+                changeCategory(ValidationTools.categoryForIndex(currentCategory, this));
+            }
         }catch (SecurityException se){
             Toast.makeText(this, R.string.action_forbbiden, Toast.LENGTH_SHORT).show();
         }
@@ -724,11 +696,6 @@ public class MainActivity extends AppCompatActivity
         shouldUseLocation = false;
         String category = ValidationTools.categoryForIndex(currentCategory, this);
 
-        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        SharedPreferences.Editor userEditor = userPreferences.edit();
-        userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
-        userEditor.commit();*/
-
         changeCategory(category);
     }
 
@@ -738,20 +705,14 @@ public class MainActivity extends AppCompatActivity
 
           //  Toast.makeText(this, "Location " + location.getLatitude()+ ", "+ location.getLongitude(), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "on location changed");
-
-            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-            SharedPreferences.Editor userEditor = userPreferences.edit();
-            userEditor.putBoolean(getString(R.string.shoulduselocation_key),true);
-            userEditor.commit();*/
             shouldUseLocation = true;
-            userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
-            /*String category = ValidationTools.categoryForIndex(currentCategory, this);
-            changeCategory(category);*/
-            geofireAdsAdapter.updateQueryCenter(userQueryLocation);
+            if (GPSisActive){
+                userQueryLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
+                geofireAdsAdapter.updateQueryCenter(userQueryLocation);
+            }
         }catch (NullPointerException nulle){
 
         }
-
     }
 
 
@@ -890,9 +851,7 @@ public class MainActivity extends AppCompatActivity
         protected void populateViewHolder(RecyclerView.ViewHolder viewHolder, final Business business, final int position) {
 
             if (business == null){ //footer
-                //Log.d("FOOTER POS", Integer.toString(position));
                 int footerPosition = getItemCount() -1;
-                //Log.d("FOOTER ITENS", Integer.toString(getItemCount()));
 
                 footerViewHolder = (FooterViewHolder) viewHolder;
                 if (currentPage == 1){
@@ -1109,10 +1068,13 @@ public class MainActivity extends AppCompatActivity
 
         try{
             if(mGoogleApiClient.isConnected()){
+                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
                 mGoogleApiClient.disconnect();
+                GPSisActive = false;
             }
 
-            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+            ((ImageView) findViewById(R.id.gpsControlButton))
+                    .setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
 
             String address = addressEdit.getText().toString().trim();
             LatLng latLng = Utils.getLocationFromAddress(context, address);
@@ -1120,19 +1082,13 @@ public class MainActivity extends AppCompatActivity
             findViewById(R.id.clear).setVisibility(View.VISIBLE);
             findViewById(R.id.get).setVisibility(View.INVISIBLE);
 
-            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-            SharedPreferences.Editor userEditor = userPreferences.edit();
-            userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
-            userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
-            userEditor.commit();*/
-
             shouldUseLocation = true;
             userQueryLocation = new GeoLocation(latLng.latitude, latLng.longitude);
             String category = ValidationTools.categoryForIndex(currentCategory, this);
             changeCategory(category);
         }
         catch (NullPointerException nulle){
-            //nothing to do here :)
+            Toast.makeText(this, "Não foi possível encontrar o endereço solicitado", Toast.LENGTH_LONG);
         }
     }
 
@@ -1140,74 +1096,62 @@ public class MainActivity extends AppCompatActivity
     public void getAllLocations(View button){
 
         if(mGoogleApiClient.isConnected()){
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
 
-        ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
+        ((ImageView) findViewById(R.id.gpsControlButton))
+                .setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
 
         findViewById(R.id.clear).setVisibility(View.INVISIBLE);
         findViewById(R.id.get).setVisibility(View.VISIBLE);
         ((EditText) findViewById(R.id.address_selected)).setText("");
         shouldUseLocation = false;
         String category = ValidationTools.categoryForIndex(currentCategory, this);
-
-        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        SharedPreferences.Editor userEditor = userPreferences.edit();
-        userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
-        userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
-        userEditor.commit();*/
         changeCategory(category);
     }
 
     public void GPSControl(View button)
     {
-        userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-        Boolean gpsControl = userPreferences.getBoolean(getString(R.string.gpscontrol_key), false);
+        /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
+        Boolean gpsControl = userPreferences.getBoolean(getString(R.string.gpscontrol_key), false);*/
 
-
-        if(!gpsControl){
+        if(!GPSisActive){
             final LocationManager manager = (LocationManager) getSystemService( this.LOCATION_SERVICE );
 
 
             if(!(manager.isProviderEnabled(LocationManager.GPS_PROVIDER ))) {
-                startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 5);
+                startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), LOCATION_REQUEST);
+            }
+            if((manager.isProviderEnabled(LocationManager.GPS_PROVIDER )
+                    || (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)))) {
+
+                if (!mGoogleApiClient.isConnected()){
+                    mGoogleApiClient.connect();
+                }
+                GPSisActive = true;
+                shouldUseLocation = true;
+
+                findViewById(R.id.clear).setVisibility(View.INVISIBLE);
+                findViewById(R.id.get).setVisibility(View.VISIBLE);
+                ((EditText) findViewById(R.id.address_selected)).setText("");
+                //changeCategory(ValidationTools.categoryForIndex(currentCategory, this));
             }
 
-            mGoogleApiClient.connect();
-
-            findViewById(R.id.clear).setVisibility(View.INVISIBLE);
-            findViewById(R.id.get).setVisibility(View.VISIBLE);
-            ((EditText) findViewById(R.id.address_selected)).setText("");
-
-            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-            SharedPreferences.Editor userEditor = userPreferences.edit();
-            userEditor.putBoolean(getString(R.string.gpscontrol_key), true);
-            userEditor.putBoolean(getString(R.string.shoulduselocation_key), true);
-            userEditor.commit();*/
-
-//            waitingForLocation = (ProgressBar) findViewById(R.id.progressBar);
-//            waitingForLocation.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(0xFF000000, 0x7f7f7f));
-//            waitingForLocation.setVisibility(View.VISIBLE);
-
         }else{
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
 
             shouldUseLocation = false;
+            GPSisActive = false;
             userQueryLocation = null;
             String category = ValidationTools.categoryForIndex(currentCategory, this);
 
-            ((ImageView) findViewById(R.id.gpsControlButton)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
-
-
-            /*userPreferences = context.getSharedPreferences(getString(R.string.preference_user_key), android.content.Context.MODE_PRIVATE);
-            SharedPreferences.Editor userEditor = userPreferences.edit();
-            userEditor.putBoolean(getString(R.string.gpscontrol_key), false);
-            userEditor.putBoolean(getString(R.string.shoulduselocation_key), false);
-            userEditor.commit();*/
+            ((ImageView) findViewById(R.id.gpsControlButton)).
+                    setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_my_location_black_24dp));
 
 
             changeCategory(category);
         }
-
     }
 }
