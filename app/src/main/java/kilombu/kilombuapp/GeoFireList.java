@@ -49,6 +49,11 @@ public class GeoFireList implements GeoQueryEventListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //int index = mSnapshots.size();
+                if (dataSnapshot.getValue() == null){
+                    Firebase logRef = modelRef.getRoot().child("Log").child(dataSnapshot.getKey());
+                    logRef.setValue(true);
+                    return;
+                }
                 distances.add(index, distance);
                 mSnapshots.add(index, dataSnapshot);
                 notifyChangedListeners(OnChangedListener.EventType.Added, index);

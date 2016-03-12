@@ -146,8 +146,6 @@ public class MainActivity extends AppCompatActivity
 
         Log.d(TAG, "ON CREATE");
         buildGoogleApiClient();
-
-        //Utils.createBusinessLocation(this);
     }
 
 
