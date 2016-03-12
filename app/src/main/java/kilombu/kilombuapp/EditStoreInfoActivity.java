@@ -197,7 +197,7 @@ public class EditStoreInfoActivity extends AppCompatActivity {
         currentDetailsRef.child(getString(R.string.child_details_stores)).setValue(stores);
 
         try {
-            LatLng latLng = Utils.getLocationFromAddress(this, address.toString());
+            LatLng latLng = Utils.getLocationFromAddress(this, address);
             SharedPreferences busPreferences = this.getSharedPreferences(getString(R.string.preference_business_key),
                     android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor busEditor = busPreferences.edit();

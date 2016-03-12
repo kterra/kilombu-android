@@ -94,20 +94,33 @@ public class Utils {
 
         try {
             address = coder.getFromLocationName(strAddress,5);
-            if (address==null) {
-                return null;
-            }
+
             Address location=address.get(0);
             location.getLatitude();
             location.getLongitude();
             p1 = new LatLng(location.getLatitude(), location.getLongitude());
+            Log.d(TAG, p1.toString() );
 
         }catch (IOException e){
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG);
         }catch (IndexOutOfBoundsException e){
             Log.e(TAG, e.getMessage());
+        }catch(NullPointerException nulle){
+            Log.e(TAG, nulle.getMessage());
         }
         return  p1;
+    }
+
+    public static LatLng getLocationFromAddress(Context context, BusinessAddress busAddress){
+
+        LatLng latLng = getLocationFromAddress(context, busAddress.toString());
+        if(latLng == null){
+            latLng = getLocationFromAddress(context, busAddress.getDistrict() + " "+ busAddress.getCity() + ", "+ busAddress.getState());
+        }
+        if(latLng == null){
+            latLng = getLocationFromAddress(context, busAddress.getCity() + ", "+ busAddress.getState());
+        }
+        return  latLng;
     }
 
     public static void createBusinessPlaceholders(Context context){
@@ -143,7 +156,7 @@ public class Utils {
 
                             try {
                                 BusinessAddress address = details.getStores().values().iterator().next().getAddress();
-                                LatLng latLng = Utils.getLocationFromAddress(context, address.toString());
+                                LatLng latLng = Utils.getLocationFromAddress(context, address);
                                 GeoFire geoFire = new GeoFire(appRef
                                         .child(context.getString(R.string.child_business_geolocation)).child(category));
                                 geoFire.setLocation(id, new GeoLocation(latLng.latitude, latLng.longitude));

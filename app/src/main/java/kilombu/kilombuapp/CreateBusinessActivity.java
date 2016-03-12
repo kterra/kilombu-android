@@ -255,7 +255,7 @@ public class CreateBusinessActivity extends AppCompatActivity {
 
 
         try {
-            LatLng latLng = Utils.getLocationFromAddress(this, address.toString());
+            LatLng latLng = Utils.getLocationFromAddress(this, address);
             GeoFire geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation)).child(category));
             geoFire.setLocation(businessId, new GeoLocation(latLng.latitude, latLng.longitude));
             geoFire = new GeoFire(appRef.child(getString(R.string.child_business_geolocation))
